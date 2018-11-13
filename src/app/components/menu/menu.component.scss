@@ -1,0 +1,152 @@
+nav {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    background: #666;
+    min-width: 800px;
+    width: 100%;
+}
+
+.mat-raised-button:not([class*=mat-elevation-z]) {
+    box-shadow: unset;
+}
+
+.active {
+    background: gainsboro !important;
+    color: green !important;
+}
+
+.mat-raised-button.mat-primary:hover {
+    background: grey;
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+        background: #24c510;
+    }
+    5% {
+        opacity: 0.5;
+        background: #24c510;
+    }
+    15% {
+        opacity: 0.6;
+        background: #24c510;
+    }
+    25% {
+        opacity: 0.7;
+        background: #24c510;
+    }
+    35% {
+        opacity: 0.8;
+        background: #24c510;
+    }
+    45% {
+        opacity: 0.9;
+        background: #24c510
+    }
+    55% {
+        opacity: 1;
+        background: #24c510
+    }
+    65% {
+        opacity: .9;
+        background: #24c510
+    }
+    75% {
+        opacity: .8;
+        background: #24c510
+    }
+    85% {
+        opacity: .7;
+        background: #24c510
+    }
+    95% {
+        opacity: .6;
+        background: #24c510
+    }
+    100% {
+        opacity: .5;
+        background: #24c510
+    }
+}
+
+.connected {
+    background-color: #24c510; 
+    // -webkit-animation: blink 1s step-start 0s 10;
+}
+
+.container {
+    display: flex;
+    .block1 {
+        position: fixed;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100vh - 117px);
+        min-height: 50px;
+        width: 250px;
+        z-index: 1;
+    }
+    .block2 {
+        margin-left: 250px;
+        width: 100%;
+        max-height: calc(100vh - 117px);
+        height: -webkit-fill-available;
+    }
+}
+.tab {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    background-color: #F9FAFB;
+    border-left: solid #E5E5E4;
+    border-right: solid #E5E5E4;
+    width: 100%;
+    height: -webkit-fill-available;
+    & > p {
+        text-transform: uppercase;
+        color: #8C8D8E;
+        padding: 10px;
+        padding-left: 20px;
+        font-weight: 500;
+    }
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+    height: 30px;
+    padding: 5px;
+    padding-left: 40px;
+    box-sizing: border-box;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: rgb(51, 191, 244);
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: rgb(51, 191, 244) !important;
+    color: white !important;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+}
+.showTabForm {
+    opacity: .5;
+}
+
+.activeTab {
+    display: block;
+}

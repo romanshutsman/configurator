@@ -1,0 +1,35 @@
+.container {
+    height: 90px;
+    color: white;
+    background-color: #676767;
+    display: flex;
+    .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h1 {
+            &:first-child {
+                font-size: 24px;
+            }
+            margin: 0;
+            padding-left: 15px;
+            font-weight: 100;
+            font-size: 16px;
+        }
+    }
+    .status {
+        position: fixed;
+        right: 25px;
+        top: 35px;
+        mat-checkbox {
+            margin-left: 25px;
+        }
+        
+    }
+}
+.online {
+    color: #12ff12;
+}
+.offline {
+    color: #fff;
+}

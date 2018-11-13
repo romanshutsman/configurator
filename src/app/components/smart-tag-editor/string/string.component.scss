@@ -1,0 +1,173 @@
+.first-block {
+    display: flex;
+    padding-top: 60px;
+    .name {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        p {
+            height: 30px;
+            padding-top: 8px;
+            box-sizing: border-box;
+        }
+    }
+    .tagname {
+        label {
+            margin-right: 20px;
+            height: 30px;
+            padding-top: 8px;
+            width: 110px;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        input {
+            margin-right: 20px;
+        }
+    }
+}
+.second-block {
+    padding-bottom: 40px;
+    padding-top: 40px;
+    display: flex;
+    .model {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        p {
+            height: 30px;
+            padding-top: 8px;
+            box-sizing: border-box;
+        }
+    }
+    .nameinmodel {
+        label {
+            margin-right: 20px;
+            width: 110px;
+            flex-shrink: 0;
+            height: 30px;
+            padding-top: 8px;
+            display: inline-block;
+        }
+        input {
+            margin-right: 20px;
+        }
+    }
+}
+.select {
+    display: flex;
+    padding-bottom: 60px;
+    .mat-select-center {
+        display: flex;
+        align-items: center;
+    }
+    p {
+        width: 200px;
+    }
+    mat-select {
+        width: 200px;
+        margin-right: 20px;
+    }
+    div {
+        position: relative;
+        p {
+            position: absolute;
+            top: 35px; // left: 20px;
+        }
+    }
+    mat-select {
+        width: 130px;
+    }
+    .inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        div {
+            position: relative;
+            label {
+                margin-right: 20px;
+                margin-left: 20px;
+            }
+            input {
+                margin-right: 20px;
+                width: 70px;
+            }
+            p {
+                position: absolute;
+                top: 35px;
+                left: 20px;
+            }
+        }
+        .add {
+            margin-left: 20px;
+        }
+    }
+}
+form {
+    padding-bottom: 40px;
+}
+mat-select.select {
+    box-shadow: unset;
+}
+.err {
+    color: red;
+}
+.paragraph-error {
+    font-size: 12px;
+}
+.paragraph-error.valueOfRadio {
+    position: absolute;
+}
+.paragraph-error.routine {
+    left: 223px;
+    position: absolute;
+    bottom: 8px;
+}
+.inputEnable {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.inputDisable {
+    background: #cccccc;
+}
+.other-options {
+    display: flex;
+    height: 128px;
+    padding-bottom: 0;
+}
+
+.select-property {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    mat-select {
+        width: 150px;
+        &:first-child {
+            padding-top: 6px;
+        }
+        &:nth-child(2) {
+            padding-top: 43px;
+        }
+    }
+}
+
+.value-percent {
+    display: flex;
+    flex-direction: column;
+    div {
+        display: flex;
+        align-items: center;
+        position: relative;
+        &:first-child {
+            margin-bottom: 35px;
+        }
+        label {
+            padding-bottom: 5px;
+            width: 130px;
+        }
+        p {
+            position: absolute;
+            top: 32px;
+        }
+    }
+}

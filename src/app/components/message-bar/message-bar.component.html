@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="timeline" [ngClass]="{
+      'timelineSuccess':styleBar === 'success',
+      'timelineError':styleBar === 'fail',
+      'timelineStarted':styleBar === 'info'}">
+      {{statusBar}}
+    </div>
+    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+  </div>

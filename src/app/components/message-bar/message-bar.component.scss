@@ -1,0 +1,26 @@
+.container {
+    background-color: #80C46E;
+    color: white;
+    height: 30px;
+}
+.timeline {
+    width: -webkit-fill-available;
+    padding-left: 40px;
+    padding-top: 6px;
+    padding-bottom: 5px;
+}
+.timelineSuccess {
+    display: flex;
+    background: gainsboro;
+    color: green;
+    p {
+        width: 15px;
+    }
+}
+.timelineError {
+    background: rgba(197, 151, 151, 0.4);
+    color: #862f2f;
+}
+.timelineStarted {
+    color: white;
+}

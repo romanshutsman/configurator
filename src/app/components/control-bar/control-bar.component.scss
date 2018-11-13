@@ -1,0 +1,39 @@
+.container {
+    box-sizing: border-box;
+    height: 50px;
+    background-color: #F9FAFB;
+    border: solid #E5E5E4;
+    padding: 9px 20px;
+    .group1 {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            margin-left: 20px;
+            color: rgb(98, 180, 192);
+            background: none;
+            box-shadow: none;
+            &:hover {
+                background: rgb(214,232,238);
+                box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+            }
+            &.mat-raised-button[disabled] {
+                background: #e2e2e2;
+                box-shadow: none;
+                // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+                &:hover {
+                    box-shadow: none;
+                    background: #e2e2e2;
+                }
+            }
+        }
+    }
+}
+mat-spinner {
+    position: absolute;
+    left: 0;
+    margin-top: 11px;
+    margin-left: 15px;
+}
+.mat-raised-button {
+    line-height: 26px;
+}

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="block1">
+    <div class="tab">
+      <p>general</p>
+      <button  color="primary"  (click)="onConnect()">Connect</button>
+      <button  color="primary" [matMenuTriggerFor]="model">Model</button>
+      <mat-menu #model="matMenu" ng-reflect-position="above" [class.menu-top]="true">
+        <button mat-menu-item [matMenuTriggerFor]="CollectData">CollectData</button>
+      </mat-menu>
+      <mat-menu #CollectData="matMenu">
+        <button mat-menu-item [class.active]="active === true" [disabled]="active" (click)="collectData(true)">On</button>
+        <button mat-menu-item [class.active]="active  === false" [disabled]="!active" (click)="collectData(false)">Off</button>
+      </mat-menu>
+      <p>Configuration</p>
+      <button class="tablinks" [class.active]="showTabTree" (click)="openTab($event, 'model-tree')" >Model</button>
+      <button class="tablinks" [class.active]="showTabOperation" *ngIf="!hideForm" (click)="openTab($event, 'smart-tag-editor')">Smart Tag</button>
+    </div>
+  </div>
+</div>

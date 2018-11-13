@@ -1,0 +1,94 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./../@ra-web-tech-ui-toolkit-dashboard-controls/themes/rockwell-blue.css";
+@import "./../@ra-web-tech-ui-toolkit-navigation/themes/rockwell-blue.css";
+@import "./../@ra-web-tech-ui-toolkit-form-system/themes/rockwell-blue.css";
+@import "./../@ra-web-tech-ui-toolkit-common-utils/themes/rockwell-blue.css";
+@import "./../ra-icons/dist/ra-icons.min.css";
+@import "./../ra-icons/dist/fonts/ra-icons.ttf";
+@import "./../src/assets/Roboto-Regular.ttf";
+// @import "./../ra-icons/dist/fonts/ra-icons.svg";
+// @import "./../ra-icons/dist/fonts/ra-icons.woff";
+
+
+@font-face {
+	font-family: "Roboto-Regular";
+	src:  url("./../src/assets/Roboto-Regular.ttf"),
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+  
+    height: 100%;
+  }
+  
+  html, body { height: 100%; }
+  body { margin: 0; font-family: "Roboto-Regular", "Helvetica Neue", sans-serif; }
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  button {
+    font-family: "Roboto-Regular", "Helvetica Neue", sans-serif !important;
+  }
+
+
+
+  .ngx-contextmenu .dropdown-menu {
+    width: 200px;
+    padding: 2px;
+    margin: 0;
+    // border: 1px solid #bbb;
+    background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100px, #e5e5e5 100%);
+    // z-index: 100;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,.2);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .ngx-contextmenu li {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    .hasSubMenu:before {
+      content: "›";
+      position: absolute;
+      right: 5px;
+      font-size: 30px;
+      top: -4px;
+  }
+  }
+  .ngx-contextmenu li:first-child {
+    border-top:none;
+  }
+  .ngx-contextmenu a {
+    display: flex;
+    width: 100%;
+    color: #444;
+    text-align: left;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    box-sizing: border-box;
+    & > span {
+      padding-top: 2px;
+      padding-left: 5px;
+    }
+    & > .line {
+      border-left: solid 1px;
+      margin-left: 10px;
+    }
+  }
+  .ngx-contextmenu a:hover {
+    color: #2d1313;
+    outline: none;
+    background-color: rgba(0,0,0,.1);
+  }
+  .ngx-contextmenu:focus {
+    outline: none;
+  }

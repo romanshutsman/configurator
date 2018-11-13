@@ -1,0 +1,18 @@
+<div class="over" *ngIf="show">
+  <div class="pop connected">
+    <mat-radio-group class="example-radio-group" class="group">
+      <mat-radio-button class="example-radio-button" [checked]="item.Version == controller" *ngFor="let item of list"
+        [value]="item" (click)="choose(item); ">
+        {{item.Name}} ({{item.Version}})
+      </mat-radio-button>
+    </mat-radio-group>
+    <p *ngIf="list.length == 0">No active controllers!</p>
+    <button mat-raised-button color="primary" class="first-btn" (click)="closeModal1()">close</button>
+  </div>
+</div>
+<div class="over" *ngIf="showConnect">
+  <div class="pop connected">
+    <p class="header">{{message}}</p>
+    <button mat-raised-button color="primary" (click)="closeModal2()">close</button>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<form #nodeForm="ngForm">
+  <mat-card class="first-block">
+    <div class="name">
+      <p>Location in code</p>
+      <p>{{node.sProgram}}</p>
+    </div>
+    <div class="tagname">
+      <label for="tagname">Tag Name</label>
+      <input type="text" class="inputEnable" name="tagname" (mouseover)="activeInputTag($event)" #activeInput1
+        [attr.disabled]="tagnameDisable ? '' : null" [class.inputDisable]="tagnameDisable" [(ngModel)]="cloneSelectedNode.TagName"
+        pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$" id="tagname" maxlength="40" required>
+      <p class="paragraph-error err" *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
+        First letter must be letter or _. You can type letters and numbers.
+      </p>
+    </div>
+  </mat-card>
+  <mat-card class="second-block">
+    <div class="model">
+      <p>Position in model</p>
+      <p>{{ pathNode}}</p>
+    </div>
+    <div class="nameinmodel">
+      <label for="nameinmodel">Name in model</label>
+      <input pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$" type="text" required class="inputEnable" name="label" [(ngModel)]="cloneSelectedNode.label"
+        (mouseover)="activeInputModel($event)" #activeInput2 maxlength="40" id="nameinmodel">
+      <p *ngIf="nodeFrm.controls.label?.status === 'INVALID' && nodeFrm.controls.label?.touched" class="paragraph-error err">
+        First letter must be letter or _. You can type letters and numbers.
+      </p>
+    </div>
+  </mat-card>
+  <mat-card class="other-options">
+    <div class="select-property">
+      <mat-select placeholder="Value type" style="color:black" name="ValueTypeDint" [(ngModel)]="ValueTypeStateDint[2]">
+        <mat-option *ngFor="let item of ValueTypeStateDint" [value]="item">{{item}}</mat-option>
+      </mat-select>
+      <label for="sEU">Engineering Units</label>
+      <input id="sEU" type="text" name="sEU" class="inputEnable" required [value]="cloneSelectedNode.sEU" [(ngModel)]="cloneSelectedNode.sEU">
+      <!-- <p *ngIf="nodeFrm.controls.sEU?.status === 'INVALID'" class="paragraph-error valueOfRadio err">
+          This must be a "%"!
+        </p> -->
+    </div>
+    <div class="value-percent">
+      <div>
+        <label for="mulval">Mul Value</label>
+        <input id="mulval" type="number" name="mulval" class="inputEnable" required [value]="cloneSelectedNode.dMul"
+          [(ngModel)]="cloneSelectedNode.dMul" min="0" >
+        <p *ngIf="nodeFrm.controls.mulval?.status === 'INVALID' " class="paragraph-error valueOfRadio err">
+          This must be a integer or number with up to 2 decimal places!
+        </p>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="infomation-type">
+    <div class="radio-block">
+      <p class="update">Updated by</p>
+      <div class="group">
+        <div class="radio">
+          <mat-radio-group [(ngModel)]="cloneSelectedNode.updateRadio" [ngModelOptions]="{standalone: true}">
+            <mat-radio-button [value]="item" *ngFor="let item of arrayOfRadioBtns2, let i = index" (change)="clickOnRadio($event)">{{item}}</mat-radio-button>
+          </mat-radio-group>
+          <!-- <p 
+                class="paragraph-error">
+                  Required!!
+                </p> -->
+        </div>
+        <div class="group-2">
+          <div>
+            <input type="number" name="updateRate" pattern="^\d*[0-9.]\d*$" required [value]="cloneSelectedNode.updateRate"
+              [(ngModel)]="cloneSelectedNode.updateRate" [attr.disabled]="inputDisable ? '' : null" min="0" (change)="getCurrentValue($event)"
+              (keydown)="removeMinus($event, 1)" [class.inputDisable]="inputDisable" class="inputEnable">
+            <p *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'" class="paragraph-error valueOfRadio err">
+              Required! Only positive or 0!
+            </p>
+          </div>
+          <div>
+            <mat-select [ngModelOptions]="{standalone: true}" (selectionChange)="getOptionTime($event)" placeholder="Type of time"
+              [(ngModel)]="timeDefault">
+              <mat-option *ngFor="let item of times" [value]="item">{{item}}</mat-option>
+            </mat-select>
+            <!-- <p 
+                    class="paragraph-error times"
+                    >
+                      Time is required!
+                    </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="select">
+    <div class="mat-select-center">
+      <mat-select id="matSelect1" [disabled]="programNameDisabled" name="sProgram" placeholder="Programs" style="color:black"
+        [(ngModel)]="cloneSelectedNode.sProgram" required="isRequired ? '' : null">
+        <mat-option *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
+      </mat-select>
+      <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">
+        Required!
+      </p>
+    </div>
+    <div class="mat-select-center">
+      <mat-select [disabled]="routineDisabled" placeholder="Routines" style="color:black" [(ngModel)]="routineDefault"
+        name="routine" required="isRequired ? '' : null">
+        <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
+      </mat-select>
+      <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" class="paragraph-error err">
+        Required!
+      </p>
+    </div>
+    <div class="inputs">
+      <div>
+        <label for="rung">Rung</label>
+        <input type="number" pattern="^\d*[0-9]\d*$" name="rung" [value]="cloneSelectedNode.rung" [(ngModel)]="cloneSelectedNode.rung"
+          (keydown)="removeMinus($event, 2)" min="0" id="rung" required="isRequired ? '' : null" [disabled]="!isRequired"
+          [class.inputDisable]="!isRequired" class="inputEnable">
+        <p *ngIf="nodeFrm.controls.rung?.status === 'INVALID'" class="paragraph-error err">
+          Required! Only positive or 0!
+        </p>
+      </div>
+    </div>
+  </mat-card>
+</form>

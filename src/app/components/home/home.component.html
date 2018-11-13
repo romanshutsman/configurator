@@ -1,0 +1,37 @@
+<section class="home">
+  <section class="info-bar">
+    <app-info-bar [SelectedNode]="selectedItem" [status]="statusOfController"></app-info-bar>
+  </section>
+  <section class="message-bar">
+    <app-message-bar></app-message-bar>
+  </section>
+  <section class="menu-bar">
+    <app-menu (contentSelected)="selectedContent($event)"  [actionOnClicked]="operationOnForm"></app-menu>
+  </section>
+  <section class="content">
+    <div class="block2">
+      <div class="tabcontent" [class.activeTab]="showTabTree">
+        <app-model-tree 
+        [dataForm]="operationOnForm" 
+        (actionContextMenuChanged)="actionMenu($event)"
+        (itemSelected)="getNode($event)" 
+        (transferTree)="getTree($event)"></app-model-tree>
+      </div>
+
+      <div class="tabcontent" [class.activeTab]="showTabOperation">
+        <app-smart-tag-editor 
+        [modifiedNode]="operationOnForm" 
+        [SelectedSmartTag]="selectedItem" 
+        [Tree]="treeModel" 
+        [actionMenu]="actionContextMenu">
+        </app-smart-tag-editor>
+      </div>
+    </div>
+  </section>
+  <section class="control-bar">
+    <app-control-bar (actionOnClick)="onClicked($event)" [selectedContent]="showBtn"></app-control-bar>
+  </section>
+</section>
+
+<app-dialog class="dialog" (connectController)="statusController($event)">
+  <app-dialog>

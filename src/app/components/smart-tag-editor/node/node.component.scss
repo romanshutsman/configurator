@@ -1,0 +1,257 @@
+@import './../theme.scss';
+.first-block {
+    display: flex;
+    .name {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        p {
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
+            height: 30px;
+            padding-top: 0px;
+            box-sizing: border-box;
+            @include labelContent;
+        }
+    }
+    .tagname {
+        label {
+            margin-right: 20px;
+            height: 30px;
+            padding-top: 8px;
+            width: 110px;
+            flex-shrink: 0;
+            display: inline-block;
+            @include label;
+        }
+        input {
+            margin-right: 20px;
+        }
+    }
+}
+.second-block {
+    display: flex;
+    .model {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        p {
+            height: 30px;
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
+            @include labelContent;
+            padding-top: 0;
+            box-sizing: border-box;
+        }
+    }
+    .nameinmodel {
+        label {
+            margin-right: 20px;
+            width: 110px;
+            flex-shrink: 0;
+            height: 30px;
+            padding-top: 8px;
+            display: inline-block;
+            @include label;
+        }
+        input {
+            margin-right: 20px;
+        }
+    }
+}
+.infomation-type {
+    display: flex;
+    @include labelContent;
+    font-size: 14px;
+    div.type {
+        div.checkbox {
+            border: 1px solid;
+            width: 200px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            height: 110px;
+            overflow-y: scroll;
+        }
+    }
+    .radio-block {
+        margin-left: 50px;
+        p.update {
+            margin-bottom: 10px;
+        }
+        .group {
+            display: flex;
+            .radio {
+                margin-right: 20px;
+                mat-radio-group {
+                    display: flex;
+                    flex-direction: column;
+                    mat-radio-button {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+            .group-2 {
+                display: flex;
+                div {
+                    height: 30px;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    input {
+                        width: 75px;
+                        margin-right: 20px;
+                    }
+                    p {
+                        position: absolute;
+                        top: 35px;
+                    }
+                    mat-select {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+}
+.select {
+    display: flex;
+    .mat-select-center {
+        display: flex;
+        align-items: center;
+    }
+    p {
+        width: 200px;
+    }
+    mat-select {
+        width: 200px;
+        margin-right: 20px;
+    }
+    div {
+        position: relative;
+        p {
+            position: absolute;
+            top: 35px; // left: 20px;
+        }
+    }
+    mat-select {
+        width: 130px;
+    }
+    .inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        div {
+            position: relative;
+            label {
+                margin-right: 20px;
+                margin-left: 20px;
+                @include label;
+            }
+            input {
+                margin-right: 20px;
+                width: 70px;
+            }
+            p {
+                position: absolute;
+                top: 35px;
+                left: 20px;
+            }
+        }
+        .add {
+            margin-left: 20px;
+        }
+    }
+}
+form {
+    padding-bottom: 40px;
+}
+mat-select.select {
+    box-shadow: unset;
+}
+.err {
+    color: red;
+}
+.paragraph-error {
+    font-size: 12px;
+}
+.paragraph-error.valueOfRadio {
+    position: absolute;
+}
+.paragraph-error.routine {
+    left: 223px;
+    position: absolute;
+    bottom: 8px;
+}
+.inputEnable {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.inputDisable {
+    background: #cccccc;
+}
+::ng-deep .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: black !important;
+}
+::ng-deep   .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: black !important;
+}
+::ng-deep .mat-radio-outer-circle {
+    border-color: black !important;
+}
+.tagname, .nameinmodel {
+    position: relative;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep label.mat-form-field-label {
+    @include label;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
+    color: gray;
+}
+::ng-deep mat-error {
+    position: absolute;
+    width: 351px;
+    bottom: 0;
+}
+::ng-deep .mat-checkbox-frame {
+    border-color: black;
+}
+::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+    background-color: black;
+}
+.UpdateRate {
+    max-width: 76px;
+}
+.updateRateError {
+    bottom: -25px;
+    font-weight: 400;
+    max-width: 100px;
+}
+.select {
+    padding-top: 10px;
+    padding-bottom: 14px;
+    box-shadow: unset;
+}
+form {
+    padding-bottom: 40px;
+}
+.routineProgramselect {
+    max-width: 130px;
+    margin-right: 20px;
+}

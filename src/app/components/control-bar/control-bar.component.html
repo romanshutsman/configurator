@@ -1,0 +1,15 @@
+<!-- <div class="container">
+  <aside class="group1">
+    <button mat-raised-button color="primary" (click)="navigate()" *ngIf="!disableBtnEdit">Navigate</button>
+    <button mat-raised-button color="primary" (click)="editNode()" *ngIf="!disableBtnEdit">Update</button>
+    <button mat-raised-button color="primary" (click)="addNode()" class="add" *ngIf="!disableBtnAdd">Add</button>
+  </aside>
+ </div> -->
+<div class="container">
+  <aside class="group1">
+    <button mat-raised-button color="primary" (click)="navigate()"  [disabled]="disableBtnNav" *ngIf="content.navigate">Navigate</button>
+    <button mat-raised-button color="primary" (click)="updateNode()" [disabled]="disableBtnEdit" *ngIf="content.edit">Update</button>
+    <button mat-raised-button color="primary" (click)="addNode()"  [disabled]="disableBtnAdd"  *ngIf="content.add" class="add">Add</button>
+    <mat-spinner *ngIf="showSpinner" [diameter]=17></mat-spinner>
+  </aside>
+</div> 

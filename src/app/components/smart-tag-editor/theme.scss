@@ -1,0 +1,10 @@
+@mixin label {
+    color: gray;
+    font-size: 13px;
+    font-weight: 300
+}
+@mixin labelContent {
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+}

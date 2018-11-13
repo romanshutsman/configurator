@@ -1,0 +1,23 @@
+<div class="scroll">
+    <ra-ui-tree 
+  [contextMenu]="basicMenu" 
+  [contextMenuSubject]="selectedNode"
+  [(tree)]="treeModel" 
+  (dblclick)="onDblClick()"
+  [config]="config"
+  (treeNodeSelected)="onTreeNodeSelected($event)"
+  (treeInitialized)="onTreeInitialized($event)">
+  </ra-ui-tree>
+</div>
+
+<context-menu #basicMenu >
+  <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext">Add</ng-template>
+  <!-- <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuEditNode($event)">Edit</ng-template> -->
+  <context-menu #someSubMenu >
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node')">Node</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real')">Real</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state')">State</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint')">Dint</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string')">String</ng-template>
+  </context-menu>
+</context-menu>

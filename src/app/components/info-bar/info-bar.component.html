@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="info" *ngIf="node">
+    <h1>sProgram: {{node.sProgram}}</h1>
+    <h1>TagName: {{node.TagName}}</h1>
+  </div>
+  <div class="status" >
+
+    <p *ngIf="statusController" class="online">Online</p>
+    <p *ngIf="!statusController" class="offline">Offline</p>
+    <p >{{name}}</p>
+  </div>
+</div>

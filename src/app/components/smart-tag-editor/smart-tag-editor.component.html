@@ -1,0 +1,16 @@
+<mat-card class="main">
+  <app-node *ngIf="onEditOrAdd" [cloneSelected]="cloneSelectedNode" [getPathNode]="pathNode" [oldNode]="node"
+     [actionMenu]="actionOnContextMenu"></app-node>
+  <app-real *ngIf="nodeType === 'real'" [cloneSelected]="cloneSelectedNode" [getPathNode]="pathNode" [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-real>
+  <app-state *ngIf="nodeType === 'state'" [cloneSelected]="cloneSelectedNode" [getPathNode]="pathNode" [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-state>
+  <app-dint *ngIf="nodeType === 'dint'" [cloneSelected]="cloneSelectedNode" [getPathNode]="pathNode" [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-dint>
+  <app-string *ngIf="nodeType === 'string'" [cloneSelected]="cloneSelectedNode" [getPathNode]="pathNode" [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-string>
+</mat-card>
