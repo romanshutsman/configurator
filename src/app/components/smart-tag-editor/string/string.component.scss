@@ -1,3 +1,4 @@
+@import './../theme.scss';
 .first-block {
     display: flex;
     padding-top: 60px;
@@ -6,9 +7,14 @@
         flex-direction: column;
         width: 200px;
         p {
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
             height: 30px;
-            padding-top: 8px;
+            padding-top: 0px;
             box-sizing: border-box;
+            @include labelContent;
         }
     }
     .tagname {
@@ -19,6 +25,7 @@
             width: 110px;
             flex-shrink: 0;
             display: inline-block;
+            @include label;
         }
         input {
             margin-right: 20px;
@@ -35,7 +42,12 @@
         width: 200px;
         p {
             height: 30px;
-            padding-top: 8px;
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
+            @include labelContent;
+            padding-top: 0;
             box-sizing: border-box;
         }
     }
@@ -47,6 +59,7 @@
             height: 30px;
             padding-top: 8px;
             display: inline-block;
+            @include label;
         }
         input {
             margin-right: 20px;
@@ -55,7 +68,7 @@
 }
 .select {
     display: flex;
-    padding-bottom: 60px;
+    padding-bottom: 50px;
     .mat-select-center {
         display: flex;
         align-items: center;
@@ -86,6 +99,7 @@
             label {
                 margin-right: 20px;
                 margin-left: 20px;
+                @include label;
             }
             input {
                 margin-right: 20px;
@@ -170,4 +184,75 @@ mat-select.select {
             top: 32px;
         }
     }
+}
+form {
+    padding-bottom: 40px;
+}
+mat-select.select {
+    box-shadow: unset;
+}
+::ng-deep .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: black !important;
+}
+::ng-deep   .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: black !important;
+}
+::ng-deep .mat-radio-outer-circle {
+    border-color: black !important;
+}
+.tagname, .nameinmodel {
+    position: relative;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep label.mat-form-field-label {
+    @include label;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
+    color: gray;
+}
+::ng-deep mat-error.mat-error {
+    position: absolute;
+    width: 341px;
+    bottom: 6px;
+}
+::ng-deep .mat-checkbox-frame {
+    border-color: black;
+}
+::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+    background-color: black;
+}
+.UpdateRate {
+    max-width: 76px;
+}
+.updateRateError {
+    bottom: -25px;
+    font-weight: 400;
+    max-width: 100px;
+}
+.dMulError {
+    bottom: 0;
+}
+.rungError {
+    bottom: -8px;
+    max-width: 100px;
+}
+.select {
+    padding-top: 0px;
+    padding-bottom: 19px;
+    box-shadow: unset;
+}
+form {
+    padding-bottom: 40px;
+}
+.routineProgramselect {
+    max-width: 130px;
+    margin-right: 20px;
 }

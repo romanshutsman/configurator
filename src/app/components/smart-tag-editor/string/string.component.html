@@ -5,13 +5,30 @@
         <p>{{node.sProgram}}</p>
       </div>
       <div class="tagname">
-        <label for="tagname">Tag Name</label>
+        <!-- <label for="tagname">Tag Name</label>
         <input type="text" class="inputEnable" name="tagname" (mouseover)="activeInputTag($event)" #activeInput1
           [attr.disabled]="tagnameDisable ? '' : null" [class.inputDisable]="tagnameDisable" [(ngModel)]="cloneSelectedNode.TagName"
           pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$" id="tagname" maxlength="40" required>
         <p class="paragraph-error err" *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
-        </p>
+        </p> -->
+        <mat-form-field class="example-full-width">          
+            <input 
+            matInput
+            placeholder="Tag Name"
+            type="text" 
+            name="tagname" 
+            style="font-size:16px"
+            [disabled]="tagnameDisable ? '' : null" 
+            [(ngModel)]="cloneSelectedNode.TagName"
+            pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$"
+            id="tagname"
+            maxlength="40"
+            required >
+          </mat-form-field>
+          <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+              First letter must be letter or _. You can type letters and numbers.
+          </mat-error>
       </div>
     </mat-card>
     <mat-card class="second-block">
@@ -20,42 +37,79 @@
         <p>{{ pathNode}}</p>
       </div>
       <div class="nameinmodel">
-        <label for="nameinmodel">Name in model</label>
+        <!-- <label for="nameinmodel">Name in model</label>
         <input pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$" type="text" required class="inputEnable" name="label" [(ngModel)]="cloneSelectedNode.label"
           (mouseover)="activeInputModel($event)" #activeInput2 maxlength="40" id="nameinmodel">
         <p *ngIf="nodeFrm.controls.label?.status === 'INVALID' && nodeFrm.controls.label?.touched" class="paragraph-error err">
           First letter must be letter or _. You can type letters and numbers.
-        </p>
+        </p> -->
+        <mat-form-field class="example-full-width">          
+            <input 
+            matInput
+            placeholder="Name in model"
+            type="text" 
+            name="label" 
+            style="font-size:16px"
+            [(ngModel)]="cloneSelectedNode.label"
+            pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$"
+            maxlength="40"
+            required >
+          </mat-form-field>
+          <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+              First letter must be letter or _. You can type letters and numbers.
+          </mat-error>
       </div>
     </mat-card>
     <mat-card class="select">
       <div class="mat-select-center">
-        <mat-select id="matSelect1" [disabled]="programNameDisabled" name="sProgram" placeholder="Programs" style="color:black"
-          [(ngModel)]="cloneSelectedNode.sProgram" required="isRequired ? '' : null">
-          <mat-option *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
-        </mat-select>
+        <mat-form-field class="routineProgramselect">
+          <mat-select id="matSelect1" [disabled]="programNameDisabled" name="sProgram" placeholder="Programs" style="color:black"
+            [(ngModel)]="cloneSelectedNode.sProgram" required="isRequired ? '' : null">
+            <mat-option *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">
           Required!
         </p>
       </div>
       <div class="mat-select-center">
-        <mat-select [disabled]="routineDisabled" placeholder="Routines" style="color:black" [(ngModel)]="routineDefault"
-          name="routine" required="isRequired ? '' : null">
-          <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
-        </mat-select>
+        <mat-form-field class="routineProgramselect">
+          <mat-select [disabled]="routineDisabled" placeholder="Routines" style="color:black" [(ngModel)]="routineDefault"
+            name="routine" required="isRequired ? '' : null">
+            <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" class="paragraph-error err">
           Required!
         </p>
       </div>
       <div class="inputs">
         <div>
-          <label for="rung">Rung</label>
+          <!-- <label for="rung">Rung</label>
           <input type="number" pattern="^\d*[0-9]\d*$" name="rung" [value]="cloneSelectedNode.rung" [(ngModel)]="cloneSelectedNode.rung"
           (keydown)="removeMinus($event, 2)" min="0" id="rung" required="isRequired ? '' : null" [disabled]="!isRequired"
           [class.inputDisable]="!isRequired" class="inputEnable">
           <p *ngIf="nodeFrm.controls.rung?.status === 'INVALID'" class="paragraph-error err">
             Required! Only positive or 0!
-          </p>
+          </p> -->
+          <mat-form-field class="UpdateRate">          
+            <input 
+            matInput
+            placeholder="Rung"
+            type="number"
+            pattern="^\d*[0-9]\d*$"
+            name="rung" 
+            [value]="cloneSelectedNode.rung" 
+            [(ngModel)]="cloneSelectedNode.rung" 
+            (keydown)="removeMinus($event, 2)"
+            min="0"
+            id="rung" 
+            required="isRequired ? '' : null"
+            [disabled]="!isRequired" >
+          </mat-form-field>
+          <mat-error class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+            Required!<br>Only positive or 0!
+          </mat-error>
         </div>
       </div>
     </mat-card>

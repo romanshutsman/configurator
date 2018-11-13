@@ -1,8 +1,9 @@
 @import './../theme.scss';
 .first-block {
     display: flex;
-    padding-bottom: 0px;
-    padding-top: 8px;
+    padding-top: 10px;
+    padding-bottom: 0;
+    height: 70px;
     .name {
         display: flex;
         flex-direction: column;
@@ -36,8 +37,9 @@
 }
 .second-block {
     display: flex;
-    padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 0;
+    height: 70px;
     .model {
         display: flex;
         flex-direction: column;
@@ -72,6 +74,7 @@
 .infomation-type {
     display: flex;
     // padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 10px;
     @include labelContent;
     font-size: 14px;

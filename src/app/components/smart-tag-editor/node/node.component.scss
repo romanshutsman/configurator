@@ -1,6 +1,9 @@
 @import './../theme.scss';
 .first-block {
     display: flex;
+    padding-top: 10px;
+    padding-bottom: 0;
+    height: 70px;
     .name {
         display: flex;
         flex-direction: column;
@@ -33,6 +36,9 @@
 }
 .second-block {
     display: flex;
+    padding-top: 10px;
+    padding-bottom: 0;
+    height: 70px;
     .model {
         display: flex;
         flex-direction: column;

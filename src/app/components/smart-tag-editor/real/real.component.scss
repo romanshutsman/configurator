@@ -1,15 +1,22 @@
+@import './../theme.scss';
 .first-block {
     display: flex;
-    padding-bottom: 0px;
-    padding-top: 8px;
+    padding-top: 10px;
+    padding-bottom: 0;
+    height: 70px;
     .name {
         display: flex;
         flex-direction: column;
         width: 200px;
         p {
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
             height: 30px;
-            padding-top: 8px;
+            padding-top: 0px;
             box-sizing: border-box;
+            @include labelContent;
         }
     }
     .tagname {
@@ -21,6 +28,7 @@
             width: 110px;
             flex-shrink: 0;
             display: inline-block;
+            @include label;
         }
         input {
             margin-right: 20px;
@@ -29,15 +37,21 @@
 }
 .second-block {
     display: flex;
-    padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 0;
+    height: 70px;
     .model {
         display: flex;
         flex-direction: column;
         width: 200px;
         p {
             height: 30px;
-            padding-top: 8px;
+            &:first-child {
+                @include label;
+                padding-top: 8px;
+            }
+            @include labelContent;
+            padding-top: 0;
             box-sizing: border-box;
         }
     }
@@ -50,6 +64,7 @@
             height: 30px;
             padding-top: 8px;
             display: inline-block;
+            @include label;
         }
         input {
             margin-right: 20px;
@@ -58,8 +73,10 @@
 }
 .infomation-type {
     display: flex;
-    padding-top: 0;
+    padding-top: 10px;
     padding-bottom: 0;
+    @include labelContent;
+    font-size: 14px;
     div.type {
         div.checkbox {
             border: 1px solid;
@@ -146,6 +163,7 @@
             label {
                 margin-right: 20px;
                 margin-left: 20px;
+                @include label;
             }
             input {
                 margin-right: 20px;
@@ -173,7 +191,7 @@ mat-select.select {
 }
 .paragraph-error {
     font-size: 12px;
-    max-width: 300px;
+    max-width: 338px;
 }
 .paragraph-error.valueOfRadio {
     position: absolute;
@@ -194,18 +212,17 @@ mat-select.select {
 .other-options {
     display: flex;
     height: 110px;
-    padding-top: 0;
+    padding-bottom: 14px;
+    padding-top: 10px;
 }
 
 .select-property {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 150px;
+    margin-right: 50px;
     mat-select {
         width: 150px;
-        &:first-child {
-            padding-top: 6px;
-        }
     }
     label {
         padding-top: 14px;
@@ -227,9 +244,6 @@ mat-select.select {
         display: flex;
         align-items: center;
         position: relative;
-        &:first-child {
-            margin-bottom: 30px;
-        }
         label {
             padding-bottom: 5px;
             width: 130px;
@@ -239,4 +253,78 @@ mat-select.select {
             top: 32px;
         }
     }
+}
+form {
+    padding-bottom: 40px;
+}
+mat-select.select {
+    box-shadow: unset;
+}
+::ng-deep .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: black !important;
+}
+::ng-deep   .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: black !important;
+}
+::ng-deep .mat-radio-outer-circle {
+    border-color: black !important;
+}
+.tagname, .nameinmodel {
+    position: relative;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+::ng-deep label.mat-form-field-label {
+    @include label;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
+    color: gray;
+}
+::ng-deep mat-error.mat-error {
+    position: absolute;
+    width: 341px;
+    bottom: 27px;
+}
+::ng-deep .mat-checkbox-frame {
+    border-color: black;
+}
+::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+    background-color: black;
+}
+.UpdateRate {
+    max-width: 76px;
+}
+.updateRateError {
+    bottom: -25px;
+    font-weight: 400;
+    max-width: 100px;
+}
+.dMulError {
+    bottom: 0;
+}
+.rungError {
+    bottom: -8px;
+    max-width: 100px;
+}
+.minMaxError {
+    bottom: 4px;
+}
+.select {
+    padding-top: 0px;
+    padding-bottom: 19px;
+    box-shadow: unset;
+}
+form {
+    padding-bottom: 40px;
+}
+.routineProgramselect {
+    max-width: 130px;
+    margin-right: 20px;
 }
