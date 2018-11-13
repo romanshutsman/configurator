@@ -10,7 +10,8 @@ import { SharedService } from 'src/app/providers/shared.service';
   styleUrls: ['./node.component.scss']
 })
 export class NodeComponent extends BaseSmartTag implements OnInit {
-  typesOfCheckboxes = [{Name : 'sdfs', BIT: 0, selected: false}, {Name : 'sdfs', BIT: 1, selected: false}];
+  // typesOfCheckboxes = [{Name : 'sdfs', BIT: 0, selected: false}, {Name : 'sdfs', BIT: 1, selected: false}];
+  typesOfCheckboxes = [];
   @ViewChild('nodeForm') public nodeFrm: NgForm;
 
 

@@ -85,23 +85,23 @@ export class ModelTreeComponent implements OnInit {
       }
     });
 
-    let stringifyData = JSON.stringify(this.service.dataTREE);
-    stringifyData = stringifyData.replace(/sName/g, 'label');
-    stringifyData = stringifyData.replace(/lChildrens/g, 'children');
-    const object = JSON.parse(stringifyData);
-    const data = [];
-    data.push(object);
-    this.treeModel = data;
-    console.log(this.treeModel);
-    console.log(data);
+    // let stringifyData = JSON.stringify(this.service.dataTREE);
+    // stringifyData = stringifyData.replace(/sName/g, 'label');
+    // stringifyData = stringifyData.replace(/lChildrens/g, 'children');
+    // const object = JSON.parse(stringifyData);
+    // const data = [];
+    // data.push(object);
+    // this.treeModel = data;
+    // console.log(this.treeModel);
+    // console.log(data);
 
   }
 
   ngOnInit() {
     // should comment in production!!!!!!
-    setTimeout(() => {
-      this.transferTree.emit(this.treeModel);
-    }, 0);
+    // setTimeout(() => {
+    //   this.transferTree.emit(this.treeModel);
+    // }, 0);
     this.config = {
       shouldExpandOnCaret: true,
       isNodeIconEnabled: true,

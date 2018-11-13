@@ -51,8 +51,8 @@ export class BaseSmartTag {
   timeDefault: any;
   updateRadio: string;
   inputDisable = false;
-  routines = ['a', 'b'];
-  programs = ['a', 'b'];
+  routines = [];
+  programs = [];
   cloneSelectedNode: NodeTree;
   pathNode: string;
   node: NodeTree;

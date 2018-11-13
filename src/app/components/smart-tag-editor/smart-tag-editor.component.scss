@@ -4,33 +4,10 @@
 .mat-card {
     box-shadow: unset !important;
 }
-// app-node {
-//     display: none;
-// }
-// app-real {
-//     display: none;
-// }
-// app-state {
-//     display: none;
-// }
-// app-dint {
-//     display: none;
-// }
-// app-string {
-//     display: none;
-// }
-// .onEditOrAdd {
-//     display: block;
-// }
-// .onReal {
-//     display: block;
-// }
-// .onState {
-//     display: block;
-// }
-// .onDint {
-//     display: block;
-// }
-// .onString {
-//     display: block;
-// }
+::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: unset;
+    border-bottom: solid 1px #E4E4E4;
+    &:last-child {
+        border-bottom: unset;
+    }
+}
