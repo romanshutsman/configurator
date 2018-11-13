@@ -169,12 +169,6 @@
         }
     }
 }
-form {
-    padding-bottom: 40px;
-}
-mat-select.select {
-    box-shadow: unset;
-}
 .err {
     color: red;
 }
@@ -196,6 +190,12 @@ mat-select.select {
 }
 .inputDisable {
     background: #cccccc;
+}
+form {
+    padding-bottom: 40px;
+}
+mat-select.select {
+    box-shadow: unset;
 }
 ::ng-deep .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
     border-color: black !important;
