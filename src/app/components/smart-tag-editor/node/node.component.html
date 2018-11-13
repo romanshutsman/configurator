@@ -39,7 +39,7 @@
         maxlength="40"
         required >
       </mat-form-field>
-      <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+      <mat-error class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
       </mat-error>
     </div>
@@ -81,7 +81,7 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+          <mat-error class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
               First letter must be letter or _. You can type letters and numbers.
           </mat-error>
       </div>
@@ -250,7 +250,7 @@
             required="isRequired ? '' : null"
             [disabled]="!isRequired" >
           </mat-form-field>
-          <mat-error class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+          <mat-error class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
             Required!<br>Only positive or 0!
           </mat-error>
         </div>

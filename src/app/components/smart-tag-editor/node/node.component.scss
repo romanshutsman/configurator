@@ -230,10 +230,10 @@ mat-select.select {
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
     color: gray;
 }
-::ng-deep mat-error {
+::ng-deep mat-error.mat-error.tagNameLabelError {
     position: absolute;
     width: 351px;
-    bottom: 0;
+    bottom: 16px;
 }
 ::ng-deep .mat-checkbox-frame {
     border-color: black;
@@ -261,3 +261,11 @@ form {
     max-width: 130px;
     margin-right: 20px;
 }
+.rungError {
+    bottom: -8px;
+    max-width: 100px;
+}
+
+
+// border-bottom: solid 2px #E4E4E4;
+// border-bottom: unset;
