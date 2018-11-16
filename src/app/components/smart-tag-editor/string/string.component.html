@@ -12,7 +12,7 @@
         <p class="paragraph-error err" *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
         </p> -->
-        <mat-form-field class="example-full-width">          
+        <mat-form-field class="example-full-width input">          
             <input 
             matInput
             placeholder="Tag Name"
@@ -26,9 +26,9 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+          <p class="paragraph-error ErrorTagNameInModelString err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
               First letter must be letter or _. You can type letters and numbers.
-          </mat-error>
+          </p>
       </div>
     </mat-card>
     <mat-card class="second-block">
@@ -43,7 +43,7 @@
         <p *ngIf="nodeFrm.controls.label?.status === 'INVALID' && nodeFrm.controls.label?.touched" class="paragraph-error err">
           First letter must be letter or _. You can type letters and numbers.
         </p> -->
-        <mat-form-field class="example-full-width">          
+        <mat-form-field class="example-full-width input">          
             <input 
             matInput
             placeholder="Name in model"
@@ -55,9 +55,9 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+          <p class="paragraph-error ErrorTagNameInModelString err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
               First letter must be letter or _. You can type letters and numbers.
-          </mat-error>
+          </p>
       </div>
     </mat-card>
     <mat-card class="select">
@@ -107,9 +107,9 @@
             required="isRequired ? '' : null"
             [disabled]="!isRequired" >
           </mat-form-field>
-          <mat-error class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+          <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
             Required!<br>Only positive or 0!
-          </mat-error>
+          </p>
         </div>
       </div>
     </mat-card>

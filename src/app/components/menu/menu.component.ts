@@ -76,9 +76,9 @@ export class MenuComponent implements OnInit {
         this.totalValueSubsr = this.service.getStatus().subscribe((value) => {
           console.log(value);
           if (value['total']) {
-            // const body = { 'msg': 'Collecting data...', 'type': 'info', 'total': value['total'] };
+            // const body = { 'msg': 'Collecting data...', 'type': 'success', 'total': value['total'] };
             // this.service.SubjectNotifications.next(body);
-            this.service.sendNotification('Collecting data...', 'info', value['total']);
+            this.service.sendNotification('Collecting data...', 'success', value['total']);
           }
         },
         error => clearInterval(this.intervalNode))
@@ -93,7 +93,7 @@ export class MenuComponent implements OnInit {
     this.intervalStatus(true);
     this.getVersion();
     if (this.version) {
-      this.service.sendNotification('Collecting data', 'info');
+      this.service.sendNotification('Collecting data', 'success');
       this.active = true;
       console.log('ON:', this.version);
       this.service.switchOnController(this.version).subscribe((value) => {
@@ -107,9 +107,9 @@ export class MenuComponent implements OnInit {
     this.intervalStatus(false);
     this.getVersion();
     if (this.version) {
-      // const body = { 'msg': 'Data saved!', 'type': 'info' };
+      // const body = { 'msg': 'Data saved!', 'type': 'success' };
       // this.service.SubjectNotifications.next(body);
-      this.service.sendNotification('Data saved!', 'info');
+      this.service.sendNotification('Data saved!', 'success');
       this.active = false;
       this.service.switchOffController(this.version).subscribe((value) => {
         console.log('API OFF:', value);

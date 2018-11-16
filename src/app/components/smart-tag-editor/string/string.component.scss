@@ -84,7 +84,7 @@
         position: relative;
         p {
             position: absolute;
-            top: 35px; // left: 20px;
+            top: 37px; // left: 20px;
         }
     }
     mat-select {
@@ -105,11 +105,6 @@
                 margin-right: 20px;
                 width: 70px;
             }
-            p {
-                position: absolute;
-                top: 35px;
-                left: 20px;
-            }
         }
         .add {
             margin-left: 20px;
@@ -125,8 +120,13 @@ mat-select.select {
 .err {
     color: red;
 }
+mat-form-field {
+    height: 40px;
+}
 .paragraph-error {
     font-size: 12px;
+    position: absolute;
+    width: 344px;
 }
 .paragraph-error.valueOfRadio {
     position: absolute;
@@ -218,11 +218,6 @@ mat-select.select {
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
     color: gray;
 }
-::ng-deep mat-error.mat-error {
-    position: absolute;
-    width: 341px;
-    bottom: 6px;
-}
 ::ng-deep .mat-checkbox-frame {
     border-color: black;
 }
@@ -245,7 +240,7 @@ mat-select.select {
     max-width: 100px;
 }
 .select {
-    padding-top: 0px;
+    padding-top: 10px;
     padding-bottom: 19px;
     box-shadow: unset;
 }

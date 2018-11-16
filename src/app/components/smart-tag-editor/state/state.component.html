@@ -12,7 +12,7 @@
         <p class="paragraph-error err" *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
         </p> -->
-        <mat-form-field class="example-full-width">          
+        <mat-form-field class="example-full-width input">          
           <input 
           matInput
           placeholder="Tag Name"
@@ -26,9 +26,9 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+        <p class="paragraph-error ErrorTagNameInModelState err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
             First letter must be letter or _. You can type letters and numbers.
-        </mat-error>
+        </p>
       </div>
     </mat-card>
     <mat-card class="second-block">
@@ -43,7 +43,7 @@
         <p *ngIf="nodeFrm.controls.label?.status === 'INVALID' && nodeFrm.controls.label?.touched" class="paragraph-error err">
           First letter must be letter or _. You can type letters and numbers.
         </p> -->
-        <mat-form-field class="example-full-width">          
+        <mat-form-field class="example-full-width input">          
           <input 
           matInput
           placeholder="Name in model"
@@ -56,9 +56,9 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <mat-error class="paragraph-error err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+        <p class="paragraph-error ErrorTagNameInModelState err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
             First letter must be letter or _. You can type letters and numbers.
-        </mat-error>
+        </p>
       </div>
     </mat-card>
     <mat-card class="other-options">
@@ -68,7 +68,7 @@
             <mat-option *ngFor="let item of ValueTypeStateDint" [value]="item">{{item}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="">          
+        <mat-form-field class="input">          
             <input 
             matInput
             placeholder="Engineering Units"
@@ -87,7 +87,7 @@
       </div>
       <div class="value-percent">
         <div>
-          <mat-form-field class="">          
+          <mat-form-field class="input">          
             <input 
             matInput
             placeholder="Mul Val"
@@ -99,9 +99,9 @@
             min="0"
             >
           </mat-form-field>
-          <mat-error class="paragraph-error dMulError  err" *ngIf="nodeFrm.controls.mulval?.status === 'INVALID'">
+          <p class="paragraph-error  err" *ngIf="nodeFrm.controls.mulval?.status === 'INVALID'">
               This must be a integer or number with up to 2 decimal places!
-          </mat-error>
+          </p>
   
           <!-- <label for="mulval">Mul Value</label>
           <input id="mulval" type="number" name="mulval" class="inputEnable" required [value]="cloneSelectedNode.dMul"
@@ -129,7 +129,7 @@
               <p *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'" class="paragraph-error valueOfRadio err">
                 Required! Only positive or 0!
               </p> -->
-              <mat-form-field class="UpdateRate">          
+              <mat-form-field class="UpdateRate input">          
                 <input 
                 matInput
                 placeholder="UpdateRate"
@@ -144,9 +144,9 @@
                 (change)="getCurrentValue($event)"
                 (keydown)="removeMinus($event, 1)" >
               </mat-form-field>
-              <mat-error class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
+              <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
                 Required!<br>Only positive or 0!
-              </mat-error>
+              </p>
             </div>
             <div>
               <mat-select [ngModelOptions]="{standalone: true}" (selectionChange)="getOptionTime($event)" placeholder="Type of time"
@@ -216,9 +216,9 @@
             required="isRequired ? '' : null"
             [disabled]="!isRequired" >
           </mat-form-field>
-          <mat-error class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+          <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
             Required!<br>Only positive or 0!
-          </mat-error>
+          </p>
         </div>
       </div>
     </mat-card>

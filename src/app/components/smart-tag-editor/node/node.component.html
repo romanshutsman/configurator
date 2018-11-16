@@ -25,7 +25,7 @@
         *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
         First letter must be letter or _. You can type letters and numbers.
       </p> -->
-      <mat-form-field class="example-full-width">          
+      <mat-form-field class="example-full-width input">          
         <input 
         matInput
         placeholder="Tag Name"
@@ -39,9 +39,9 @@
         maxlength="40"
         required >
       </mat-form-field>
-      <mat-error class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
-      </mat-error>
+      </p>
     </div>
     </mat-card>
     <mat-card class="second-block">
@@ -68,7 +68,7 @@
           class="paragraph-error err">
             First letter must be letter or _. You can type letters and numbers.
           </p> -->
-          <mat-form-field class="example-full-width">          
+          <mat-form-field class="example-full-width input">          
             <input 
             matInput
             placeholder="Name in model"
@@ -81,9 +81,9 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <mat-error class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+          <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
               First letter must be letter or _. You can type letters and numbers.
-          </mat-error>
+          </p>
       </div>
     </mat-card>
     <mat-card class="infomation-type" >
@@ -141,7 +141,7 @@
                 >
                   Required! Only positive or 0!
                 </p> -->
-                <mat-form-field class="UpdateRate">          
+                <mat-form-field class="UpdateRate input">          
                   <input 
                   matInput
                   placeholder="UpdateRate"
@@ -156,9 +156,9 @@
                   (change)="getCurrentValue($event)"
                   (keydown)="removeMinus($event, 1)" >
                 </mat-form-field>
-                <mat-error class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
+                <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
                   Required!<br>Only positive or 0!
-                </mat-error>
+                </p>
               </div>
               <div>
                 <mat-select 
@@ -193,7 +193,7 @@
             <mat-option  *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error> -->
+        <!-- <p *ngIf="animalControl.hasError('required')">Please choose an animal</p> -->
         <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched"
         class="paragraph-error err">
           Required!
@@ -250,9 +250,9 @@
             required="isRequired ? '' : null"
             [disabled]="!isRequired" >
           </mat-form-field>
-          <mat-error class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+          <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
             Required!<br>Only positive or 0!
-          </mat-error>
+          </p>
         </div>
       </div>
     </mat-card>

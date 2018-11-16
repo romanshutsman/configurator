@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class MessageBarComponent implements OnInit {
   statusBar: any;
   total: any;
-  styleBar = 'info';
+  styleBar = 'success';
 
   constructor(private service: SharedService) {
     this.service.SubjectNotifications.subscribe((value) => {
