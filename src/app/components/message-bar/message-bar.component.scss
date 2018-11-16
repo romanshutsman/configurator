@@ -1,6 +1,4 @@
 .container {
-    background-color: #80C46E;
-    color: white;
     height: 30px;
 }
 .timeline {
@@ -10,17 +8,18 @@
     padding-bottom: 5px;
 }
 .timelineSuccess {
+    background-color: #80C46E;
+    color: white;
     display: flex;
-    background: gainsboro;
-    color: green;
     p {
         width: 15px;
     }
 }
 .timelineError {
-    background: rgba(197, 151, 151, 0.4);
+    background: #DCC1C1;
     color: #862f2f;
 }
 .timelineStarted {
-    color: white;
+    color: #6d6d6d;
+    background: lightgray;
 }

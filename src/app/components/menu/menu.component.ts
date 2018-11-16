@@ -80,7 +80,8 @@ export class MenuComponent implements OnInit {
             // this.service.SubjectNotifications.next(body);
             this.service.sendNotification('Collecting data...', 'info', value['total']);
           }
-        })
+        },
+        error => clearInterval(this.intervalNode))
       }, 2000)
     } else {
       if (this.totalValueSubsr)

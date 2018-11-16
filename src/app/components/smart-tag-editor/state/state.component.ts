@@ -41,7 +41,7 @@ export class StateComponent extends BaseSmartTag implements OnInit {
   onChanges(): void {
     this.nodeFrm.valueChanges
       .subscribe((value) => {
-        this.cloneSelectedNode.valueType = value['ValueTypeState'];
+        this.cloneSelectedNode.valueType = value['ValueTypeDint'];
         this.cloneSelectedNode.routine = this.routineDefault;
         this.cloneSelectedNode.iD = this.nodeiD;
         this.cloneSelectedNode.iType = 2;

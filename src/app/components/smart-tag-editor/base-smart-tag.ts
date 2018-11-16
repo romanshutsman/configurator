@@ -186,7 +186,10 @@ export class BaseSmartTag {
         this.programs = data['Programs'];
         this.routines = data['Routines'];
         this.routineDefault = this.routines[0];
-        this.programDefault = this.programs[0];
+        if(this.programs.length > 0) {
+          const defaltProgramIndex: any = this.programs.findIndex(i => i === this.node.sProgram);
+          this.cloneSelectedNode.sProgram = this.programs[defaltProgramIndex];
+        }
       });
     this.cloneSelectedNode.updateRadio = radio[2];
     this.cloneSelectedNode.sProgramParent = this.node.sProgram;
