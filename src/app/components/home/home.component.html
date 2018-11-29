@@ -33,5 +33,5 @@
   </section>
 </section>
 
-<app-dialog class="dialog" (connectController)="statusController($event)">
+<app-dialog class="dialog" (postController)="sendPostController($event)" [connectController]="onConnect">
   <app-dialog>

@@ -51,15 +51,15 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
   onConnect() {
-    this.service.connectVersionsofControllers().subscribe(data => {
-      console.log('Connect controller ', data);
-      this.service.SubjectOnConnect.next(data);
-    },
-      error => {
-        console.log(error);
-        this.service.SubjectOnConnect.next('error');
-        this.service.sendNotification('Can\'t connect to controller...', 'fail');
-      });
+    // this.service.connectVersionsofControllers().subscribe(data => {
+    //   console.log('Connect controller ', data);
+    //   this.service.SubjectOnConnect.next(data);
+    // },
+    //   error => {
+    //     console.log(error);
+    //     this.service.SubjectOnConnect.next('error');
+    //     this.service.sendNotification('Can\'t connect to controller...', 'fail');
+    //   });
   }
   collectData(e) {
     if (e) {
@@ -75,10 +75,10 @@ export class MenuComponent implements OnInit {
           this.totalValueSubsr.unsubscribe();
         this.totalValueSubsr = this.service.getStatus().subscribe((value) => {
           console.log(value);
-          if (value['total']) {
+          if (value) {
             // const body = { 'msg': 'Collecting data...', 'type': 'success', 'total': value['total'] };
             // this.service.SubjectNotifications.next(body);
-            this.service.sendNotification('Collecting data...', 'success', value['total']);
+            this.service.sendNotification('Collecting data...', 'success', value);
           }
         },
         error => clearInterval(this.intervalNode))

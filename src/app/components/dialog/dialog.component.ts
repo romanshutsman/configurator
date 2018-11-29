@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output, Input } from '@angular/core';
 import { SharedService } from './../../providers/shared.service';
 @Component({
   selector: 'app-dialog',
@@ -11,67 +11,33 @@ export class DialogComponent implements OnInit {
   list: any = [];
   controller: string;
   message: any;
-  @Output() connectController = new EventEmitter();
+  @Output() postController = new EventEmitter();
+  @Input() set connectController(value: any) {
+    if (value) {
+      this.list = value.list;
+      this.show = value.show;
+      this.message = value.message;
+      this.showConnect = value.showConnect;
+      if (value.message == 'Can\'t connect to controller!') {
+        this.controller = '';
+      }
+    }
+  }
 
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
-    this.onConnect();
   }
 
   ngOnInit() {
-  }
-  onConnect() {
-    this.service.SubjectOnConnect.subscribe(value => {
-      if (value) {
-        if (value === 'error') {
-          this.show = true;
-          this.cdRef.detectChanges();
-        } else {
-          this.list = value;
-          this.show = true;
-          this.cdRef.detectChanges();
-        }
-      }
-    },
-      error => { console.log(error.message) });
   }
 
   choose(item) {
     this.controller = item.Version;
     this.cdRef.detectChanges();
-    const body = {};
-    body["Name"] = item.Version;
-    this.service.chooseVersionsofControllers(body).subscribe(data => {
-      if (data) {
-        this.successConnect(data, body, item);
-      } else {
-        this.service.SubjectLoadTree.next(data);
-        this.errorConnect();
-      }
-    },
-      error => {
-        this.errorConnect();
-      });
+    this.postController.emit(item);
     setTimeout(() => {
       this.show = false;
       this.cdRef.detectChanges();
-    }, 500);
-  }
-
-  errorConnect() {
-    this.controller = '';
-    this.connectController.emit({ 'status': false, 'project': '' });
-    this.message = 'Can\'t connect to controller!';
-    this.showConnect = true;
-  }
-
-  successConnect(data, body, item) {
-    this.connectController.emit({ 'status': true, 'project': item });
-    this.service.SubjectLoadTree.next(data);
-    this.service.SubjectTransferVersion.next(body);
-
-    this.message = 'Successfully connected!';
-    this.cdRef.detectChanges();
-    this.showConnect = true;
+    }, 3000);
   }
 
   closeModal1() {

@@ -109,7 +109,7 @@ export class ModelTreeComponent implements OnInit {
     }
   }
   parseTreeNode(tree) {
-    let stringifyData = JSON.stringify(tree);
+    let stringifyData = tree;
     stringifyData = stringifyData.replace(/sName/g, 'label');
     stringifyData = stringifyData.replace(/lChildrens/g, 'children');
     const object = JSON.parse(stringifyData);

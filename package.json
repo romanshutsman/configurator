@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:prod": "npm run build --prod --aot"
+    "build:prod": "ng build --prod --aot --deploy-url /App/"
   },
   "private": true,
   "dependencies": {

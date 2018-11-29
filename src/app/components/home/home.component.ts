@@ -18,7 +18,11 @@ export class HomeComponent {
   bodyForm: any;
   statusOfController: any;
   showBtn = {};
+  onConnect: any;
+  controller: string;
   constructor(private service: SharedService) {
+    console.log("home")
+    this.connecting();
   }
   getTree(e) {
     console.log(e);
@@ -95,6 +99,73 @@ export class HomeComponent {
       this.showContent(true, false);
     }
     this.statusOfController = e;
+  }
+
+  sendPostController = controller => this.chooseVersion(controller);
+
+  connecting() {
+    this.service.connectVersionsofControllers().subscribe((data: any) => {
+      if (data.length === 0) {
+        const body = { 'Version': '' };
+        this.manageMessageDialog([], false, true, 'No active controllers!');
+        this.chooseVersion(body);
+      } else if (data.length === 1) {
+        this.manageMessageDialog(data, false, false, '');
+        this.chooseVersion(data[0]);
+      } else if (data.length > 1) {
+        this.manageMessageDialog(data, true, false, '');
+      }
+    },
+      error => {
+        const body = { 'Version': '' };
+        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+        this.chooseVersion(body);
+        this.service.sendNotification('Can\'t connect to controller...', 'fail');
+      });
+  }
+  successConnect(data, body, item) {
+    this.statusController({ 'status': true, 'project': item });
+    this.service.SubjectLoadTree.next(data);
+    this.service.SubjectTransferVersion.next(body);
+  }
+  errorConnect() {
+    this.statusController({ 'status': false, 'project': '' });
+  }
+
+  chooseVersion( item) {
+    const body = {};
+    body['Name'] = item.Version;
+    this.service.chooseVersionsofControllers(item.Version).subscribe(data => {
+      if (data) {
+        this.successConnect(data, body, item);
+        this.manageMessageDialog([], false, true, 'Succesfully connected');
+      } else {
+        this.service.SubjectLoadTree.next(data);
+        this.errorConnect();
+        if(item.Version) {
+          this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+        } else {
+          this.manageMessageDialog([], false, false, '');
+
+        }
+      }
+    },
+    error => {
+      this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+      if (item.Version !== '') {
+          this.errorConnect();
+        }
+      });
+  }
+
+  
+  manageMessageDialog(list, show, showConnect, msg) {
+    this.onConnect = {
+      list: list,
+      show: show,
+      showConnect: showConnect,
+      message: msg
+    };
   }
   showContent(tree, form) {
     this.showTabTree = tree;
