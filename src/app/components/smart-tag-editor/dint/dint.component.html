@@ -5,13 +5,6 @@
       <p>{{node.sProgram}}</p>
     </div>
     <div class="tagname">
-      <!-- <label for="tagname">Tag Name</label>
-      <input type="text" class="inputEnable" name="tagname" (mouseover)="activeInputTag($event)" #activeInput1
-        [attr.disabled]="tagnameDisable ? '' : null" [class.inputDisable]="tagnameDisable" [(ngModel)]="cloneSelectedNode.TagName"
-        pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$" id="tagname" maxlength="40" required>
-      <p class="paragraph-error err" *ngIf="!nodeFrm.controls.tagname?.valid && nodeFrm.controls.tagname?.touched">
-        First letter must be letter or _. You can type letters and numbers.
-      </p> -->
       <mat-form-field class="example-full-width input">          
         <input 
         matInput
@@ -37,12 +30,6 @@
       <p>{{ pathNode}}</p>
     </div>
     <div class="nameinmodel">
-      <!-- <label for="nameinmodel">Name in model</label>
-      <input pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$" type="text" required class="inputEnable" name="label" [(ngModel)]="cloneSelectedNode.label"
-        (mouseover)="activeInputModel($event)" #activeInput2 maxlength="40" id="nameinmodel">
-      <p *ngIf="nodeFrm.controls.label?.status === 'INVALID' && nodeFrm.controls.label?.touched" class="paragraph-error err">
-        First letter must be letter or _. You can type letters and numbers.
-      </p> -->
       <mat-form-field class="example-full-width input">          
         <input 
         matInput
@@ -78,11 +65,6 @@
           [(ngModel)]="cloneSelectedNode.sEU"
           >
         </mat-form-field>
-      <!-- <label for="sEU">Engineering Units</label>
-      <input id="sEU" type="text" name="sEU" class="inputEnable" required [value]="cloneSelectedNode.sEU" [(ngModel)]="cloneSelectedNode.sEU"> -->
-      <!-- <p *ngIf="nodeFrm.controls.sEU?.status === 'INVALID'" class="paragraph-error valueOfRadio err">
-          This must be a "%"!
-        </p> -->
     </div>
     <div class="value-percent">
       <div>
@@ -102,12 +84,6 @@
             This must be a integer or number with up to 2 decimal places!
         </p>
 
-        <!-- <label for="mulval">Mul Value</label>
-        <input id="mulval" type="number" name="mulval" class="inputEnable" required [value]="cloneSelectedNode.dMul"
-          [(ngModel)]="cloneSelectedNode.dMul" min="0" >
-        <p *ngIf="nodeFrm.controls.mulval?.status === 'INVALID' " class="paragraph-error valueOfRadio err">
-          This must be a integer or number with up to 2 decimal places!
-        </p> -->
       </div>
     </div>
   </mat-card>
@@ -116,18 +92,14 @@
       <p class="update">Updated by</p>
       <div class="group">
         <div class="radio">
-          <mat-radio-group [(ngModel)]="cloneSelectedNode.updateRadio" [ngModelOptions]="{standalone: true}">
-            <mat-radio-button color="primary" [value]="item" *ngFor="let item of arrayOfRadioBtns2, let i = index" (change)="clickOnRadio($event)">{{item}}</mat-radio-button>
-          </mat-radio-group>
+            <mat-form-field class="update">
+              <mat-select style="color:black" [(value)]="cloneSelectedNode.updateRadio" (selectionChange)="clickOnRadio($event)">
+                <mat-option *ngFor="let item of arrayOfRadioBtns2" [value]="item">{{item}}</mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
         <div class="group-2">
           <div>
-            <!-- <input type="number" name="updateRate" pattern="^\d*[0-9.]\d*$" required [value]="cloneSelectedNode.updateRate"
-              [(ngModel)]="cloneSelectedNode.updateRate" [attr.disabled]="inputDisable ? '' : null" min="0" (change)="getCurrentValue($event)"
-              (keydown)="removeMinus($event, 1)" [class.inputDisable]="inputDisable" class="inputEnable">
-            <p *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'" class="paragraph-error valueOfRadio err">
-              Required! Only positive or 0!
-            </p> -->
             <mat-form-field class="UpdateRate input">          
               <input 
               matInput
@@ -193,13 +165,6 @@
     </div>
     <div class="inputs">
       <div>
-        <!-- <label for="rung">Rung</label>
-        <input type="number" pattern="^\d*[0-9]\d*$" name="rung" [value]="cloneSelectedNode.rung" [(ngModel)]="cloneSelectedNode.rung"
-          (keydown)="removeMinus($event, 2)" min="0" id="rung" required="isRequired ? '' : null" [disabled]="!isRequired"
-          [class.inputDisable]="!isRequired" class="inputEnable">
-        <p *ngIf="nodeFrm.controls.rung?.status === 'INVALID'" class="paragraph-error err">
-          Required! Only positive or 0!
-        </p> -->
         <mat-form-field class="UpdateRate ">          
           <input 
           matInput

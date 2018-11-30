@@ -256,3 +256,7 @@ form {
     bottom: -8px;
     max-width: 100px;
 }
+::ng-deep .mat-form-field.update .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    border-top-width: 0px;
+    padding-top: 11px;
+}

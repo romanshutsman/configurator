@@ -311,3 +311,7 @@ form {
     max-width: 130px;
     margin-right: 20px;
 }
+::ng-deep .mat-form-field.update .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    border-top-width: 0px;
+    padding-top: 11px;
+}
