@@ -22,42 +22,44 @@ export class ModelTreeComponent implements OnInit {
   nodeTree;
   config: ITreeConfig;
   treeExtension = [
-    // {
-    //   iconClass: 'ra-icon ra-icon-home',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iD === 1;
-    //   }
-    // },
-    // {
-    //   iconClass: 'ra-icon ra-icon-flag',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iType === 0 && node.iD !== 1;
-    //   }
-    // },
-    // {
-    //   iconClass: 'ra-icon ra-icon-image',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iType === 1;
-    //   }
-    // },
-    // {
-    //   iconClass: 'ra-icon ra-icon-scope',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iType === 2;
-    //   }
-    // },
-    // {
-    //   iconClass: 'ra-icon ra-icon-share',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iType === 3;
-    //   }
-    // },
-    // {
-    //   iconClass: 'ra-icon ra-icon-text-editor',
-    //   condition: (node: ITreeNode): boolean => {
-    //     return node.iType === 4;
-    //   }
-    // }
+    {
+      iconClass: 'ra-icon ra-icon-folder',
+      condition: (node: ITreeNode): boolean => {
+        return node.iD === 1;
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-folder',
+      condition: (node: ITreeNode): boolean => {
+        return node.iType === 0 && node.iD !== 1;
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-gauge',
+      condition: (node: ITreeNode): boolean => {
+        return node.iType === 1;
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-network-resources',
+      condition: (node: ITreeNode): boolean => {
+        const compare  = node.label.charAt(0).toLowerCase();
+        return node.iType === 2 && compare === 's';
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-data-type',
+      condition: (node: ITreeNode): boolean => {
+        const compare  = node.label.charAt(0).toLowerCase();
+        return node.iType === 2 && compare === 'd';
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-text-editor',
+      condition: (node: ITreeNode): boolean => {
+        return node.iType === 3;
+      }
+    }
   ];
   @Output() itemSelected = new EventEmitter();
   @Output() transferTree = new EventEmitter();

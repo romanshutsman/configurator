@@ -14,10 +14,10 @@
   <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext">Add</ng-template>
   <!-- <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuEditNode($event)">Edit</ng-template> -->
   <context-menu #someSubMenu >
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node')">Node</ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real')">Real</ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state')">State</ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint')">Dint</ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string')">String</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node')"> <i class="ra-icon ra-icon-folder"></i> Node</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real')"> <i class="ra-icon ra-icon-gauge"></i> Real</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state')"><i class="ra-icon ra-icon-network-resources"></i> State</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint')"> <i class="ra-icon ra-icon-data-type"></i>Dint</ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string')"> <i class="ra-icon ra-icon-text-editor"></i> String</ng-template>
   </context-menu>
 </context-menu>

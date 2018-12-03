@@ -100,7 +100,9 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     } else {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[4];
     }
-
+    this.initCheckbox();
+  }
+  initCheckbox() {
     let Function = this.cloneSelectedNode.iFunction;
     for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
       if (Function % Math.pow(2, i + 1) > 0) {
@@ -108,7 +110,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       } else {
         this.typesOfCheckboxes[i].selected = false;
       }
-
+  
       Function -= (Function % Math.pow(2, i + 1));
     }
   }
@@ -134,6 +136,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     this.service.getInfoTypes().subscribe((value) => {
       this.typesOfCheckboxes = JSON.parse(value['types']);
       this.updateCheckbox();
+      this.initCheckbox();
     });
   }
   updateCheckbox() {
