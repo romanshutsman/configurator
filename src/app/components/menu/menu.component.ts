@@ -11,22 +11,18 @@ import { SharedService } from './../../providers/shared.service';
 export class MenuComponent implements OnInit {
 
   @Output() contentSelected = new EventEmitter();
-  version: any;
   @Input() set actionOnClicked(value) {
     if (value) {
       if (value.action === 'added') {
-        this.showTabTree = true;
-        this.showTabOperation = false;
-        this.hideForm = true;
+        this.setPropertyMenu(true, false, true);
       }
       if (value.action === 'edited') {
-        this.showTabTree = true;
-        this.showTabOperation = false;
-        this.hideForm = true;
+        this.setPropertyMenu(true, false, true);
       }
     }
   }
-
+  
+  version: any;
   active: boolean;
   totalValueSubsr: Subscription;
   intervalNode: any;
@@ -38,29 +34,16 @@ export class MenuComponent implements OnInit {
   constructor(private service: SharedService) {
     this.service.SubjectControlTab.subscribe((value) => {
       if (value === 'show_form') {
-        this.showTabTree = false;
-        this.showTabOperation = true;
-        this.hideForm = false;
+        this.setPropertyMenu(false, true, false);
       } else if (value === 'hide_form') {
-        this.hideForm = true;
-        this.showTabOperation = false;
+        this.setPropertyMenu(this.showTabTree, true, false);
       }
     });
   }
 
   ngOnInit() {
   }
-  onConnect() {
-    // this.service.connectVersionsofControllers().subscribe(data => {
-    //   console.log('Connect controller ', data);
-    //   this.service.SubjectOnConnect.next(data);
-    // },
-    //   error => {
-    //     console.log(error);
-    //     this.service.SubjectOnConnect.next('error');
-    //     this.service.sendNotification('Can\'t connect to controller...', 'fail');
-    //   });
-  }
+
   collectData(e) {
     if (e) {
       this.switchOn();
@@ -74,10 +57,7 @@ export class MenuComponent implements OnInit {
         if (this.totalValueSubsr)
           this.totalValueSubsr.unsubscribe();
         this.totalValueSubsr = this.service.getStatus().subscribe((value) => {
-          console.log(value);
           if (value) {
-            // const body = { 'msg': 'Collecting data...', 'type': 'success', 'total': value['total'] };
-            // this.service.SubjectNotifications.next(body);
             this.service.sendNotification('Collecting data...', 'success', value);
           }
         },
@@ -95,9 +75,7 @@ export class MenuComponent implements OnInit {
     if (this.version) {
       this.service.sendNotification('Collecting data', 'success');
       this.active = true;
-      console.log('ON:', this.version);
       this.service.switchOnController(this.version).subscribe((value) => {
-        console.log('API ON:', value);
       });
     } else {
       this.service.sendNotification('Can\'t write a file!', 'fail');
@@ -107,16 +85,11 @@ export class MenuComponent implements OnInit {
     this.intervalStatus(false);
     this.getVersion();
     if (this.version) {
-      // const body = { 'msg': 'Data saved!', 'type': 'success' };
-      // this.service.SubjectNotifications.next(body);
       this.service.sendNotification('Data saved!', 'success');
       this.active = false;
       this.service.switchOffController(this.version).subscribe((value) => {
-        console.log('API OFF:', value);
       });
     } else {
-      // const body = { 'msg': 'Something went wrong!', 'type': 'fail' };
-      // this.service.SubjectNotifications.next(body);
       this.service.sendNotification('Something went wrong!', 'fail');
     }
   }
@@ -128,13 +101,16 @@ export class MenuComponent implements OnInit {
   openTab(e, tab) {
     if (tab === 'model-tree') {
       this.contentSelected.emit('model-tree');
-      this.showTabTree = true;
-      this.showTabOperation = false;
+      this.setPropertyMenu(true, false, this.hideForm);
     } else if (tab === 'smart-tag-editor') {
       this.contentSelected.emit('smart-tag-editor');
-      this.showTabTree = false;
-      this.showTabOperation = true;
+      this.setPropertyMenu(false, true, this.hideForm);
     }
+  }
+  setPropertyMenu(tabTree, tabOper, hideForm) {
+    this.showTabTree = tabTree;
+    this.showTabOperation = tabOper;
+    this.hideForm = hideForm;
   }
 }
 
