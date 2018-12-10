@@ -50,8 +50,8 @@
     <mat-card class="other-options">
       <div class="select-property">
         <mat-form-field >
-          <mat-select placeholder="Value type" style="color:black" name="ValueTypeDint" [(ngModel)]="ValueTypeStateDint[2]">
-            <mat-option *ngFor="let item of ValueTypeStateDint" [value]="item">{{item}}</mat-option>
+          <mat-select placeholder="Value type" style="color:black" name="ValueTypeDint" (selectionChange)="updateValueType($event)" [(ngModel)]="defaultValueType">
+            <mat-option *ngFor="let item of ValueTypeReal" [value]="item">{{item}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="input">          
@@ -147,9 +147,9 @@
   
             </div>
           </div>
-          <div class="has-trigger-inline">
+          <!-- <div class="has-trigger-inline">
             <mat-checkbox color="primary" >Has Trigger</mat-checkbox>
-          </div>
+          </div> -->
         </div>
         <div class="has-trigger-block">
           <mat-checkbox color="primary" >Has Trigger</mat-checkbox>

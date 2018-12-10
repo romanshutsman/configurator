@@ -30,7 +30,4 @@ export interface NodeTree {
 export interface RealStateDintNode extends NodeTree {
     valueType: string;
 }
-export interface RealStateDintNode extends NodeTree {
-    valueType: string;
-}
 

@@ -43,15 +43,13 @@ export class ModelTreeComponent implements OnInit {
     {
       iconClass: 'ra-icon ra-icon-network-resources',
       condition: (node: ITreeNode): boolean => {
-        const compare  = node.label.charAt(0).toLowerCase();
-        return node.iType === 2 && compare === 's';
+        return node.iType === 2 && node.iSubType === 2;
       }
     },
     {
       iconClass: 'ra-icon ra-icon-data-type',
       condition: (node: ITreeNode): boolean => {
-        const compare  = node.label.charAt(0).toLowerCase();
-        return node.iType === 2 && compare === 'd';
+        return node.iType === 2 && node.iSubType === 0 || node.iType === 2 && node.iSubType === 1;
       }
     },
     {

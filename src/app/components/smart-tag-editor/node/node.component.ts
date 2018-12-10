@@ -133,8 +133,8 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       });
   }
   getITypes() {
-    this.service.getInfoTypes().subscribe((value) => {
-      this.typesOfCheckboxes = JSON.parse(value['types']);
+    this.service.getInfoTypes().subscribe((value: any) => {
+      this.typesOfCheckboxes = JSON.parse(value);
       this.updateCheckbox();
       this.initCheckbox();
     });

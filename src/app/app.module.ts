@@ -38,7 +38,7 @@ import {
   MatTooltipModule,
   MatTreeModule
 } from '@angular/material';
-
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -88,6 +88,7 @@ import { StringComponent } from './components/smart-tag-editor/string/string.com
   imports: [
     BrowserModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -138,6 +139,7 @@ import { StringComponent } from './components/smart-tag-editor/string/string.com
     ContextMenuModule.forRoot()
   ],
   exports: [
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     MatRadioModule,
