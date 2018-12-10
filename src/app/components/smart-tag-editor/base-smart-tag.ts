@@ -53,9 +53,9 @@ export class BaseSmartTag {
   inputDisable = false;
   routines = [];
   programs = [];
-  cloneSelectedNode: NodeTree;
+  cloneSelectedNode: NodeTree = this.service.initNode;
   pathNode: string;
-  node: NodeTree;
+  node: NodeTree = this.service.initNode;
   detailsOfNode: any;
   tagnameDisable = false;
   programNameDisabled = false;

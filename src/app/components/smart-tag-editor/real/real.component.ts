@@ -14,17 +14,21 @@ export class RealComponent extends BaseSmartTag implements OnInit {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   inputInvalidMin = true;
   inputInvalidMax = true;
-  cloneSelectedNode: RealStateDintNode;
-  node: RealStateDintNode;
+  cloneSelectedNode: RealStateDintNode = this.service.initNodeValueType;
+  node: RealStateDintNode = this.service.initNodeValueType;
+  defaultValueType;
 
   @Input() set actionMenu(value) {
     if (value) {
       this.formAction = value;
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
+        this.defaultValueType = this.ValueTypeReal[0];
+        this.cloneSelectedNode.iSubType = this.ValueTypeReal.indexOf(this.defaultValueType);
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
+        this.defaultValueType = this.ValueTypeReal[this.cloneSelectedNode.iSubType];
         this.loadValue();
       }
     }
@@ -50,7 +54,9 @@ export class RealComponent extends BaseSmartTag implements OnInit {
         this.sendSmartTagData(this.nodeFrm);
       });
   }
-
+  updateValueType(e) {
+    this.cloneSelectedNode.iSubType = this.ValueTypeReal.indexOf(e.value);
+  }
   testPattern(e, check) {
     const test = /^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$/.test(e.target.value);
     check === 1 ? this.inputInvalidMin = test : this.inputInvalidMax = test;

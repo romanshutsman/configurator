@@ -12,12 +12,15 @@ import { NgForm, Validators } from '@angular/forms';
 export class StringComponent extends BaseSmartTag implements OnInit {
 
   @ViewChild('nodeForm') public nodeFrm: NgForm;
-  cloneSelectedNode: NodeTree;
-  node: NodeTree;
+  cloneSelectedNode: NodeTree = this.service.initNode;
+  node: NodeTree = this.service.initNode;
   @Input() set cloneSelected(value) {
     if (value) {
       this.cloneSelectedNode = value;
       this.nodeiD = this.cloneSelectedNode.iD;
+    } else {
+      this.cloneSelectedNode.TagName = '';
+
     }
   }
 

@@ -13,7 +13,7 @@ export class ControlBarComponent implements OnInit {
   disableBtnNav = false;
   dataForm: any;
   operation;
-  content;
+  content = {navigate: false, edit: false, add: false};
   showSpinner = false;
 
   @Input() set selectedContent(value) {

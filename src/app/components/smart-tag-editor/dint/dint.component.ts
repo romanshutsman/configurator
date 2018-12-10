@@ -15,17 +15,21 @@ export class DintComponent extends BaseSmartTag implements OnInit {
   tagnameDisable = false;
   programNameDisabled = false;
   routineDisabled = false;
-  cloneSelectedNode: RealStateDintNode;
-  node: RealStateDintNode;
+  cloneSelectedNode: RealStateDintNode = this.service.initNodeValueType;
+  node: RealStateDintNode = this.service.initNodeValueType;
+  defaultValueType;
 
   @Input() set actionMenu(value) {
     if (value) {
       this.formAction = value;
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
+        this.defaultValueType = this.ValueTypeStateDint[0];
+        this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
+        this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.iSubType];
         this.loadValue();
       }
     }
@@ -47,7 +51,9 @@ export class DintComponent extends BaseSmartTag implements OnInit {
         this.sendSmartTagData(this.nodeFrm);
       });
   }
-
+  updateValueType(e) {
+    this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(e.value);
+  }
   getCurrentValue(e) {
     if (e.target.value > 0) {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
