@@ -33,5 +33,5 @@
   </section>
 </section>
 
-<app-dialog class="dialog" (postController)="sendPostController($event)" [connectController]="onConnect">
+<app-dialog class="dialog" (postController)="sendPostController($event)" [connectController]="onConnect" (responseVerify)="onVeryfied($event)">
   <app-dialog>

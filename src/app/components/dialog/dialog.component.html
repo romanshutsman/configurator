@@ -15,3 +15,13 @@
     <button mat-raised-button color="primary" (click)="closeModal2()">close</button>
   </div>
 </div>
+<div class="over" *ngIf="showVerify">
+  <div class="pop connected">
+    <p class="">{{message}}</p>
+    <p class="">Do you want to insert it?</p>
+    <div class="group-btn">
+      <button mat-raised-button color="primary" (click)="onResponse(true)">Yes</button>
+      <button mat-raised-button color="primary" (click)="onResponse(false)">No</button>
+    </div>
+  </div>
+</div>

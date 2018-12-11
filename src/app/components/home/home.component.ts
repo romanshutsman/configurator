@@ -20,6 +20,7 @@ export class HomeComponent {
   showBtn = {};
   onConnect: any;
   controller: string;
+  chosenVersion: any;
   constructor(private service: SharedService) {
     console.log("home")
     this.connecting();
@@ -107,18 +108,18 @@ export class HomeComponent {
     this.service.connectVersionsofControllers().subscribe((data: any) => {
       if (data.length === 0) {
         const body = { 'Version': '' };
-        this.manageMessageDialog([], false, true, 'No active controllers!');
+        this.manageMessageDialog([], false, true, 'No active controllers!', false);
         this.chooseVersion(body);
       } else if (data.length === 1) {
-        this.manageMessageDialog(data, false, false, '');
+        this.manageMessageDialog(data, false, false, '', false);
         this.chooseVersion(data[0]);
       } else if (data.length > 1) {
-        this.manageMessageDialog(data, true, false, '');
+        this.manageMessageDialog(data, true, false, '', false);
       }
     },
       error => {
         const body = { 'Version': '' };
-        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         this.chooseVersion(body);
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
       });
@@ -132,39 +133,57 @@ export class HomeComponent {
     this.statusController({ 'status': false, 'project': '' });
   }
 
-  chooseVersion( item) {
+  chooseVersion(item) {
+    console.log(item);
+    this.chosenVersion = item;
+    const bodyTransfer = {};
     const body = {};
-    body['Name'] = item.Version;
-    this.service.chooseVersionsofControllers(item.Version).subscribe(data => {
+    bodyTransfer['Name'] = item.Version;
+    body['Version'] = item.Version;
+    this.service.VerifyLogixInfoServer(item.Version).subscribe( data => {
+      if(data) {
+        body['State'] = false;
+        this.chooseVersionsAndVerify(body, item, bodyTransfer);
+      } else {
+        // show message
+        this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
+      }
+    }, err => {
+
+    });
+  }
+  chooseVersionsAndVerify(body, item, bodyTransfer) {
+    console.log(body);
+    this.service.chooseVersionsofControllers(body).subscribe(data => {
       if (data) {
-        this.successConnect(data, body, item);
-        this.manageMessageDialog([], false, true, 'Succesfully connected');
+        this.successConnect(data, bodyTransfer, item);
+        this.manageMessageDialog([], false, true, 'Succesfully connected', false);
       } else {
         this.service.SubjectLoadTree.next(data);
         this.errorConnect();
         if(item.Version) {
-          this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+          this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         } else {
-          this.manageMessageDialog([], false, false, '');
+          this.manageMessageDialog([], false, false, '', false);
 
         }
       }
     },
     error => {
-      this.manageMessageDialog([], false, true, 'Can\'t connect to controller...');
+      this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
       if (item.Version !== '') {
           this.errorConnect();
         }
       });
   }
-
   
-  manageMessageDialog(list, show, showConnect, msg) {
+  manageMessageDialog(list, show, showConnect, msg, showVerify) {
     this.onConnect = {
       list: list,
       show: show,
       showConnect: showConnect,
-      message: msg
+      message: msg,
+      showVerify: showVerify
     };
   }
   showContent(tree, form) {
@@ -177,5 +196,20 @@ export class HomeComponent {
       'edit': edit,
       'navigate': nav
     };
+  }
+  onVeryfied(e) {
+    console.log(e)
+    console.log(this.chosenVersion);
+    console.log(this.chosenVersion.Version);
+    const bodyTransfer = {};
+    const body = {};
+    bodyTransfer['Name'] = this.chosenVersion.Version;
+    body['Version'] = this.chosenVersion.Version;
+    body['State'] = e;
+    if(e) {
+      this.chooseVersionsAndVerify(body, this.chosenVersion, bodyTransfer);
+    } else {
+      this.chooseVersionsAndVerify(body, this.chosenVersion, bodyTransfer);
+    }
   }
 }

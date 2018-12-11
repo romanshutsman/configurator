@@ -8,16 +8,19 @@ import { SharedService } from './../../providers/shared.service';
 export class DialogComponent implements OnInit {
   show: boolean = false;
   showConnect: boolean = false;
+  showVerify: boolean = false;
   list: any = [];
   controller: string;
   message: any;
   @Output() postController = new EventEmitter();
+  @Output() responseVerify = new EventEmitter();
   @Input() set connectController(value: any) {
     if (value) {
       this.list = value.list;
       this.show = value.show;
       this.message = value.message;
       this.showConnect = value.showConnect;
+      this.showVerify = value.showVerify;
       if (value.message == 'Can\'t connect to controller!') {
         this.controller = '';
       }
@@ -48,5 +51,9 @@ export class DialogComponent implements OnInit {
   closeModal2() {
     this.showConnect = false;
     this.cdRef.detectChanges();
+  }
+  onResponse(e) {
+    console.log(this.controller);
+    this.responseVerify.emit(e);
   }
 }

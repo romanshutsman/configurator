@@ -50,13 +50,18 @@ export class SharedService extends DataHelper {
     this.SubjectNotifications.next(body);
   }
   connectVersionsofControllers() {
-    return this.http.get(this.API_URL + '/get')
+    return this.http.get(this.API_URL + '/get');
   }
   getStatus() {
     return this.http.get(this.API_URL + '/status');
   }
   chooseVersionsofControllers(body) {
-    return this.http.post(this.API_URL + '/connect', JSON.stringify(body), this.options);
+    console.log(body)
+    return this.http.post(this.API_URL + '/connect', body, this.options);
+  }
+  VerifyLogixInfoServer(body) {
+    console.log(body)
+    return this.http.post(this.API_URL + '/verify-logix', JSON.stringify(body), this.options);
   }
   switchOnController(body) {
     return this.http.post(this.API_URL + '/on', body);
