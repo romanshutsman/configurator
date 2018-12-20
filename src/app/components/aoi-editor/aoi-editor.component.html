@@ -1,4 +1,4 @@
-<form #nodeForm="ngForm">
+<!-- <form #nodeForm="ngForm">
   <mat-card class="first-block">
     <div class="name">
       <p>Location in code</p>
@@ -14,7 +14,7 @@
           style="font-size:16px"
           [disabled]="tagnameDisable ? '' : null" 
           [(ngModel)]="cloneSelectedNode.TagName"
-          [pattern]="testNamePattern"
+          pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$"
           id="tagname"
           maxlength="40"
           required >
@@ -38,18 +38,13 @@
           name="label" 
           style="font-size:16px"
           [(ngModel)]="cloneSelectedNode.label"
-          validateName
-          [dataNode]="getParentNode"
-          [pattern]="testNamePattern"
+          pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$"
           id="tagname"
           maxlength="40"
           required >
       </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
         First letter must be letter or _. You can type letters and numbers.
-      </p>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
-        This name already exist!
       </p>
     </div>
   </mat-card>
@@ -118,63 +113,4 @@
         </div>
     </div>
   </mat-card>
-  <mat-card class="select">
-    <div class="mat-select-center">
-      <mat-form-field class="routineProgramselect">
-          <mat-select 
-          id="matSelect1"
-          [disabled]="programNameDisabled"  
-          name="sProgram" 
-          placeholder="Programs" 
-          style="color:black" 
-          [(ngModel)]="cloneSelectedNode.sProgram" 
-          required="isRequired ? '' : null"
-          >
-            <mat-option  *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-      <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched"
-      class="paragraph-error err">
-        Required!
-      </p>
-    </div>
-    <div class="mat-select-center">
-      <mat-form-field class="routineProgramselect">
-          <mat-select 
-          [disabled]="routineDisabled" 
-          placeholder="Routines" style="color:black" 
-          [(ngModel)]="routineDefault" 
-          name="routine" 
-          required="isRequired ? '' : null">
-          <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched"
-      class="paragraph-error err">
-        Required!
-      </p>
-    </div>
-    <div class="inputs">
-      <div>
-          <mat-form-field class="UpdateRate">          
-              <input 
-              matInput
-              placeholder="Rung"
-              type="number"
-              pattern="^\d*[0-9]\d*$"
-              name="rung" 
-              [value]="cloneSelectedNode.rung" 
-              [(ngModel)]="cloneSelectedNode.rung" 
-              (keydown)="removeMinus($event, 2)"
-              min="0"
-              id="rung" 
-              required="isRequired ? '' : null"
-              [disabled]="!isRequired" >
-            </mat-form-field>
-        <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
-          Required!<br>Only positive or 0!
-        </p>
-      </div>
-    </div>
-  </mat-card>
-</form>
+</form> -->

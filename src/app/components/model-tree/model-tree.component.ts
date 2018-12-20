@@ -4,6 +4,8 @@ import { Nullable } from '@ra-web-tech-ui-toolkit/common-utils';
 import { TreeComponent, RaUiNestedTreeControl, ITreeNodeState, ITreeNode, ITreeConfig } from '@ra-web-tech-ui-toolkit/navigation';
 import { SharedService } from './../../providers/shared.service';
 import { NodeTree } from './../../providers/node.interface';
+import { copyFileSync } from 'fs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-model-tree',
@@ -17,13 +19,15 @@ export class ModelTreeComponent implements OnInit {
   showContext: boolean;
   treeModel: NodeTree[];
   detailsOfNode: any;
-  pathNode: string;
+  ParentIDOfNodes = [];
   found: any;
   nodeTree;
   config: ITreeConfig;
+  oldUnknowNode: NodeTree;
+  newChangedNode: NodeTree;
   treeExtension = [
     {
-      iconClass: 'ra-icon ra-icon-folder',
+      iconClass: 'ra-icon ra-icon-home',
       condition: (node: ITreeNode): boolean => {
         return node.iD === 1;
       }
@@ -59,12 +63,13 @@ export class ModelTreeComponent implements OnInit {
       }
     }
   ];
+  listOfAOI = ['list1', 'list2'];
   @Output() itemSelected = new EventEmitter();
   @Output() transferTree = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
+  offsetTopEdit: any;
   @Input() set dataForm(value) {
     if (value) {
-      console.log(value);
       if (value.action === 'added') {
         this.onAddNewNode(value.body)
       } else if (value.action === 'edited') {
@@ -73,9 +78,7 @@ export class ModelTreeComponent implements OnInit {
     }
   }
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
-    localStorage.setItem('item', '1654646565465');
     this.service.SubjectLoadTree.subscribe((value) => {
-      console.log('SubjectLoadTree', value);
       if (value) {
         this.service.sendNotification('Succesfully connected!', 'success');
 
@@ -129,6 +132,7 @@ export class ModelTreeComponent implements OnInit {
     if (event['value']) {
       const node = event['node'];
       this.nodeTree = node;
+      this.oldUnknowNode = this.cloneNode(node);
       this.service.SubjectControlTab.next('hide_form');
       this.itemSelected.emit(node);
       const typeOfNode = node['iType'];
@@ -171,5 +175,108 @@ export class ModelTreeComponent implements OnInit {
       'nodeTree': this.nodeTree
     });
   }
+  setWidth() {
+    if(this.nodeTree) {
+      if(this.nodeTree.InternalIndex == 32) {
+        return '80%'
+      } else {
+        return '100%'
+      }
+    }
+  }
+  getInfo(e) {
+    console.log(e.target.offsetTop);
+    this.offsetTopEdit = e.target.offsetTop + 'px';
+    
+  }
+  changeParentID (form: NgForm) {
+    console.log(form.controls.parentID.value);
+    console.log(this.oldUnknowNode);
+    // this. = form.controls.parentID.value;
+    // this.onAddNewNode(this.oldUnknowNode);
 
+    // this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [this.selectedNode]);
+    console.log(this.treeModel[0]);
+    const node = this.treeModel[0];
+    // this.searchAllParentID(node);
+  }
+
+  searchAllParentID(node) {
+    console.log(node)
+    console.log(node.iParent)
+    this.writeFoundID(node.iParent);
+    if (node.iParent < 0 ) return;
+    this.found = undefined;
+    // const parent = this.findTreeNode(this.treeModel, node.iParent);
+    this.treeModel.forEach( item => {
+      if(item.iParent) {
+        console.log(item.iParent, 'ZERO')
+        this.writeFoundID(item.iParent);
+      } else {
+        if (item.children.length) {
+          item.children.forEach( elem => {
+            if(elem.iParent) {
+              console.log(elem)
+              this.writeFoundID(item.iParent);
+            } else {
+              console.log('HERE')
+              this.searchAllParentID(elem);
+            }
+          })
+        }
+      }
+    })
+  }
+  writeFoundID(id) {
+    console.log(id)
+    this.ParentIDOfNodes.push(id);
+    console.log(this.ParentIDOfNodes);
+  }
+  // findTreeNode(nodeList: NodeTree[], id) {
+  //   nodeList.forEach(item => {
+  //     if (item.iParent) {
+  //       this.found = item;
+  //       return;
+  //     } else {
+  //       if (item.children.length) {
+  //         this.findTreeNode(item.children, id);
+  //       }
+  //     }
+  //   });
+  //   if (this.found) return this.found;
+  // }
+
+
+  cloneNode(item) {
+    return {
+      label: item.label,
+      iParent: item.iParent,
+      iD: item.iD,
+      iType: item.iType,
+      iSubType: item.iSubType,
+      iFunction: item.iFunction,
+      sEU: item.sEU,
+      dMin: item.dMin,
+      dMax: item.dMax,
+      dMul: item.dMul,
+      sExp: item.sExp,
+      sProgram: item.sProgram,
+      TagName: item.TagName,
+      UID: item.UID,
+      iStartD: item.iStartD,
+      bHasTrigger: item.bHasTrigger,
+      updateRate: item.updateRate,
+      isMulp: item.isMulp,
+      InternalIndex: item.InternalIndex,
+      children: item.children,
+      oTreeNode: item.oTreeNode,
+      rung: item.rung,
+      routine: item.routine,
+      sProgramParent: item.sProgramParent,
+      sParentTagName: item.TagName,
+      updateRadio: item.updateRadio
+    };
+  }
+  contextMenuAOI() {
+  }
 }

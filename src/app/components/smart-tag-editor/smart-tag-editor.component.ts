@@ -3,6 +3,7 @@ import { NgForm, Validators, AbstractControl, FormControl } from '@angular/forms
 import { SharedService } from '../../providers/shared.service';
 import { NodeTree } from '../../providers/node.interface';
 import { filter } from 'rxjs/operators';
+import { BaseSmartTag } from './base-smart-tag';
 
 // actionContextMenuChanged
 // SubjectContextMenu
@@ -12,7 +13,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./smart-tag-editor.component.scss'],
 
 })
-export class SmartTagEditorComponent implements OnInit {
+export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
 
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   @ViewChild('activeInput1') activeInput1: ElementRef;
@@ -28,6 +29,9 @@ export class SmartTagEditorComponent implements OnInit {
   nodeiD: number;
   onEditOrAdd = false;
   nodeType: string;
+  parentOfSelectedNode;
+  countOfCall = 0;
+  
 
   @Input() set SelectedSmartTag(value: NodeTree) {
     console.log(value);
@@ -47,7 +51,12 @@ export class SmartTagEditorComponent implements OnInit {
   @Input() set actionMenu(value) {
     console.log(value);
     if (value) {
+      console.log(value);
       this.actionOnContextMenu = value;
+      this.pathNode = '';
+      this.countOfCall = 0;
+      this.parentOfSelectedNode = undefined;
+      this.searchAbsolutePath(this.detailsOfNode['0']);
       if (value.action === this.service.action.add) {
         if (value.type === 'node') {
           this.onEditOrAdd = true;
@@ -64,7 +73,7 @@ export class SmartTagEditorComponent implements OnInit {
           this.onEditOrAdd = false;
           this.nodeType = value.type;
         }
-      } 
+      }
     }
   }
   @Input() set modifiedNode(value) {
@@ -75,15 +84,15 @@ export class SmartTagEditorComponent implements OnInit {
     }
   }
 
-  constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
-
+  constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
+    super(service);
   }
 
   ngOnInit() {
 
   }
 
-  
+
 
   cloneNode(item: NodeTree) {
     return {
@@ -119,10 +128,13 @@ export class SmartTagEditorComponent implements OnInit {
     this.node = this.cloneNode(value);
     this.pathNode = '';
     this.detailsOfNode = Array.of(this.node);
-    this.searchAbsolutePath(this.detailsOfNode['0']);
+    this.countOfCall = 0;
+    this.parentOfSelectedNode = undefined;
   }
   searchAbsolutePath(node: NodeTree) {
     this.writePath(node.label);
+    this.getParent(node);
+
     if (node.iParent === 0) return;
     this.found = undefined;
     const parent = this.findTreeElement(this.tree, node.iParent);
@@ -146,6 +158,18 @@ export class SmartTagEditorComponent implements OnInit {
       }
     });
     if (this.found) return this.found;
+  }
+  getParent(node) {
+    if (this.actionOnContextMenu['action'] === this.service.action.edit) {
+      console.log(this.parentOfSelectedNode);
+      if (this.countOfCall === 1) {
+        this.parentOfSelectedNode = {parent:node, selectedItem: this.cloneSelectedNode};
+      }
+    } else {
+      console.log(this.parentOfSelectedNode);
+      this.parentOfSelectedNode = {parent:undefined, selectedItem: this.cloneSelectedNode};
+    }
+    this.countOfCall++;
   }
 
 }

@@ -1,7 +1,30 @@
 div.scroll {
     padding: 25px;
     margin-bottom: 25px;
+    // width: 80%;
+    width: 100%;
+    flex-grow: 1;
 }
 i {
     margin-right: 10px;
+}
+.wrap {
+    display: flex;
+}
+.wrap-edit {
+    width: 100px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+.editing {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+mat-form-field {
+    max-width: 100px;
+    width: 100%;
 }

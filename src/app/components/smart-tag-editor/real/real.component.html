@@ -14,7 +14,7 @@
           style="font-size:16px"
           [disabled]="tagnameDisable ? '' : null" 
           [(ngModel)]="cloneSelectedNode.TagName"
-          pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$"
+          [pattern]="testNamePattern"
           id="tagname"
           maxlength="40"
           required >
@@ -38,12 +38,17 @@
           name="label" 
           style="font-size:16px"
           [(ngModel)]="cloneSelectedNode.label"
-          pattern="^[A-Za-z_][A-Za-z0-9]{0,39}$"
+          validateName
+          [dataNode]="getParentNode"
+          [pattern]="testNamePattern"
           maxlength="40"
           required >
         </mat-form-field>
-        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
+        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
             First letter must be letter or _. You can type letters and numbers.
+        </p>
+        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+          This name already exist!
         </p>
       </div>
     </mat-card>

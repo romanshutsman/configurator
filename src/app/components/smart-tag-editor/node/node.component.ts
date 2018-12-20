@@ -1,9 +1,8 @@
 import { BaseSmartTag } from './../base-smart-tag';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { NodeTree } from 'src/app/providers/node.interface';
-import { NgForm, Validators } from '@angular/forms';
+import { NgForm, Validators, FormControl } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
-
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
@@ -42,9 +41,9 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           this.loadNode();
         }
       }
+
     }
   }
-
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
     this.getITypes();
@@ -53,6 +52,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   ngOnInit() {
     this.onChanges();
+
   }
   cloneNode(item: NodeTree) {
     return {
@@ -184,5 +184,4 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     console.log(rVal);
     this.cloneSelectedNode.iFunction = rVal;
   }
-
 }

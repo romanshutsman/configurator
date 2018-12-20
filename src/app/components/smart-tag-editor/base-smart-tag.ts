@@ -1,10 +1,11 @@
 
 import { NodeTree, RealStateDintNode } from 'src/app/providers/node.interface';
 import { ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
-import { NgForm, Validators } from '@angular/forms';
+import { NgForm, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
 
 export class BaseSmartTag {
+  parentOfNode: NodeTree;
   @Input() set cloneSelected(value: RealStateDintNode) {
     if (value) {
       this.cloneSelectedNode = value;
@@ -22,6 +23,7 @@ export class BaseSmartTag {
       this.node = value;
     }
   }
+  @Input() getParentNode;
   public formComp: NgForm;
   @ViewChild('activeInput1') activeInput1: ElementRef;
   @ViewChild('activeInput2') activeInput2: ElementRef;
@@ -68,7 +70,7 @@ export class BaseSmartTag {
   ValueTypeReal = ['Value', 'Totalizer'];
   ValueTypeStateDint = ['Value', 'Totalizer', 'State'];
   engeneringUnits = ['%'];
-
+  testNamePattern = /^[A-Za-z_][A-Za-z0-9\s]{0,39}$/;
   constructor(public service: SharedService) {
 
   }
@@ -259,4 +261,8 @@ export class BaseSmartTag {
     this.inputDisable = inp;
     this.cloneSelectedNode.updateRate = num;
   }
+  // getParentSelectedNode(node: NodeTree) {
+  //   this.parentOfNode = node;
+  //   console.log(this.parentOfNode)
+  // }
 }

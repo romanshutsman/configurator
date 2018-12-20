@@ -1,17 +1,42 @@
-<div class="scroll">
+<div class="wrap">
+  <div class="scroll" 
+  >
+  <!-- to scroll -->
+  <!-- [ngStyle]="{'width': nodeTree?.InternalIndex == 32 ? '80%':'100%' }" -->
     <ra-ui-tree 
-  [contextMenu]="basicMenu" 
-  [contextMenuSubject]="selectedNode"
-  [(tree)]="treeModel" 
-  (dblclick)="onDblClick()"
-  [config]="config"
-  (treeNodeSelected)="onTreeNodeSelected($event)"
-  (treeInitialized)="onTreeInitialized($event)">
-  </ra-ui-tree>
-</div>
+    [contextMenu]="basicMenu" 
+    [contextMenuSubject]="selectedNode"
+    [(tree)]="treeModel" 
+    (dblclick)="onDblClick()"
+    (click)="getInfo($event)"
+    [config]="config"
+    (treeNodeSelected)="onTreeNodeSelected($event)"
+    (treeInitialized)="onTreeInitialized($event)">
+    </ra-ui-tree>
+  </div>
+  <!-- <div class="wrap-edit" *ngIf="this.nodeTree?.InternalIndex == 32">
+    <div 
+    class="editing"
 
+    [ngStyle]="{'top': offsetTopEdit }">
+    <form  #parentIDForm="ngForm">
+      <mat-form-field class="example-full-width">
+        <input 
+        matInput 
+        placeholder="Change Parent ID" 
+        name="parentID" 
+        value="0" 
+        [(ngModel)]="oldUnknowNode.iParent"
+        type="number" required>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="changeParentID(parentIDForm)" >Change</button>
+    </form>
+    </div>
+  </div> -->
+</div>
 <context-menu #basicMenu >
   <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext">Add</ng-template>
+  <!-- <ng-template contextMenuItem [subMenu]="subMenuAOI" >AOI</ng-template> -->
   <!-- <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuEditNode($event)">Edit</ng-template> -->
   <context-menu #someSubMenu >
     <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node')"> <i class="ra-icon ra-icon-folder"></i> Node</ng-template>
@@ -19,5 +44,8 @@
     <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state')"><i class="ra-icon ra-icon-network-resources"></i> State</ng-template>
     <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint')"> <i class="ra-icon ra-icon-data-type"></i>Dint</ng-template>
     <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string')"> <i class="ra-icon ra-icon-text-editor"></i> String</ng-template>
+  </context-menu>
+  <context-menu #subMenuAOI>
+      <ng-template contextMenuItem *ngFor="let item of listOfAOI"  (execute)="contextMenuAOI()"> <i class="ra-icon ra-icon-dashboard"></i> {{item}}</ng-template>
   </context-menu>
 </context-menu>

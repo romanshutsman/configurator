@@ -66,7 +66,9 @@ import { NodeComponent } from './components/smart-tag-editor/node/node.component
 import { RealComponent } from './components/smart-tag-editor/real/real.component';
 import { StateComponent } from './components/smart-tag-editor/state/state.component';
 import { DintComponent } from './components/smart-tag-editor/dint/dint.component';
-import { StringComponent } from './components/smart-tag-editor/string/string.component'
+import { StringComponent } from './components/smart-tag-editor/string/string.component';
+import { AoiEditorComponent } from './components/aoi-editor/aoi-editor.component';
+import { CustomValidatorDirective } from './providers/custom-validator.directive'
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { StringComponent } from './components/smart-tag-editor/string/string.com
     RealComponent,
     StateComponent,
     DintComponent,
-    StringComponent
+    StringComponent,
+    AoiEditorComponent,
+    CustomValidatorDirective
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,6 @@
 
     <p *ngIf="statusController" class="online">Online</p>
     <p *ngIf="!statusController" class="offline">Offline</p>
-    <p >{{name}}</p>
+    <p *ngIf="statusController">{{name}}</p>
   </div>
 </div>

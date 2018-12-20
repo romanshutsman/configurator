@@ -42,31 +42,26 @@ export class SharedService extends DataHelper {
   }
 
   constructor(private http: HttpClient) { super() }
-  getData() {
-    return 'data';
-  }
   sendNotification(msg: string, type: string, total = undefined) {
     const body = { 'msg': msg, 'type': type, 'total': total };
     this.SubjectNotifications.next(body);
   }
-  connectVersionsofControllers() {
+  getActiveControllers() {
     return this.http.get(this.API_URL + '/get');
   }
   getStatus() {
     return this.http.get(this.API_URL + '/status');
   }
-  chooseVersionsofControllers(body) {
-    console.log(body)
+  connectToController(body) {
     return this.http.post(this.API_URL + '/connect', body, this.options);
   }
   VerifyLogixInfoServer(body) {
-    console.log(body)
     return this.http.post(this.API_URL + '/verify-logix', JSON.stringify(body), this.options);
   }
-  switchOnController(body) {
+  StartCollectData(body) {
     return this.http.post(this.API_URL + '/on', body);
   }
-  switchOffController(body) {
+  StopCollectData(body) {
     return this.http.post(this.API_URL + '/off', body);
   }
   addNode(body) {

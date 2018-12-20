@@ -26,12 +26,16 @@
         [actionMenu]="actionContextMenu">
         </app-smart-tag-editor>
       </div>
+      <div class="tabcontent" [class.activeTab]="showTabAOI">
+        <app-aoi-editor>
+        </app-aoi-editor>
+      </div>
     </div>
   </section>
   <section class="control-bar">
-    <app-control-bar (actionOnClick)="onClicked($event)" [selectedContent]="showBtn"></app-control-bar>
+    <app-control-bar (submitForm)="onSubmitted($event)" [selectedContent]="showBtn"></app-control-bar>
   </section>
 </section>
 
-<app-dialog class="dialog" (postController)="sendPostController($event)" [connectController]="onConnect" (responseVerify)="onVeryfied($event)">
+<app-dialog class="dialog" (postController)="getChosenController($event)" [connectController]="onConnect" (responseVerify)="verifyingChosenController($event)">
   <app-dialog>

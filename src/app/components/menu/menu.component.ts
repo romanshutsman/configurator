@@ -12,12 +12,13 @@ export class MenuComponent implements OnInit {
 
   @Output() contentSelected = new EventEmitter();
   @Input() set actionOnClicked(value) {
+    console.log(value);
     if (value) {
       if (value.action === 'added') {
-        this.setPropertyMenu(true, false, true);
+        this.setPropertyMenu(true, false, true, false);
       }
       if (value.action === 'edited') {
-        this.setPropertyMenu(true, false, true);
+        this.setPropertyMenu(true, false, true, false);
       }
     }
   }
@@ -29,14 +30,16 @@ export class MenuComponent implements OnInit {
   showTabTree = true;
   showTabOperation = false;
   hideForm = true;
+  hideAOI = true;
+  showTabAOI = false;
 
 
   constructor(private service: SharedService) {
     this.service.SubjectControlTab.subscribe((value) => {
       if (value === 'show_form') {
-        this.setPropertyMenu(false, true, false);
+        this.setPropertyMenu(false, true, false, false);
       } else if (value === 'hide_form') {
-        this.setPropertyMenu(this.showTabTree, true, false);
+        this.setPropertyMenu(this.showTabTree, false, true, false);
       }
     });
   }
@@ -75,7 +78,8 @@ export class MenuComponent implements OnInit {
     if (this.version) {
       this.service.sendNotification('Collecting data', 'success');
       this.active = true;
-      this.service.switchOnController(this.version).subscribe((value) => {
+      this.service.StartCollectData(this.version).subscribe((value) => {
+        if(!value) this.service.sendNotification('Can\'t write a file!', 'fail');
       });
     } else {
       this.service.sendNotification('Can\'t write a file!', 'fail');
@@ -87,7 +91,12 @@ export class MenuComponent implements OnInit {
     if (this.version) {
       this.service.sendNotification('Data saved!', 'success');
       this.active = false;
-      this.service.switchOffController(this.version).subscribe((value) => {
+      this.service.StopCollectData(this.version).subscribe((value) => {
+        if(value) {
+          this.service.sendNotification('Data saved!', 'success');
+        } else {
+          this.service.sendNotification('Something went wrong!', 'fail');
+        }
       });
     } else {
       this.service.sendNotification('Something went wrong!', 'fail');
@@ -101,16 +110,20 @@ export class MenuComponent implements OnInit {
   openTab(e, tab) {
     if (tab === 'model-tree') {
       this.contentSelected.emit('model-tree');
-      this.setPropertyMenu(true, false, this.hideForm);
+      this.setPropertyMenu(true, false, this.hideForm, false);
     } else if (tab === 'smart-tag-editor') {
       this.contentSelected.emit('smart-tag-editor');
-      this.setPropertyMenu(false, true, this.hideForm);
+      this.setPropertyMenu(false, true, this.hideForm, false);
+    } else if(tab === 'aoi') {
+      this.contentSelected.emit('aoi');
+      this.setPropertyMenu(false, false, this.hideForm, true);
     }
   }
-  setPropertyMenu(tabTree, tabOper, hideForm) {
+  setPropertyMenu(tabTree, tabOper, hideForm, aoi) {
     this.showTabTree = tabTree;
     this.showTabOperation = tabOper;
     this.hideForm = hideForm;
+    this.showTabAOI = aoi;
   }
 }
 

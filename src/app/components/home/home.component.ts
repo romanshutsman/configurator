@@ -21,35 +21,35 @@ export class HomeComponent {
   onConnect: any;
   controller: string;
   chosenVersion: any;
+  listOfControllers = [];
+  showTabAOI = false;
+
   constructor(private service: SharedService) {
-    console.log("home")
-    this.connecting();
+    this.getActiveControllerAndCheck();
   }
   getTree(e) {
     console.log(e);
     this.treeModel = e;
-    this.showBtnOnContent(false, false, false);
+    this.manageOfBtns(false, false, false);
   }
   getNode(e) {
     this.selectedItem = e;
-    this.showBtnOnContent(false, false, false);
+    this.manageOfBtns(false, false, false);
   }
   actionMenu(e) {
     this.actionContextMenu = e;
-    console.log(e);
-    console.log(this.actionContextMenu);
     switch (e.action) {
       case this.service.action.add:
-        this.showContent(false, true);
-        this.showBtnOnContent(true, false, false);
+        this.manageOfContent(false, true, false);
+        this.manageOfBtns(true, false, false);
         break;
       case this.service.action.edit:
-        this.showContent(false, true);
-        this.showBtnOnContent(false, true, true);
+        this.manageOfContent(false, true, false);
+        this.manageOfBtns(false, true, true);
         break;
       default:
-        this.showContent(true, false);
-        this.showBtnOnContent(false, false, false);
+        this.manageOfContent(false, false, true);
+        this.manageOfBtns(false, false, false);
         break;
     }
   }
@@ -57,36 +57,39 @@ export class HomeComponent {
     console.log('SELECTED CONTENT', e)
     switch (e) {
       case 'model-tree':
-        this.showContent(true, false);
-        this.showBtnOnContent(false, false, false);
+        this.manageOfContent(true, false, false);
+        this.manageOfBtns(false, false, false);
         break;
       case 'smart-tag-editor':
         if (this.actionContextMenu) {
           switch (this.actionContextMenu.action) {
             case this.service.action.add:
-              this.showBtnOnContent(true, false, false);
+              this.manageOfBtns(true, false, false);
               break;
             case this.service.action.edit:
-              this.showBtnOnContent(false, true, true);
+              this.manageOfBtns(false, true, true);
               break;
             default:
-              this.showBtnOnContent(false, false, false);
+              this.manageOfBtns(false, false, false);
               break;
           }
         }
-        this.showContent(false, true);
+        this.manageOfContent(false, true, false);
+        break;
+      case 'aoi':
+        this.manageOfContent(false, false, true);
         break;
       default:
-        this.showContent(true, false);
+        this.manageOfContent(true, false, false);
         break;
     }
   }
-  onClicked(e) {
-    this.showContent(true, false);
+  onSubmitted(e) {
+    this.manageOfContent(true, false, false);
     console.log(e);
     this.operationOnForm = e;
     this.bodyForm = e;
-    this.showBtnOnContent(false, false, false);
+    this.manageOfBtns(false, false, false);
     if (e['action'] === 'edited') {
       const node = e['body'];
       this.selectedItem.iFunction = node.iFunction;
@@ -97,22 +100,23 @@ export class HomeComponent {
   }
   statusController(e) {
     if (e.status) {
-      this.showContent(true, false);
+      this.manageOfContent(true, false, false);
     }
     this.statusOfController = e;
   }
 
-  sendPostController = controller => this.chooseVersion(controller);
+  getChosenController = controller => this.checkVerification(controller);
 
-  connecting() {
-    this.service.connectVersionsofControllers().subscribe((data: any) => {
+  getActiveControllerAndCheck() {
+    this.service.getActiveControllers().subscribe((data: any) => {
+      this.listOfControllers = data;
       if (data.length === 0) {
         const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'No active controllers!', false);
-        this.chooseVersion(body);
+        this.checkVerification(body);
       } else if (data.length === 1) {
         this.manageMessageDialog(data, false, false, '', false);
-        this.chooseVersion(data[0]);
+        this.checkVerification(data[0]);
       } else if (data.length > 1) {
         this.manageMessageDialog(data, true, false, '', false);
       }
@@ -120,7 +124,7 @@ export class HomeComponent {
       error => {
         const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
-        this.chooseVersion(body);
+        this.checkVerification(body);
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
       });
   }
@@ -133,17 +137,17 @@ export class HomeComponent {
     this.statusController({ 'status': false, 'project': '' });
   }
 
-  chooseVersion(item) {
-    console.log(item);
+  checkVerification(item) {
     this.chosenVersion = item;
     const bodyTransfer = {};
     const body = {};
     bodyTransfer['Name'] = item.Version;
     body['Version'] = item.Version;
-    this.service.VerifyLogixInfoServer(item.Version).subscribe( data => {
+    const foundIndex = this.listOfControllers.findIndex(i => i === item);
+    this.service.VerifyLogixInfoServer(foundIndex).subscribe( data => {
       if(data) {
         body['State'] = false;
-        this.chooseVersionsAndVerify(body, item, bodyTransfer);
+        this.connectingToChosenVersion(body, item, bodyTransfer);
       } else {
         // show message
         this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
@@ -152,12 +156,11 @@ export class HomeComponent {
 
     });
   }
-  chooseVersionsAndVerify(body, item, bodyTransfer) {
-    console.log(body);
-    this.service.chooseVersionsofControllers(body).subscribe(data => {
+  connectingToChosenVersion(body, item, bodyTransfer) {
+    this.service.connectToController(body).subscribe(data => {
       if (data) {
         this.successConnect(data, bodyTransfer, item);
-        this.manageMessageDialog([], false, true, 'Succesfully connected', false);
+        // this.manageMessageDialog([], false, true, 'Succesfully connected', false);
       } else {
         this.service.SubjectLoadTree.next(data);
         this.errorConnect();
@@ -186,30 +189,28 @@ export class HomeComponent {
       showVerify: showVerify
     };
   }
-  showContent(tree, form) {
-    this.showTabTree = tree;
-    this.showTabOperation = form;
+  manageOfContent(tabTree, tabForm, tabAoi) {
+    this.showTabTree = tabTree;
+    this.showTabOperation = tabForm;
+    this.showTabAOI = tabAoi;
   }
-  showBtnOnContent(add, edit, nav) {
+  manageOfBtns(add, edit, nav) {
     this.showBtn = {
       'add': add,
       'edit': edit,
       'navigate': nav
     };
   }
-  onVeryfied(e) {
-    console.log(e)
-    console.log(this.chosenVersion);
-    console.log(this.chosenVersion.Version);
+  verifyingChosenController(e) {
     const bodyTransfer = {};
     const body = {};
     bodyTransfer['Name'] = this.chosenVersion.Version;
     body['Version'] = this.chosenVersion.Version;
     body['State'] = e;
     if(e) {
-      this.chooseVersionsAndVerify(body, this.chosenVersion, bodyTransfer);
+      this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     } else {
-      this.chooseVersionsAndVerify(body, this.chosenVersion, bodyTransfer);
+      this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     }
   }
 }

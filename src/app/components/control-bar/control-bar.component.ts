@@ -22,7 +22,7 @@ export class ControlBarComponent implements OnInit {
       this.checkOperation(this.operation['operation']['action']);
     } 
   }
-  @Output() actionOnClick = new EventEmitter();
+  @Output() submitForm = new EventEmitter();
 
   constructor(private service: SharedService) {
     this.onEditForm();
@@ -64,7 +64,7 @@ export class ControlBarComponent implements OnInit {
     this.service.addNode(this.dataForm).subscribe((value) => {
       this.showSpinner = false;
       if(value) {
-        this.actionOnClick.emit({'action': 'added', 'body': this.dataForm});
+        this.submitForm.emit({'action': 'added', 'body': this.dataForm});
         this.service.sendNotification('Node has been added!', 'success');
         this.disableAllBtn();
       } else {
@@ -87,7 +87,7 @@ export class ControlBarComponent implements OnInit {
       this.showSpinner = false;
       this.disableBtnEdit = false;
       if(value) {
-        this.actionOnClick.emit({'action': 'edited', 'body': this.dataForm});
+        this.submitForm.emit({'action': 'edited', 'body': this.dataForm});
         this.service.sendNotification('Node has been changed!', 'success');
         this.disableAllBtn();
       } else {
