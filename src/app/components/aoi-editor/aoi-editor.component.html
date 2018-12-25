@@ -50,7 +50,7 @@
   </mat-card>
   <mat-card class="infomation-type" >
     <div class="type" >
-      <p>Infomation attributes</p>
+      <p>Information attributes</p>
       <div class="checkbox">
           <ng-container 
           *ngFor="let item of typesOfCheckboxes; let i = index">
@@ -59,7 +59,7 @@
             color="primary"
             [(ngModel)]="item.selected"
             [checked]="item.selected"
-            (change)="getFunctions()"
+            (change)="updateFunctions()"
             >
             {{item.Name}}
           </mat-checkbox>
@@ -71,7 +71,7 @@
       <div class="group">
         <div class="radio">
           <mat-form-field class="update">
-            <mat-select style="color:black" [(value)]="cloneSelectedNode.updateRadio" (selectionChange)="clickOnRadio($event)">
+            <mat-select style="color:black" [(value)]="cloneSelectedNode.updateRadio" (selectionChange)="onChangeSelect($event)">
               <mat-option *ngFor="let item of arrayOfRadioBtns" [value]="item">{{item}}</mat-option>
             </mat-select>
           </mat-form-field>

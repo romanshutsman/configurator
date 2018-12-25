@@ -25,8 +25,6 @@ export class BaseSmartTag {
   }
   @Input() getParentNode;
   public formComp: NgForm;
-  @ViewChild('activeInput1') activeInput1: ElementRef;
-  @ViewChild('activeInput2') activeInput2: ElementRef;
   arrayOfRadioBtns = [
     'Parent',
     'Parent + Trigger',
@@ -105,12 +103,6 @@ export class BaseSmartTag {
       updateRadio: 'Rate'
     };
   }
-  activeInputTag(e) {
-    this.activeInput1.nativeElement.focus();
-  }
-  activeInputModel(e) {
-    this.activeInput2.nativeElement.focus();
-  }
   getOptionTime(e) {
     this.selectedOption = e.value;
     this.calculateTime(this.selectedOption);
@@ -124,22 +116,14 @@ export class BaseSmartTag {
       this.cloneSelectedNode.updateRate = this.tempValueOfRadio * 1000;
     }
   }
-  initTime() {
-    const Time = JSON.parse(localStorage.getItem('time'));
-    if (Time) {
-      this.timeDefault = Time;
-    } else {
-      this.timeDefault = this.times[1];
-    }
-  }
-  enableReuireditems(form: NgForm) {
+  enableReuiredItems(form: NgForm) {
     this.formComp = form;
     this.isRequired = true;
     this.setUpdateValidator('sProgram');
     this.setUpdateValidator('routine');
     this.setUpdateValidator('rung');
   }
-  disableReuireditems(form: NgForm) {
+  disableReuiredItems(form: NgForm) {
     this.formComp = form;
     this.isRequired = false;
     this.clearUpdateValidator('sProgram');
@@ -182,7 +166,7 @@ export class BaseSmartTag {
 
   defaultValueOnAdd(form, radio) {
     this.initOnAdd();
-    this.enableReuireditems(form);
+    this.enableReuiredItems(form);
     this.service.getInfoNode(this.nodeiD)
       .subscribe((data: any) => {
         this.programs = data['Programs'];
@@ -197,10 +181,9 @@ export class BaseSmartTag {
     this.cloneSelectedNode.sProgramParent = this.node.sProgram;
     this.cloneSelectedNode.sParentTagName = this.node.TagName;
     this.disableGroupBtn(false);
-    this.initTime();
   }
   defaultValueOnEdit(form) {
-    this.disableReuireditems(form);
+    this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode.iD)
       .subscribe((data: any) => {
         console.log(data);
@@ -208,7 +191,6 @@ export class BaseSmartTag {
     this.routineDefault = this.routines[0];
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
     this.disableGroupBtn(true);
-    this.initTime();
     this.loadValue();
   }
 

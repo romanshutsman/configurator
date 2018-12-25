@@ -14,7 +14,7 @@ export class DialogComponent implements OnInit {
   message: any;
   @Output() postController = new EventEmitter();
   @Output() responseVerify = new EventEmitter();
-  @Input() set connectController(value: any) {
+  @Input() set manageOfMessageBox(value: any) {
     if (value) {
       this.list = value.list;
       this.show = value.show;
@@ -33,7 +33,7 @@ export class DialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  choose(item) {
+  chooseController(item) {
     this.controller = item.Version;
     this.cdRef.detectChanges();
     this.postController.emit(item);
@@ -52,7 +52,7 @@ export class DialogComponent implements OnInit {
     this.showConnect = false;
     this.cdRef.detectChanges();
   }
-  onResponse(e) {
+  onResponseVerify(e) {
     console.log(this.controller);
     this.responseVerify.emit(e);
   }

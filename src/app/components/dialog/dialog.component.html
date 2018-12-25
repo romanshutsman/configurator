@@ -2,7 +2,7 @@
   <div class="pop connected">
     <mat-radio-group class="example-radio-group" class="group">
       <mat-radio-button class="example-radio-button" [checked]="item.Version == controller" *ngFor="let item of list"
-        [value]="item" (click)="choose(item); ">
+        [value]="item" (click)="chooseController(item); ">
         {{item.Name}} ({{item.Version}})
       </mat-radio-button>
     </mat-radio-group>
@@ -20,8 +20,8 @@
     <p class="">{{message}}</p>
     <p class="">Do you want to insert it?</p>
     <div class="group-btn">
-      <button mat-raised-button color="primary" (click)="onResponse(true)">Yes</button>
-      <button mat-raised-button color="primary" (click)="onResponse(false)">No</button>
+      <button mat-raised-button color="primary" (click)="onResponseVerify(true)">Yes</button>
+      <button mat-raised-button color="primary" (click)="onResponseVerify(false)">No</button>
     </div>
   </div>
 </div>

@@ -12,9 +12,9 @@
         <button mat-menu-item [class.active]="active  === false" [disabled]="!active" (click)="collectData(false)">Off</button>
       </mat-menu>
       <p>Configuration</p>
-      <button class="tablinks" [class.active]="showTabTree" (click)="openTab($event, 'model-tree')" >Model</button>
-      <button class="tablinks" [class.active]="showTabOperation" *ngIf="!hideForm" (click)="openTab($event, 'smart-tag-editor')">Smart Tag</button>
-      <!-- <button class="tablinks" [class.active]="showTabAOI" (click)="openTab($event, 'aoi')">AOI</button> -->
+      <button class="tablinks" [class.active]="showTabTree" (click)="openTab('model-tree')" >Model</button>
+      <button class="tablinks" [class.active]="showTabOperation" *ngIf="!hideForm" (click)="openTab('smart-tag-editor')">Smart Tag</button>
+      <!-- <button class="tablinks" [class.active]="showTabAOI" (click)="openTab'aoi')">AOI</button> -->
     </div>
   </div>
 </div>

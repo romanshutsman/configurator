@@ -107,7 +107,7 @@ export class MenuComponent implements OnInit {
       this.version = value;
     });
   }
-  openTab(e, tab) {
+  openTab(tab) {
     if (tab === 'model-tree') {
       this.contentSelected.emit('model-tree');
       this.setPropertyMenu(true, false, this.hideForm, false);

@@ -19,7 +19,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       this.cloneSelectedNode = value;
       this.nodeiD = this.cloneSelectedNode.iD;
     }
-    this.updateCheckbox();
+    this.resetCheckbox();
   }
 
   @Input() set actionMenu(value) {
@@ -29,7 +29,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       if (value.type == 'node') {
         if (value.action === this.service.action.add) {
           this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
-          this.updateCheckbox();
+          this.resetCheckbox();
           if(this.nodeFrm.controls['tagname'] && this.nodeFrm.controls['label'] && this.nodeFrm.controls['sProgram']) {
             this.nodeFrm.controls['tagname'].reset();
             this.nodeFrm.controls['label'].reset();
@@ -135,18 +135,18 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   getITypes() {
     this.service.getInfoTypes().subscribe((value: any) => {
       this.typesOfCheckboxes = JSON.parse(value);
-      this.updateCheckbox();
+      this.resetCheckbox();
       this.initCheckbox();
     });
   }
-  updateCheckbox() {
+  resetCheckbox() {
     for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
       this.typesOfCheckboxes[i]['selected'] = false;
     }
   }
 
 
-  clickOnRadio(e) {
+  onChangeSelect(e) {
     if (e.value === this.arrayOfRadioBtns[4]) {
       this.isEnableTriggerInput(true, true, 0);
     } else if (e.value === this.arrayOfRadioBtns[0]) {
@@ -175,8 +175,8 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   }
 
-  getFunctions() {
-    let rVal = 0;
+  updateFunctions() {
+    let   rVal = 0;
     const selected = this.typesOfCheckboxes.filter(it => it.selected == true).map(i => i.BIT);
     selected.forEach(iBit => {
       rVal += Math.pow(2, iBit);

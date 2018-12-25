@@ -16,8 +16,6 @@ import { BaseSmartTag } from './base-smart-tag';
 export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
 
   @ViewChild('nodeForm') public nodeFrm: NgForm;
-  @ViewChild('activeInput1') activeInput1: ElementRef;
-  @ViewChild('activeInput2') activeInput2: ElementRef;
 
   pathNode: string;
   found: any;

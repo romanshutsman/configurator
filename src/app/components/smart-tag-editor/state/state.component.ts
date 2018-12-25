@@ -60,7 +60,7 @@ export class StateComponent extends BaseSmartTag implements OnInit {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
     }
   }
-  clickOnRadio(e) {
+  onChangeSelect(e) {
     this.onCheckRadio(e, this.nodeFrm);
   }
   removeMinus(e, num) {
