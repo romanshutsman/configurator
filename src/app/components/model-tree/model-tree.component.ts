@@ -63,9 +63,10 @@ export class ModelTreeComponent implements OnInit {
       }
     }
   ];
-  listOfAOI = ['list1', 'list2'];
+  listOfAOI = [];
   @Output() itemSelected = new EventEmitter();
   @Output() transferTree = new EventEmitter();
+  @Output() showAOIMsg = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   offsetTopEdit: any;
   @Input() set dataForm(value) {
@@ -77,6 +78,18 @@ export class ModelTreeComponent implements OnInit {
       }
     }
   }
+  checkedStatus = true;
+  @Input() set  CheckStatusOfController(value) {
+    console.log(value)
+    if(value) {
+      if(value['Status'] != 6) {
+        this.checkedStatus = false;
+      } else {
+        this.checkedStatus = true;
+      }
+      this.listOfAOI = value['Aois'];
+    }
+  };
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
     this.service.SubjectLoadTree.subscribe((value) => {
       if (value) {
@@ -89,7 +102,7 @@ export class ModelTreeComponent implements OnInit {
     });
 
     // let stringifyData = JSON.stringify(this.service.dataTREE);
-    // stringifyData = stringifyData.replace(/sName/g, 'label');
+    // stringifyData = stringifyData.replace(/nameInModel/g, 'label');
     // stringifyData = stringifyData.replace(/lChildrens/g, 'children');
     // const object = JSON.parse(stringifyData);
     // const data = [];
@@ -99,7 +112,6 @@ export class ModelTreeComponent implements OnInit {
     // console.log(data);
 
   }
-
   ngOnInit() {
     // should comment in production!!!!!!
     // setTimeout(() => {
@@ -113,7 +125,7 @@ export class ModelTreeComponent implements OnInit {
   }
   parseTreeNode(tree) {
     let stringifyData = tree;
-    stringifyData = stringifyData.replace(/sName/g, 'label');
+    stringifyData = stringifyData.replace(/nameInModel/g, 'label');
     stringifyData = stringifyData.replace(/lChildrens/g, 'children');
     const object = JSON.parse(stringifyData);
     const data = [];
@@ -278,5 +290,11 @@ export class ModelTreeComponent implements OnInit {
     };
   }
   contextMenuAOI() {
+  }
+  onHover() {
+    console.log(this.checkedStatus);
+    if(!this.checkedStatus) {
+      this.showAOIMsg.emit(true);
+    }
   }
 }

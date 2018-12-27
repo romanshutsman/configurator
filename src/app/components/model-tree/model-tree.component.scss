@@ -5,9 +5,6 @@ div.scroll {
     width: 100%;
     flex-grow: 1;
 }
-i {
-    margin-right: 10px;
-}
 .wrap {
     display: flex;
 }
@@ -27,4 +24,16 @@ i {
 mat-form-field {
     max-width: 100px;
     width: 100%;
+}
+
+.menu:before {
+    content: "›";
+    position: absolute;
+    right: 5px;
+    font-size: 30px;
+    top: -4px;
+}
+
+.menu.empty-menu:before {
+    content: "";
 }

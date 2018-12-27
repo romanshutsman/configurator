@@ -55,5 +55,7 @@ export class DialogComponent implements OnInit {
   onResponseVerify(e) {
     console.log(this.controller);
     this.responseVerify.emit(e);
+    this.showVerify = false;
+    this.cdRef.detectChanges();
   }
 }

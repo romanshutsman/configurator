@@ -150,3 +150,9 @@ nav {
 .activeTab {
     display: block;
 }
+.tab button.disableBtn:hover {
+    background-color: unset;
+}
+.tab button.disableBtn {
+    color: gainsboro;
+}

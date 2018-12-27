@@ -53,11 +53,11 @@ html, body {
     padding: 0;
     white-space: nowrap;
     .hasSubMenu:before {
-      content: "›";
-      position: absolute;
-      right: 5px;
-      font-size: 30px;
-      top: -4px;
+      content: "";
+  //     position: absolute;
+  //     right: 5px;
+  //     font-size: 30px;
+  //     top: -4px;
   }
   }
   .ngx-contextmenu li:first-child {
@@ -71,7 +71,6 @@ html, body {
     cursor: pointer;
     border: 1px solid transparent;
     white-space: nowrap;
-    padding: 6px 8px;
     border-radius: 3px;
     text-decoration: none;
     box-sizing: border-box;
@@ -91,4 +90,14 @@ html, body {
   }
   .ngx-contextmenu:focus {
     outline: none;
+  }
+  .ngx-contextmenu > ul > li > a > span {
+    width: 100%;
+    height: 100%;
+    padding: 6px 8px;
+  }
+  
+  .ngx-contextmenu ul li a :not(span) {
+    padding: 6px 8px;
+    align-items: center;
   }

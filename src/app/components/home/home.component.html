@@ -6,7 +6,11 @@
     <app-message-bar></app-message-bar>
   </section>
   <section class="menu-bar">
-    <app-menu (contentSelected)="selectedContent($event)"  [actionOnClicked]="operationOnForm"></app-menu>
+    <app-menu 
+    (contentSelected)="selectedContent($event)"  
+    (onReconnect)="onReconnecting($event)"  
+    [actionOnClicked]="operationOnForm"
+    [disableBtnOnError]="disableBtnOfMenu"></app-menu>
   </section>
   <section class="content">
     <div class="block2">
@@ -15,7 +19,10 @@
         [dataForm]="operationOnForm" 
         (actionContextMenuChanged)="actionMenu($event)"
         (itemSelected)="getNode($event)" 
-        (transferTree)="getTree($event)"></app-model-tree>
+        [CheckStatusOfController]="checkStatus"
+        (transferTree)="getTree($event)"
+        (showAOIMsg)="showNewMsg($event)"
+        ></app-model-tree>
       </div>
 
       <div class="tabcontent" [class.activeTab]="showTabOperation">
@@ -37,5 +44,9 @@
   </section>
 </section>
 
-<app-dialog class="dialog" (postController)="getChosenController($event)" [manageOfMessageBox]="onConnect" (responseVerify)="verifyingChosenController($event)">
+<app-dialog 
+class="dialog" 
+(postController)="getChosenController($event)" 
+[manageOfMessageBox]="onConnect" 
+(responseVerify)="verifyingChosenController($event)">
   <app-dialog>

@@ -23,6 +23,8 @@ export class HomeComponent {
   chosenVersion: any;
   listOfControllers = [];
   showTabAOI = false;
+  disableBtnOfMenu = false;
+  checkStatus;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -114,10 +116,13 @@ export class HomeComponent {
         const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'No active controllers!', false);
         this.checkVerification(body);
+        this.disableBtnOfMenu = true;
       } else if (data.length === 1) {
+        this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, false, false, '', false);
         this.checkVerification(data[0]);
       } else if (data.length > 1) {
+        this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, true, false, '', false);
       }
     },
@@ -126,6 +131,7 @@ export class HomeComponent {
         this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         this.checkVerification(body);
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
+        this.disableBtnOfMenu = true;
       });
   }
   successConnect(data, body, item) {
@@ -145,37 +151,49 @@ export class HomeComponent {
     body['Version'] = item.Version;
     const foundIndex = this.listOfControllers.findIndex(i => i === item);
     this.service.VerifyLogixInfoServer(foundIndex).subscribe( data => {
-      if(data) {
+      if(data === true) {
         body['State'] = false;
         this.connectingToChosenVersion(body, item, bodyTransfer);
-      } else {
+        this.disableBtnOfMenu = false;
+      } else if (data === false) {
         // show message
         this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
+        this.disableBtnOfMenu = true;
+      } else {
+        this.manageMessageDialog([], false, true, 'You should set the language first!', false);
+        this.disableBtnOfMenu = true;
       }
     }, err => {
-
+      this.disableBtnOfMenu = true;
     });
   }
   connectingToChosenVersion(body, item, bodyTransfer) {
-    this.service.connectToController(body).subscribe(data => {
-      if (data) {
-        this.successConnect(data, bodyTransfer, item);
+    this.service.connectToController(body).subscribe(data  => {
+      console.log(data);
+      console.log(data['Status']);
+      console.log(data['']);
+      this.checkStatus = data;
+      if (data['Tree']) {
+        this.successConnect(data['Tree'], bodyTransfer, item);
+        this.disableBtnOfMenu = false;
         // this.manageMessageDialog([], false, true, 'Succesfully connected', false);
       } else {
-        this.service.SubjectLoadTree.next(data);
+        this.service.SubjectLoadTree.next(data['Tree']);
         this.errorConnect();
+        this.disableBtnOfMenu = true;
         if(item.Version) {
           this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         } else {
           this.manageMessageDialog([], false, false, '', false);
-
+          
         }
       }
     },
     error => {
+      this.disableBtnOfMenu = true;
       this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
       if (item.Version !== '') {
-          this.errorConnect();
+        this.errorConnect();
         }
       });
   }
@@ -211,6 +229,18 @@ export class HomeComponent {
       this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     } else {
       this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
+    }
+  }
+  showNewMsg(e) {
+    console.log(e);
+    if(e) {
+      this.manageMessageDialog([], false, true, 'Controller should be offline!', false);
+    }
+  }
+  onReconnecting(e) {
+    console.log(e);
+    if(e) {
+      this.getActiveControllerAndCheck();
     }
   }
 }

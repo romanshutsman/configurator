@@ -9,8 +9,9 @@ import { SharedService } from './../../providers/shared.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-
+  
   @Output() contentSelected = new EventEmitter();
+  @Output() onReconnect = new EventEmitter();
   @Input() set actionOnClicked(value) {
     console.log(value);
     if (value) {
@@ -22,6 +23,7 @@ export class MenuComponent implements OnInit {
       }
     }
   }
+  @Input() disableBtnOnError;
   
   version: any;
   active: boolean;
@@ -124,6 +126,9 @@ export class MenuComponent implements OnInit {
     this.showTabOperation = tabOper;
     this.hideForm = hideForm;
     this.showTabAOI = aoi;
+  }
+  Reconnect() {
+    this.onReconnect.emit(true);
   }
 }
 
