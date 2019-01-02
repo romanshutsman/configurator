@@ -25,6 +25,10 @@ export class HomeComponent {
   showTabAOI = false;
   disableBtnOfMenu = false;
   checkStatus;
+  onLoading = false;
+  onBlocking = false;
+  onHideAoi = false;
+  onDisableBtn = false;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -110,7 +114,10 @@ export class HomeComponent {
   getChosenController = controller => this.checkVerification(controller);
 
   getActiveControllerAndCheck() {
+    this.onLoading = true;
+    this.onBlocking = true;
     this.service.getActiveControllers().subscribe((data: any) => {
+      this.onBlocking = false;
       this.listOfControllers = data;
       if (data.length === 0) {
         const body = { 'Version': '' };
@@ -126,7 +133,8 @@ export class HomeComponent {
         this.manageMessageDialog(data, true, false, '', false);
       }
     },
-      error => {
+    error => {
+      this.onBlocking = false;
         const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         this.checkVerification(body);
@@ -160,8 +168,10 @@ export class HomeComponent {
         this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
         this.disableBtnOfMenu = true;
       } else {
+        this.onLoading = false;
         this.manageMessageDialog([], false, true, 'You should set the language first!', false);
         this.disableBtnOfMenu = true;
+        this.onDisableBtn = true;
       }
     }, err => {
       this.disableBtnOfMenu = true;
@@ -169,9 +179,13 @@ export class HomeComponent {
   }
   connectingToChosenVersion(body, item, bodyTransfer) {
     this.service.connectToController(body).subscribe(data  => {
+      this.onLoading = false;
       console.log(data);
       console.log(data['Status']);
       console.log(data['']);
+      if(data['Status'] != 6) {
+        this.onHideAoi = true;
+      }
       this.checkStatus = data;
       if (data['Tree']) {
         this.successConnect(data['Tree'], bodyTransfer, item);
@@ -190,6 +204,7 @@ export class HomeComponent {
       }
     },
     error => {
+      this.onLoading = false;
       this.disableBtnOfMenu = true;
       this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
       if (item.Version !== '') {

@@ -1,4 +1,7 @@
-<div class="wrap">
+<div class="spinner" *ngIf="visibleBlock">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="wrap" *ngIf="!visibleBlock">
   <div class="scroll" 
   >
   <!-- to scroll -->

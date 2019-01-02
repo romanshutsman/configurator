@@ -10,6 +10,9 @@
     (contentSelected)="selectedContent($event)"  
     (onReconnect)="onReconnecting($event)"  
     [actionOnClicked]="operationOnForm"
+    [onReconnectLoading]="onBlocking"
+    [onOfflineDisableBtn]="onHideAoi"
+    [onOfflineHideAoi]="onDisableBtn"
     [disableBtnOnError]="disableBtnOfMenu"></app-menu>
   </section>
   <section class="content">
@@ -22,6 +25,7 @@
         [CheckStatusOfController]="checkStatus"
         (transferTree)="getTree($event)"
         (showAOIMsg)="showNewMsg($event)"
+        [onReconnectLoading]="onLoading"
         ></app-model-tree>
       </div>
 

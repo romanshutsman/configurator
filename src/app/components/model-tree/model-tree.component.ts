@@ -90,6 +90,10 @@ export class ModelTreeComponent implements OnInit {
       this.listOfAOI = value['Aois'];
     }
   };
+  visibleBlock = false;
+  @Input() set onReconnectLoading(value) {
+    this.visibleBlock = value;
+  }
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
     this.service.SubjectLoadTree.subscribe((value) => {
       if (value) {

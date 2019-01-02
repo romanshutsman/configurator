@@ -24,7 +24,16 @@ export class MenuComponent implements OnInit {
     }
   }
   @Input() disableBtnOnError;
-  
+  blockOnConnecting = false;
+  @Input() set onReconnectLoading(value) {
+    this.blockOnConnecting = value;
+  }
+  @Input() set onOfflineDisableBtn(value) {
+    this.disableBtn = value;
+  }
+  @Input() set onOfflineHideAoi(value) {
+    this.hideAoi = value;
+  }
   version: any;
   active: boolean;
   totalValueSubsr: Subscription;
@@ -34,7 +43,8 @@ export class MenuComponent implements OnInit {
   hideForm = true;
   hideAOI = true;
   showTabAOI = false;
-
+  hideAoi = false;
+  disableBtn = false;
 
   constructor(private service: SharedService) {
     this.service.SubjectControlTab.subscribe((value) => {

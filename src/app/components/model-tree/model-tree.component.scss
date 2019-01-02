@@ -37,3 +37,8 @@ mat-form-field {
 .menu.empty-menu:before {
     content: "";
 }
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%
+}
