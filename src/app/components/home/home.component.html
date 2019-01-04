@@ -13,6 +13,7 @@
     [onReconnectLoading]="onBlocking"
     [onOfflineDisableBtn]="onHideAoi"
     [onOfflineHideAoi]="onDisableBtn"
+    [onShowedAOI]="showAOITab"
     [disableBtnOnError]="disableBtnOfMenu"></app-menu>
   </section>
   <section class="content">
@@ -25,6 +26,7 @@
         [CheckStatusOfController]="checkStatus"
         (transferTree)="getTree($event)"
         (showAOIMsg)="showNewMsg($event)"
+        (showAOI)="onShowAOI($event)"
         [onReconnectLoading]="onLoading"
         ></app-model-tree>
       </div>
@@ -38,7 +40,7 @@
         </app-smart-tag-editor>
       </div>
       <div class="tabcontent" [class.activeTab]="showTabAOI">
-        <app-aoi-editor>
+        <app-aoi-editor [loadedAoi]="responseAoi">
         </app-aoi-editor>
       </div>
     </div>

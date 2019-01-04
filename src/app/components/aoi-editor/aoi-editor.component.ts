@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-aoi-editor',
@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./aoi-editor.component.scss']
 })
 export class AoiEditorComponent implements OnInit {
+  aoi;
+  @Input() set loadedAoi(value) {
+    if(value) {
+      this.aoi = value;
+    }
+  }
 
   constructor() { }
 

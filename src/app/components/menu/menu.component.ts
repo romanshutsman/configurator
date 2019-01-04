@@ -34,6 +34,16 @@ export class MenuComponent implements OnInit {
   @Input() set onOfflineHideAoi(value) {
     this.hideAoi = value;
   }
+  @Input() set onShowedAOI(value) {
+    console.log('HERE', value);
+    if(value) {
+      if(value.emit) {
+        this.setPropertyMenu(false, false, this.hideForm, true);
+      } else {
+        this.setPropertyMenu(true, false, this.hideForm, false);
+      }
+    }
+  }
   version: any;
   active: boolean;
   totalValueSubsr: Subscription;

@@ -9,7 +9,10 @@ import { SharedService } from 'src/app/providers/shared.service';
   styleUrls: ['./node.component.scss']
 })
 export class NodeComponent extends BaseSmartTag implements OnInit {
-  // typesOfCheckboxes = [{Name : 'sdfs', BIT: 0, selected: false}, {Name : 'sdfs', BIT: 1, selected: false}];
+  // typesOfCheckboxes = [
+  //   {Name : 'sdfs', BIT: 0, selected: false},
+  //    {Name : 'sdfs', BIT: 1, selected: false}
+  //   ];
   typesOfCheckboxes = [];
   @ViewChild('nodeForm') public nodeFrm: NgForm;
 
@@ -44,6 +47,9 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
     }
   }
+  showPopUpAttr = false;
+
+
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
     this.getITypes();
@@ -183,5 +189,11 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     });
     console.log(rVal);
     this.cloneSelectedNode.iFunction = rVal;
+  }
+  showMore() {
+    this.showPopUpAttr = true;
+  }
+  closeModal1() {
+    this.showPopUpAttr = false;
   }
 }

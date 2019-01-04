@@ -62,13 +62,24 @@ export class ModelTreeComponent implements OnInit {
         return node.iType === 3;
       }
     }
+    // ,
+    // {
+    //   iconClass: 'ra-icon ra-icon-priority-medium',
+    //   condition: (node: ITreeNode): boolean => {
+    //     return node.iFunction !== 0;
+    //     // return true;
+    //   }
+    // }
   ];
   listOfAOI = [];
   @Output() itemSelected = new EventEmitter();
   @Output() transferTree = new EventEmitter();
   @Output() showAOIMsg = new EventEmitter();
+  @Output() showAOI = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   offsetTopEdit: any;
+  offsetTopTooltip: any;
+  offsetLeftTooltip: any;
   @Input() set dataForm(value) {
     if (value) {
       if (value.action === 'added') {
@@ -124,7 +135,8 @@ export class ModelTreeComponent implements OnInit {
     this.config = {
       shouldExpandOnCaret: true,
       isNodeIconEnabled: true,
-      nodeExt: this.treeExtension
+      nodeExt: this.treeExtension,
+      emptyTreeText: 'Tree is empty!'
     }
   }
   parseTreeNode(tree) {
@@ -201,7 +213,6 @@ export class ModelTreeComponent implements OnInit {
     }
   }
   getInfo(e) {
-    console.log(e.target.offsetTop);
     this.offsetTopEdit = e.target.offsetTop + 'px';
     
   }
@@ -218,24 +229,19 @@ export class ModelTreeComponent implements OnInit {
   }
 
   searchAllParentID(node) {
-    console.log(node)
-    console.log(node.iParent)
     this.writeFoundID(node.iParent);
     if (node.iParent < 0 ) return;
     this.found = undefined;
     // const parent = this.findTreeNode(this.treeModel, node.iParent);
     this.treeModel.forEach( item => {
       if(item.iParent) {
-        console.log(item.iParent, 'ZERO')
         this.writeFoundID(item.iParent);
       } else {
         if (item.children.length) {
           item.children.forEach( elem => {
             if(elem.iParent) {
-              console.log(elem)
               this.writeFoundID(item.iParent);
             } else {
-              console.log('HERE')
               this.searchAllParentID(elem);
             }
           })
@@ -244,9 +250,7 @@ export class ModelTreeComponent implements OnInit {
     })
   }
   writeFoundID(id) {
-    console.log(id)
     this.ParentIDOfNodes.push(id);
-    console.log(this.ParentIDOfNodes);
   }
   // findTreeNode(nodeList: NodeTree[], id) {
   //   nodeList.forEach(item => {
@@ -293,12 +297,33 @@ export class ModelTreeComponent implements OnInit {
       updateRadio: item.updateRadio
     };
   }
-  contextMenuAOI() {
-  }
   onHover() {
     console.log(this.checkedStatus);
     if(!this.checkedStatus) {
       this.showAOIMsg.emit(true);
+    }
+  }
+  contextMenuAOI(e) {
+    this.showAOI.emit({emit: true, aoi: e, selectedNode: this.nodeTree});
+  }
+  showTooltip(e) {
+    const classes = e.target.classList;
+    for (let i = 0; i < classes.length; i++) {
+      if(classes[i] == 'ra-icon-priority-medium') {
+        const offsetTop = e.target.offsetTop - 20;
+        const offsetLeft = e.target.offsetLeft - 50;
+        this.offsetTopTooltip = offsetTop + 'px';
+        this.offsetLeftTooltip = offsetLeft + 'px';
+      }
+    }
+  }
+  hideTooltip(e) {
+    const classes = e.target.classList;
+    for (let i = 0; i < classes.length; i++) {
+      if(classes[i] == 'ra-icon-priority-medium') {
+        this.offsetTopTooltip = -2000 + 'px';
+        this.offsetLeftTooltip = -2000 + 'px';
+      }
     }
   }
 }

@@ -55,7 +55,7 @@
   </mat-card>
   <mat-card class="infomation-type" >
     <div class="type" >
-      <p>Information attributes</p>
+      <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
       <div class="checkbox">
           <ng-container 
           *ngFor="let item of typesOfCheckboxes; let i = index">
@@ -66,8 +66,10 @@
             [checked]="item.selected"
             (change)="updateFunctions()"
             >
-            {{item.Name}}
-            <!-- <input type="text" class="input-info-type" *ngIf="item.BIT == 1"> -->
+            <span class="infoName" >
+              {{item.Name}}
+            </span>
+            <!-- <input type="text" placeholder="Enter attr" class="input-info-type" *ngIf="item.BIT == 1"> -->
           </mat-checkbox>
         </ng-container>
       </div>
@@ -179,3 +181,36 @@
     </div>
   </mat-card>
 </form>
+
+
+
+<div class="over" *ngIf="showPopUpAttr">
+    <div class="pop">
+      <p>Information attributes</p>
+        <mat-card class="" >
+          <p *ngIf="typesOfCheckboxes.length == 0">No attributes!</p>
+          <div class="mat-checkboxes">
+            <ng-container 
+              *ngFor="let item of typesOfCheckboxes; let i = index">
+                <mat-checkbox
+                [ngModelOptions]="{standalone: true}"
+                color="primary"
+                [(ngModel)]="item.selected"
+                [checked]="item.selected"
+                (change)="updateFunctions()"
+                >
+                <div class="groupSpan">
+                  <span class="popupNameCheckbox" >
+                    {{item.Name}}
+                  </span>
+                  <span>
+                    <!-- <input type="text" placeholder="Enter name of attribute" class="popUpInfoName" *ngIf="item.BIT == 1"> -->
+                  </span>
+                </div>
+              </mat-checkbox>
+            </ng-container>
+          </div>
+          </mat-card>
+      <button mat-raised-button color="primary" class="first-btn" (click)="closeModal1()">close</button>
+    </div>
+  </div>

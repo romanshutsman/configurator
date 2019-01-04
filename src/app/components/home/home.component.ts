@@ -12,7 +12,7 @@ export class HomeComponent {
   treeModel: NodeTree[];
   selectedItem: NodeTree;
   public actionContextMenu: any;
-  showTabTree = false;
+  showTabTree = true;
   showTabOperation = false;
   operationOnForm: string;
   bodyForm: any;
@@ -29,6 +29,8 @@ export class HomeComponent {
   onBlocking = false;
   onHideAoi = false;
   onDisableBtn = false;
+  showAOITab = false;
+  responseAoi;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -169,6 +171,7 @@ export class HomeComponent {
         this.disableBtnOfMenu = true;
       } else {
         this.onLoading = false;
+        this.manageOfContent(false, false, false);
         this.manageMessageDialog([], false, true, 'You should set the language first!', false);
         this.disableBtnOfMenu = true;
         this.onDisableBtn = true;
@@ -257,5 +260,30 @@ export class HomeComponent {
     if(e) {
       this.getActiveControllerAndCheck();
     }
+  }
+  onShowAOI(e) {
+    console.log(e)
+    
+    this.service.loadAOI(e.aoi).subscribe(value => {
+      if(value) {
+        const body = e;
+        body['resAoi'] = value;
+        this.showAOITab = body;
+        this.manageOfContent(false, false, true);
+        this.responseAoi = value;
+      } else {
+        e.emit = false;
+        this.showAOITab = e;
+        console.log(this.showAOITab);
+        this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
+        this.manageOfContent(true, false, false);
+      }
+    },
+    error => {
+      this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
+      e.emit = false;
+      this.showAOITab = e;
+      console.log(this.showAOITab);
+    });
   }
 }
