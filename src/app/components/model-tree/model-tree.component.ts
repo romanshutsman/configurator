@@ -174,9 +174,19 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       this.showAOIMsg.emit(true);
     }
   }
-  contextMenuAOI(e) {
-    this.showAOI.emit({ emit: true, aoi: e, selectedNode: this.nodeTree });
+  editAoi(aoiName) {
+    console.log(aoiName);
+    console.log(this.nodeTree);
+    this.showAOI.emit({ emit: true, aoi: aoiName, selectedNode: this.nodeTree });
   }
+
+  insertAoi(item) {
+    this.service.insertAOI(this.nodeTree.iD, item).subscribe(i=>{
+      let tree = this.fixTreeLabels(JSON.stringify(i));
+      this.onAddNewNode(tree[0]);
+    })
+  }
+
   showTooltip(e) {
     const classes = e.target.classList;
     for (let i = 0; i < classes.length; i++) {
