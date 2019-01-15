@@ -142,13 +142,19 @@ export class BaseTree {
       'component': component
     });
   }
-  parseTreeNode(tree) {
+
+  fixTreeLabels(tree): any{
     let stringifyData = tree;
     stringifyData = stringifyData.replace(/nameInModel/g, 'label');
     stringifyData = stringifyData.replace(/lChildrens/g, 'children');
     const object = JSON.parse(stringifyData);
     const data = [];
     data.push(object);
+    return data;
+  }
+
+  parseTreeNode(tree) {
+    let data = this.fixTreeLabels(tree);
     this.treeModel = data;
     this.transferTree.emit(this.treeModel);
     setTimeout(() => {

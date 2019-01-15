@@ -83,6 +83,9 @@ export class SharedService extends DataHelper {
     return this.http.get(this.API_URL_NODE + '/navigate');
   }
   loadAOI(name) {
-    return this.http.post(this.API_URL_NODE + '/load-aoi', {name : name});
+    return this.http.post(this.API_URL_NODE + '/load-aoi', { name: name });
+  }
+  insertAOI(id, name) {
+    return this.http.post(this.API_URL_NODE + '/insert-aoi', { id: id, name: name });
   }
 }
