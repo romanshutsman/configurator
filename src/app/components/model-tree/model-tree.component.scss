@@ -57,3 +57,17 @@ mat-form-field {
     top: -2000px;
     left: -2000px;
 }
+
+ra-ui-tree {
+    position: relative;
+}
+::ng-deep .bgColorNode {
+    padding-left: 0px !important;
+    position: absolute; 
+    opacity: .2;
+    width: 200px;
+    height: 28px;
+    background: rebeccapurple;
+    left: 0;
+    pointer-events: none;
+}

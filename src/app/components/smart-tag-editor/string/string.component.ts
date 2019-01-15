@@ -29,9 +29,11 @@ export class StringComponent extends BaseSmartTag implements OnInit {
       this.formAction = value;
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
+        this.initAoi(value);
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
+        this.initAoi(value);
       }
     }
   }

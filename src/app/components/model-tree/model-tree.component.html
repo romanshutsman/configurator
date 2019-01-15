@@ -7,11 +7,11 @@
   >
   <!-- to scroll -->
   <!-- [ngStyle]="{'width': nodeTree?.InternalIndex == 32 ? '80%':'100%' }" -->
-    <ra-ui-tree 
+    <ra-ui-tree
     [contextMenu]="basicMenu" 
     [contextMenuSubject]="selectedNode"
     [(tree)]="treeModel" 
-    (dblclick)="onDblClick()"
+    (dblclick)="onDblClick('model')"
     (click)="getInfo($event)"
     (mouseover)="showTooltip($event)"
     (mouseout)="hideTooltip($event)"
@@ -45,11 +45,11 @@
   <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext"> <span class="menu">Add</span> </ng-template>
   <ng-template contextMenuItem [subMenu]="subMenuAOI"  ><span (mouseenter)="onHover()" class="menu" [class.empty-menu]="checkedStatus">AOI</span></ng-template>
   <context-menu #someSubMenu class="item-menu-cont" id="item-menu-cont">
-    <ng-template  contextMenuItem [visible]="showContext" (execute)="contextMenuType('node')"> <i class="ra-icon ra-icon-folder"></i> <p>Node</p> </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real')"> <i class="ra-icon ra-icon-gauge"></i> <p>Real</p> </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state')"><i class="ra-icon ra-icon-network-resources"></i> <p>State</p> </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint')"> <i class="ra-icon ra-icon-data-type"></i> <p>Dint</p> </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string')"> <i class="ra-icon ra-icon-text-editor"></i> <p>String</p></ng-template>
+    <ng-template  contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'model')"> <i class="ra-icon ra-icon-folder"></i> <p>Node</p> </ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real', 'model')"> <i class="ra-icon ra-icon-gauge"></i> <p>Real</p> </ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state', 'model')"><i class="ra-icon ra-icon-network-resources"></i> <p>State</p> </ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint', 'model')"> <i class="ra-icon ra-icon-data-type"></i> <p>Dint</p> </ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string', 'model')"> <i class="ra-icon ra-icon-text-editor"></i> <p>String</p></ng-template>
   </context-menu>
   <context-menu #subMenuAOI >
       <ng-template contextMenuItem [visible]="checkedStatus" *ngFor="let item of listOfAOI"  (execute)="contextMenuAOI(item)"> <i class="ra-icon ra-icon-dashboard"></i> <p>{{item}}</p></ng-template>

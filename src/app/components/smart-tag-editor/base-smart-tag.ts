@@ -100,7 +100,10 @@ export class BaseSmartTag {
       rung: 0,
       sProgramParent: '',
       sParentTagName: '',
-      updateRadio: 'Rate'
+      updateRadio: 'Rate',
+      isAoi: false,
+      nameAoi: null,
+      lInfoAtt: []
     };
   }
   getOptionTime(e) {
@@ -172,7 +175,7 @@ export class BaseSmartTag {
         this.programs = data['Programs'];
         this.routines = data['Routines'];
         this.routineDefault = this.routines[0];
-        if(this.programs.length > 0) {
+        if (this.programs.length > 0) {
           const defaltProgramIndex: any = this.programs.findIndex(i => i === this.node.sProgram);
           this.cloneSelectedNode.sProgram = this.programs[defaltProgramIndex];
         }
@@ -247,4 +250,13 @@ export class BaseSmartTag {
   //   this.parentOfNode = node;
   //   console.log(this.parentOfNode)
   // }
+  initAoi(value) {
+    if (value.component == 'model') {
+      this.cloneSelectedNode.isAoi = false;
+      this.cloneSelectedNode.nameAoi = null;
+    } else if (value.component == 'aoi') {
+      this.cloneSelectedNode.isAoi = true;
+      this.cloneSelectedNode.nameAoi = value.aoi;
+    }
+  }
 }

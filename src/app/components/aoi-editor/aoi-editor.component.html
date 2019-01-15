@@ -1,116 +1,31 @@
-<!-- <form #nodeForm="ngForm">
-  <mat-card class="first-block">
-    <div class="name">
-      <p>Location in code</p>
-      <p>{{node.sProgram}}</p>
+<!-- <div class="spinner" *ngIf="visibleBlock">
+  <mat-spinner></mat-spinner>
+</div> -->
+<div class="wrap" >
+  <!-- <div class="wrap" *ngIf="!visibleBlock"> -->
+    <div class="scroll"
+    >
+    <!-- to scroll -->
+    <!-- [ngStyle]="{'width': nodeTree?.InternalIndex == 32 ? '80%':'100%' }" -->
+      <ra-ui-tree 
+      [contextMenu]="basicMenu2" 
+      [contextMenuSubject]="selectedNode"
+      (dblclick)="onDblClick('aoi')"
+      [(tree)]="treeModel" 
+      [config]="config"
+      (treeNodeSelected)="onTreeNodeSelected($event)"
+      (treeInitialized)="onTreeInitialized($event)">
+      </ra-ui-tree>
     </div>
-    <div class="tagname">
-      <mat-form-field class="example-full-width input">
-          <input 
-          matInput
-          placeholder="Tag Name"
-          type="text" 
-          name="tagname" 
-          style="font-size:16px"
-          [disabled]="tagnameDisable ? '' : null" 
-          [(ngModel)]="cloneSelectedNode.TagName"
-          pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$"
-          id="tagname"
-          maxlength="40"
-          required >
-      </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
-        First letter must be letter or _. You can type letters and numbers.
-      </p>
-    </div>
-  </mat-card>
-  <mat-card class="second-block">
-    <div class="model">
-      <p>Position in model</p>
-      <p>{{ pathNode}}</p>
-    </div>
-    <div class="nameinmodel">
-      <mat-form-field class="example-full-width input">
-          <input 
-          matInput
-          placeholder="Name in model"
-          type="text" 
-          name="label" 
-          style="font-size:16px"
-          [(ngModel)]="cloneSelectedNode.label"
-          pattern="^[A-Za-z_][A-Za-z0-9\s]{0,39}$"
-          id="tagname"
-          maxlength="40"
-          required >
-      </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.invalid && nodeFrm.controls.label?.touched">
-        First letter must be letter or _. You can type letters and numbers.
-      </p>
-    </div>
-  </mat-card>
-  <mat-card class="infomation-type" >
-    <div class="type" >
-      <p>Information attributes</p>
-      <div class="checkbox">
-          <ng-container 
-          *ngFor="let item of typesOfCheckboxes; let i = index">
-            <mat-checkbox
-            [ngModelOptions]="{standalone: true}"
-            color="primary"
-            [(ngModel)]="item.selected"
-            [checked]="item.selected"
-            (change)="updateFunctions()"
-            >
-            {{item.Name}}
-          </mat-checkbox>
-        </ng-container>
-      </div>
-    </div>
-    <div class="radio-block">
-      <p class="update">Updated by</p>
-      <div class="group">
-        <div class="radio">
-          <mat-form-field class="update">
-            <mat-select style="color:black" [(value)]="cloneSelectedNode.updateRadio" (selectionChange)="onChangeSelect($event)">
-              <mat-option *ngFor="let item of arrayOfRadioBtns" [value]="item">{{item}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="group-2">
-          <div>
-            <mat-form-field class="UpdateRate input">
-                <input 
-                matInput
-                placeholder="UpdateRate"
-                type="number" 
-                name="updateRate" 
-                pattern="^\d*[0-9.]\d*$"
-                required
-                [value]="cloneSelectedNode.updateRate" 
-                [(ngModel)]="cloneSelectedNode.updateRate" 
-                [attr.disabled]="inputDisable ? '' : null"
-                min="0"
-                (change)="getCurrentValue($event)"
-                (keydown)="removeMinus($event, 1)" >
-            </mat-form-field>
-            <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
-              Required!<br>Only positive or 0!
-            </p>
-          </div>
-          <div>
-              <mat-select 
-              [ngModelOptions]="{standalone: true}"
-              (selectionChange)="getOptionTime($event)" 
-              placeholder="Type of time"  
-              [(ngModel)]="timeDefault" >
-              <mat-option *ngFor="let item of times" [value]="item">{{item}}</mat-option>
-            </mat-select>
-          </div>
-        </div>
-      </div>
-        <div class="has-trigger">
-          <mat-checkbox color="primary" >Has Trigger</mat-checkbox>
-        </div>
-    </div>
-  </mat-card>
-</form> -->
+
+  </div>
+  <context-menu #basicMenu2 >
+    <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext"> <span class="menu">Add</span> </ng-template>
+    <context-menu #someSubMenu class="item-menu-cont" id="item-menu-cont">
+      <ng-template  contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'aoi')"> <i class="ra-icon ra-icon-folder"></i> <p>Node</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real', 'aoi')"> <i class="ra-icon ra-icon-gauge"></i> <p>Real</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state', 'aoi')"><i class="ra-icon ra-icon-network-resources"></i> <p>State</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint', 'aoi')"> <i class="ra-icon ra-icon-data-type"></i> <p>Dint</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string', 'aoi')"> <i class="ra-icon ra-icon-text-editor"></i> <p>String</p></ng-template>
+    </context-menu>
+  </context-menu>

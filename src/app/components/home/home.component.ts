@@ -31,6 +31,7 @@ export class HomeComponent {
   onDisableBtn = false;
   showAOITab = false;
   responseAoi;
+  nameAoi: any;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -263,6 +264,7 @@ export class HomeComponent {
   }
   onShowAOI(e) {
     console.log(e)
+    this.nameAoi = e.aoi;
     
     this.service.loadAOI(e.aoi).subscribe(value => {
       if(value) {

@@ -119,7 +119,10 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       routine: item.routine,
       sProgramParent: item.sProgramParent,
       sParentTagName: item.TagName,
-      updateRadio: item.updateRadio
+      updateRadio: item.updateRadio,
+      isAoi: item.isAoi,
+      nameAoi: null,
+      lInfoAtt: []
     };
   }
   initSelectedTag(value) {
@@ -135,6 +138,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
 
     if (node.iParent === 0) return;
     this.found = undefined;
+    console.log(this.tree)
+    console.log(node)
     const parent = this.findTreeElement(this.tree, node.iParent);
     if (parent) {
       this.searchAbsolutePath(parent);

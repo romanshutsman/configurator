@@ -1,4 +1,4 @@
-export interface NodeTree { 
+export interface NodeTree  { 
     label: string;
     iParent: number;
     iD: number;
@@ -25,9 +25,16 @@ export interface NodeTree {
     sProgramParent: string;
     sParentTagName: string;
     updateRadio: string;
+    isAoi: boolean;
+    nameAoi: string;
+    lInfoAtt: InfoAttributesModel[];
 }
 
 export interface RealStateDintNode extends NodeTree {
     valueType: string;
+}
+export interface InfoAttributesModel {
+    name: string;
+    value: string;
 }
 

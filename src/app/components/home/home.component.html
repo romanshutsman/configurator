@@ -40,7 +40,15 @@
         </app-smart-tag-editor>
       </div>
       <div class="tabcontent" [class.activeTab]="showTabAOI">
-        <app-aoi-editor [loadedAoi]="responseAoi">
+        <app-aoi-editor 
+        [loadedAoi]="responseAoi"
+        [dataForm]="operationOnForm" 
+        (actionContextMenuChanged)="actionMenu($event)"
+        (itemSelected)="getNode($event)"
+        [onActiveAOI]="showAOITab" 
+        (transferTree)="getTree($event)"
+        (showAOI)="onShowAOI($event)"
+        >
         </app-aoi-editor>
       </div>
     </div>
