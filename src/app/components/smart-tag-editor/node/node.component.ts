@@ -3,67 +3,15 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input } fr
 import { NodeTree } from 'src/app/providers/node.interface';
 import { NgForm, Validators, FormControl } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
+
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
 })
 export class NodeComponent extends BaseSmartTag implements OnInit {
-  // typesOfCheckboxes = [
-  //   {Name : 'sdfs', BIT: 0, selected: false},
-  //    {Name : 'sdfs', BIT: 1, selected: false}
-  //   ];
-  //   typesOfCheckboxes = [{ "Name": "OEE", "HasValue": 0, "Value": null , BIT: 0, selected: false},
-  // { "Name": "Test01", "HasValue": 1, "Value": "5123" ,BIT: 0, selected: false},
-  // { "Name": "Test02", "HasValue": 0, "Value": null , BIT: 0, selected: false}]
-  typesOfCheckboxes = [
-    {
-      Name: 'Summary',
-      HasValue: 0,
-      Children: [],
-      Require: [],
-      "Value": "5123" ,BIT: 0, selected: false
-    },
-    {
-      Name: 'OEE',
-      HasValue: 0,
-      Children: [
-        { Name: 'Part Count', Type: 'DINT' },
-        { Name: 'Good Parts', Type: 'DINT' },
-        { Name: 'Bad Parts', Type: 'DINT' }],
-      Require: [],
-      "Value": "5123" ,BIT: 0, selected: false
-    },
-    {
-      Name: 'Sherlock',
-      HasValue: 1,
-      Children: [],
-      Require: [
-        { Name: 'Target', HasValue: 0 },
-        { Name: 'Output', HasValue: 1 }],
-        "Value": "5123" ,BIT: 0, selected: false
-    }
-  ];
-  typesOfCheckboxesAOI = [
-    {
-      Name: 'Summary',
-      HasValue: 0,
-      Value: "5123" 
-    },
-    {
-      Name: 'OEE',
-      HasValue: 0,
-      Value: "5123"
-    },
-    {
-      Name: 'Sherlock',
-      HasValue: 1,
-      Value: "5123"
-    }
-  ];
-  checked = [];
 
-  // typesOfCheckboxes = [];
+  typesOfCheckboxes = [];
   @ViewChild('nodeForm') public nodeFrm: NgForm;
 
 
@@ -89,11 +37,13 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
             this.nodeFrm.controls['sProgram'].reset();
           }
           this.initAoi(value);
+          this.initAttributes();
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
           this.loadNode();
           this.initAoi(value);
+          this.initAttributes();
         }
       }
 
@@ -142,7 +92,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
       nameAoi: null,
-      lInfoAtt: [{name: 'OEE', value: undefined}]
+      lInfoAtt: item.lInfoAtt
     };
   }
   loadNode() {
@@ -190,14 +140,16 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   }
   getITypes() {
     this.service.getInfoTypes().subscribe((value: any) => {
-      // this.typesOfCheckboxes = JSON.parse(value);
-      // this.resetCheckbox();
-      // this.initCheckbox();
+      this.typesOfCheckboxes = JSON.parse(value);
+      this.typesOfCheckboxesAOI = JSON.parse(value);
+      this.resetCheckbox();
+      this.initCheckbox();
     });
   }
   resetCheckbox() {
     for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
       this.typesOfCheckboxes[i]['selected'] = false;
+      this.typesOfCheckboxes[i]['BIT'] = 0;
     }
   }
 
@@ -237,7 +189,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     selected.forEach(iBit => {
       rVal += Math.pow(2, iBit);
     });
-    console.log(rVal);
     this.cloneSelectedNode.iFunction = rVal;
   }
   showMore() {
@@ -247,48 +198,32 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     this.showPopUpAttr = false;
   }
   updateInfoTypesAoi(e, item) {
-    console.log('TTYPES');
-    if(e.checked == true) {
-      const newItem = {name: undefined, value: undefined};
+    if (e.checked == true) {
+      const newItem = { name: item.Name, value: undefined };
       if (item.HasValue === 1) newItem['value'] = item.Value;
-      newItem['name'] = item.Name;
-      if(this.cloneSelectedNode.lInfoAtt.length == 0) {
-        this.cloneSelectedNode.lInfoAtt.push(newItem)
-      } else {
-        const found = this.cloneSelectedNode.lInfoAtt.some( e => e.name == item.Name);
-        if(!found) {
-          this.cloneSelectedNode.lInfoAtt.push(newItem);
-        }
-      }
-    } else if(e.checked == false) {
+
+      let el = this.cloneSelectedNode.lInfoAtt.find(e => e.name == item.Name);
+      if (el) return;
+      this.cloneSelectedNode.lInfoAtt.push(newItem);
+    } else if (e.checked == false) {
       this.cloneSelectedNode.lInfoAtt = this.cloneSelectedNode.lInfoAtt.filter(el => el.name !== item.Name);
     }
     this.checkAndSend();
   }
   inputNewValue(item, v) {
     this.cloneSelectedNode.lInfoAtt.map(e => {
-      if(e.name == item.Name) e.value = v;
+      if (e.name == item.Name) e.value = v;
     })
     this.checkAndSend();
   }
   updateChecked(item) {
-    console.log('UPDATE');
-    for (let i = 0; i < this.cloneSelectedNode.lInfoAtt.length; i++) {
-      const el = this.cloneSelectedNode.lInfoAtt[i];
-      if (el.name == item.Name) {
-        this.checked.push(true);
-        return true
-      } else {
-        this.checked.push(false);
-        return false;
-      }
-    }
-    console.log(this.checked)
+    if (!this.cloneSelectedNode.lInfoAtt || this.cloneSelectedNode.lInfoAtt.length < 1) return false;
+    let el = this.cloneSelectedNode.lInfoAtt.find(i => i.name == item.Name);
+    return el ? true : false;
   }
   checkAndSend() {
     if (this.formAction) {
       if (this.formAction['type'] === 'node') {
-        console.log(this.nodeFrm);
         this.sendSmartTagData(this.nodeFrm);
       }
     }

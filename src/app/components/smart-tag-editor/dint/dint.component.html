@@ -93,6 +93,59 @@
     </div>
   </mat-card>
   <mat-card class="infomation-type">
+      <div class="type"  *ngIf="!cloneSelectedNode.isAoi">
+          <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
+          <div class="checkbox">
+              <ng-container 
+              *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+                <mat-checkbox
+                [ngModelOptions]="{standalone: true}"
+                color="primary"
+                [(ngModel)]="item.selected"
+                [checked]="item.selected"
+                (change)="updateFunctions()"
+                >
+                <span class="infoName" >
+                  {{item.Name}}
+                </span>
+                <input 
+                type="text" 
+                placeholder="Enter attr"
+                [(ngModel)]="item.Value" 
+                [value]="item.Value" 
+                [ngModelOptions]="{standalone: true}"
+                class="input-info-type" 
+                *ngIf="item.HasValue == 1">
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
+        <div class="type" *ngIf="cloneSelectedNode.isAoi">
+          <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
+          <div class="checkbox">
+              <ng-container 
+              *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+                <mat-checkbox
+                color="primary"
+                [(ngModel)]="item.selected"
+                [ngModelOptions]="{standalone: true}"
+                (change)="updateInfoTypesAoi($event, item)">
+                <span class="infoName" >
+                  {{item.Name}}
+                </span>
+                <input 
+                type="text" 
+                placeholder="Enter attr"
+                [(ngModel)]="item.Value" 
+                [value]="item.Value" 
+                (input)="inputNewValue(item, $event.target.value)"
+                [ngModelOptions]="{standalone: true}"
+                class="input-info-type" 
+                *ngIf="item.HasValue == 1">
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
     <div class="radio-block">
       <p class="update">Updated by</p>
       <div class="group">

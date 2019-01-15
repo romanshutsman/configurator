@@ -82,16 +82,15 @@
       </div>
     </div>
     <div class="type" *ngIf="cloneSelectedNode.isAoi">
-      <p>9Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
+      <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
       <div class="checkbox">
           <ng-container 
           *ngFor="let item of typesOfCheckboxesAOI; let i = index">
             <mat-checkbox
-            [(ngModel)]="checked[i]"
-            [ngModelOptions]="{standalone: true}"
             color="primary"
-            (change)="updateInfoTypesAoi($event, item)"
-            [checked]="updateChecked(item)">
+            [(ngModel)]="item.selected"
+            [ngModelOptions]="{standalone: true}"
+            (change)="updateInfoTypesAoi($event, item)">
             <span class="infoName" >
               {{item.Name}}
             </span>
@@ -223,10 +222,10 @@
     <div class="pop">
       <p>Information attributes</p>
         <mat-card class="" >
-          <p *ngIf="typesOfCheckboxes.length == 0">No attributes!</p>
+          <p *ngIf="typesOfCheckboxesAOI.length == 0">No attributes!</p>
           <div class="mat-checkboxes">
             <ng-container 
-              *ngFor="let item of typesOfCheckboxes; let i = index">
+              *ngFor="let item of typesOfCheckboxesAOI; let i = index">
                 <mat-checkbox
                 [ngModelOptions]="{standalone: true}"
                 color="primary"
@@ -261,7 +260,7 @@
 
 <div class="over" *ngIf="showPopUpAttr && cloneSelectedNode.isAoi">
     <div class="pop">
-      <p>0Information attributes</p>
+      <p>Information attributes</p>
         <mat-card class="" >
           <p *ngIf="typesOfCheckboxesAOI.length == 0">No attributes!</p>
           <div class="mat-checkboxes">
@@ -269,7 +268,7 @@
               *ngFor="let item of typesOfCheckboxesAOI; let i = index">
                 <mat-checkbox
                 color="primary"
-                [(ngModel)]="checked[i]"
+                [(ngModel)]="item.selected"
                 [ngModelOptions]="{standalone: true}"
                 (change)="updateInfoTypesAoi($event, item)"
                 >

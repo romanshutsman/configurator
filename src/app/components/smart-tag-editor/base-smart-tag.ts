@@ -69,6 +69,7 @@ export class BaseSmartTag {
   ValueTypeStateDint = ['Value', 'Totalizer', 'State'];
   engeneringUnits = ['%'];
   testNamePattern = /^[A-Za-z_][A-Za-z0-9\s]{0,39}$/;
+  typesOfCheckboxesAOI = [];
   constructor(public service: SharedService) {
 
   }
@@ -258,5 +259,12 @@ export class BaseSmartTag {
       this.cloneSelectedNode.isAoi = true;
       this.cloneSelectedNode.nameAoi = value.aoi;
     }
+  }
+  initAttributes() {
+    this.typesOfCheckboxesAOI.forEach(e => {
+      e.selected = false;
+      let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
+      e.selected = !!selected;
+    })
   }
 }
