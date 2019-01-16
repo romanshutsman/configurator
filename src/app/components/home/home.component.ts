@@ -10,6 +10,7 @@ import { SharedService } from '../../providers/shared.service';
 })
 export class HomeComponent {
   treeModel: NodeTree[];
+  treeModelPost: NodeTree[];
   selectedItem: NodeTree;
   public actionContextMenu: any;
   showTabTree = true;
@@ -40,6 +41,9 @@ export class HomeComponent {
     console.log(e);
     this.treeModel = e;
     this.manageOfBtns(false, false, false);
+  }
+  getTreeOnPost(e) {
+    this.treeModelPost = e;
   }
   getNode(e) {
     this.selectedItem = e;
@@ -106,6 +110,7 @@ export class HomeComponent {
       this.selectedItem.updateRate = node.updateRate;
       this.selectedItem.bHasTrigger = node.bHasTrigger;
     }
+    this.treeModelPost = this.treeModel;
   }
   statusController(e) {
     if (e.status) {

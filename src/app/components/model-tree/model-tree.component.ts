@@ -32,10 +32,12 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   offsetLeftTooltip: any;
   @Input() set dataForm(value) {
     if (value) {
-      if (value.action === 'added') {
-        this.onAddNewNode(value.body)
-      } else if (value.action === 'edited') {
-        this.selectedNode && this.treeControlRa.refreshUi;
+      if(value.component == 'model') {
+        if (value.action === 'added') {
+          this.onAddNewNode(value.body)
+        } else if (value.action === 'edited') {
+          this.selectedNode && this.treeControlRa.refreshUi;
+        }
       }
     }
   }

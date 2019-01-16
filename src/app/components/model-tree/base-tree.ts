@@ -64,6 +64,7 @@ export class BaseTree {
   @Output() itemSelected = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   @Output() transferTree = new EventEmitter();
+  @Output() transferTreePost = new EventEmitter();
 
   constructor(public service: SharedService) {
     // let stringifyData = JSON.stringify(this.service.dataTREE);
@@ -158,5 +159,6 @@ export class BaseTree {
   }
   onAddNewNode(body) {
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [body]);
+    this.transferTreePost.emit(this.treeModel);
   }
 }
