@@ -30,16 +30,6 @@ describe('SharedService', () => {
         ServiceSpy = TestBed.get(SharedService);
     }));
 
-    it('should be DATA', () => {
-        const stubValue = 'data';
-        ServiceSpy.getData.and.returnValue(stubValue);
-        expect(ServiceSpy.getData()).toBe('data');
-    });
-
-    it('should call once', () => {
-        ServiceSpy.getData();
-        expect(ServiceSpy.getData.calls.count()).toBe(1);
-    });
 
     it('should return controllers []', () => {
         const expectedControllers0 = [];

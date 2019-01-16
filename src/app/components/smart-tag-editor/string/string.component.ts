@@ -30,10 +30,12 @@ export class StringComponent extends BaseSmartTag implements OnInit {
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
         this.initAoi(value);
+        this.initAttributes();
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.initAoi(value);
+        this.initAttributes();
       }
     }
   }
@@ -56,5 +58,21 @@ export class StringComponent extends BaseSmartTag implements OnInit {
 
   removeMinus(e, num) {
     return this.deleteMinus(e, num);
+  }
+  updateInfoTypesAoi(e, item) {
+    this.updateInfoTypes(e, item);
+    this.checkAndSend();
+  }
+  inputNewValue(item, v) {
+    this.cloneSelectedNode.lInfoAtt.map(e => {
+      if (e.name == item.Name) e.value = v;
+    })
+    this.checkAndSend();
+  }
+
+  checkAndSend() {
+    if (this.formAction) {
+      this.sendSmartTagData(this.nodeFrm);
+    }
   }
 }

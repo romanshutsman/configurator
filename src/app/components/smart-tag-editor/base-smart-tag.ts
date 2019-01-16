@@ -70,8 +70,10 @@ export class BaseSmartTag {
   engeneringUnits = ['%'];
   testNamePattern = /^[A-Za-z_][A-Za-z0-9\s]{0,39}$/;
   typesOfCheckboxesAOI = [];
-  constructor(public service: SharedService) {
+  showPopUpAttr = false;
 
+  constructor(public service: SharedService) {
+    this.getITypes();
   }
 
   initOnAdd() {
@@ -104,7 +106,8 @@ export class BaseSmartTag {
       updateRadio: 'Rate',
       isAoi: false,
       nameAoi: null,
-      lInfoAtt: []
+      lInfoAtt: [],
+      isInjected: false
     };
   }
   getOptionTime(e) {
@@ -262,9 +265,58 @@ export class BaseSmartTag {
   }
   initAttributes() {
     this.typesOfCheckboxesAOI.forEach(e => {
-      e.selected = false;
+      // e.selected = false;
       let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
       e.selected = !!selected;
     })
+  }
+  getITypes() {
+    this.service.getInfoTypes().subscribe((value: any) => {
+      this.typesOfCheckboxesAOI = JSON.parse(value);
+      this.typesOfCheckboxesAOI.forEach(e => {
+        e.selected = false;
+      })
+    })
+    // this.typesOfCheckboxesAOI = [
+    //   {
+    //     Name: 'Summary',
+    //     HasValue: 0,
+    //     Value: "5123" 
+    //   },
+    //   {
+    //     Name: 'OEE',
+    //     HasValue: 0,
+    //     Value: "5123"
+    //   },
+    //   {
+    //     Name: 'Sherlock',
+    //     HasValue: 1,
+    //     Value: "5123"
+    //   }
+    // ];
+  }
+  updateInfoTypes(e, item) {
+    if (e.checked == true) {
+      const newItem = { name: item.Name, value: undefined };
+      if (item.HasValue === 1) newItem['value'] = item.Value;
+
+      let el = this.cloneSelectedNode.lInfoAtt.find(e => e.name == item.Name);
+      if (el) return;
+      this.cloneSelectedNode.lInfoAtt.push(newItem);
+    } else if (e.checked == false) {
+      this.cloneSelectedNode.lInfoAtt = this.cloneSelectedNode.lInfoAtt.filter(el => el.name !== item.Name);
+    }
+  }
+  updateChecked(item) {
+    if (!this.cloneSelectedNode.lInfoAtt || this.cloneSelectedNode.lInfoAtt.length < 1) return false;
+    let el = this.cloneSelectedNode.lInfoAtt.find(i => i.name == item.Name);
+    return el ? true : false;
+  }
+  showMore() {
+    console.log('dcds')
+    this.showPopUpAttr = true;
+  }
+  closeModal1() {
+    this.showPopUpAttr = false;
   }
 }

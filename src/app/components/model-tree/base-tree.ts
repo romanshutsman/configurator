@@ -45,13 +45,8 @@ export class BaseTree {
       condition: (node: ITreeNode): boolean => {
         return node.iType === 3;
       }
-    },
-    {
-      iconClass: 'bgColorNode',
-      condition: (node: ITreeNode): boolean => {
-        return false;
-      }
     }
+
     // ,
     // {
     //   iconClass: 'ra-icon ra-icon-priority-medium',
@@ -85,7 +80,16 @@ export class BaseTree {
     this.treeControlRa = treeControl;
   }
 
+  chengeWidthInsertedNode(node) {
+    const tree = document.getElementsByClassName('model');
+    const w = tree[0].children[0].clientWidth;
 
+    const bg = document.getElementsByClassName('bgColorNode') as HTMLCollectionOf<HTMLElement>;
+    for (let i = 0; i < bg.length; i++) {
+      const element = bg[i];
+      element.style.width = w + 'px';
+    }
+  }
   cloneNode(item) {
     return {
       label: item.label,
@@ -116,7 +120,8 @@ export class BaseTree {
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
       nameAoi: null,
-      lInfoAtt: item.lInfoAtt
+      lInfoAtt: item.lInfoAtt,
+      isInjected: item.isInjected
     };
   }
   onDblClick(comp) {

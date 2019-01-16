@@ -28,12 +28,14 @@ export class StateComponent extends BaseSmartTag implements OnInit {
         this.defaultValueType = this.ValueTypeStateDint[2];
         this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
         this.initAoi(value);
+        this.initAttributes();
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.iSubType];
         this.loadValue();
         this.initAoi(value);
+        this.initAttributes();
       }
     }
   }
@@ -53,7 +55,7 @@ export class StateComponent extends BaseSmartTag implements OnInit {
         this.cloneSelectedNode.iType = 2;
         this.sendSmartTagData(this.nodeFrm);
       });
-    }
+  }
   updateValueType(e) {
     this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(e.value);
   }
@@ -68,5 +70,21 @@ export class StateComponent extends BaseSmartTag implements OnInit {
   removeMinus(e, num) {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
     return this.deleteMinus(e, num);
+  }
+  updateInfoTypesAoi(e, item) {
+    this.updateInfoTypes(e, item);
+    this.checkAndSend();
+  }
+  inputNewValue(item, v) {
+    this.cloneSelectedNode.lInfoAtt.map(e => {
+      if (e.name == item.Name) e.value = v;
+    })
+    this.checkAndSend();
+  }
+
+  checkAndSend() {
+    if (this.formAction) {
+      this.sendSmartTagData(this.nodeFrm);
+    }
   }
 }

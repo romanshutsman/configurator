@@ -54,17 +54,17 @@
     </div>
   </mat-card>
   <mat-card class="infomation-type" >
-    <div class="type"  *ngIf="!cloneSelectedNode.isAoi">
+    <div class="type" >
       <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
       <div class="checkbox">
           <ng-container 
-          *ngFor="let item of typesOfCheckboxes; let i = index">
+          *ngFor="let item of typesOfCheckboxesAOI; let i = index">
             <mat-checkbox
             [ngModelOptions]="{standalone: true}"
             color="primary"
             [(ngModel)]="item.selected"
             [checked]="item.selected"
-            (change)="updateFunctions()"
+            (change)="updateInfoTypesAoi($event, item)"
             >
             <span class="infoName" >
               {{item.Name}}
@@ -81,7 +81,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="type" *ngIf="cloneSelectedNode.isAoi">
+    <!-- <div class="type" *ngIf="cloneSelectedNode.isAoi">
       <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
       <div class="checkbox">
           <ng-container 
@@ -106,7 +106,7 @@
           </mat-checkbox>
         </ng-container>
       </div>
-    </div>
+    </div> -->
 
     <div class="radio-block">
       <p class="update">Updated by</p>
@@ -231,7 +231,6 @@
                 color="primary"
                 [(ngModel)]="item.selected"
                 [checked]="item.selected"
-                (change)="updateFunctions()"
                 >
                 <div class="groupSpan">
                   <span class="popupNameCheckbox" >
@@ -258,7 +257,7 @@
 
 
 
-<div class="over" *ngIf="showPopUpAttr && cloneSelectedNode.isAoi">
+<div class="over" *ngIf="showPopUpAttr ">
     <div class="pop">
       <p>Information attributes</p>
         <mat-card class="" >

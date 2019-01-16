@@ -94,7 +94,7 @@
       </div>
     </mat-card>
     <mat-card class="infomation-type">
-        <div class="type"  *ngIf="!cloneSelectedNode.isAoi">
+        <div class="type"  >
             <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
             <div class="checkbox">
                 <ng-container 
@@ -104,7 +104,7 @@
                   color="primary"
                   [(ngModel)]="item.selected"
                   [checked]="item.selected"
-                  (change)="updateFunctions()"
+                  (change)="updateInfoTypesAoi($event, item)"
                   >
                   <span class="infoName" >
                     {{item.Name}}
@@ -114,32 +114,6 @@
                   placeholder="Enter attr"
                   [(ngModel)]="item.Value" 
                   [value]="item.Value" 
-                  [ngModelOptions]="{standalone: true}"
-                  class="input-info-type" 
-                  *ngIf="item.HasValue == 1">
-                </mat-checkbox>
-              </ng-container>
-            </div>
-          </div>
-          <div class="type" *ngIf="cloneSelectedNode.isAoi">
-            <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
-            <div class="checkbox">
-                <ng-container 
-                *ngFor="let item of typesOfCheckboxesAOI; let i = index">
-                  <mat-checkbox
-                  color="primary"
-                  [(ngModel)]="item.selected"
-                  [ngModelOptions]="{standalone: true}"
-                  (change)="updateInfoTypesAoi($event, item)">
-                  <span class="infoName" >
-                    {{item.Name}}
-                  </span>
-                  <input 
-                  type="text" 
-                  placeholder="Enter attr"
-                  [(ngModel)]="item.Value" 
-                  [value]="item.Value" 
-                  (input)="inputNewValue(item, $event.target.value)"
                   [ngModelOptions]="{standalone: true}"
                   class="input-info-type" 
                   *ngIf="item.HasValue == 1">
@@ -252,3 +226,41 @@
       </div>
     </mat-card>
   </form>
+
+  <div class="over" *ngIf="showPopUpAttr ">
+      <div class="pop">
+        <p>Information attributes</p>
+          <mat-card class="" >
+            <p *ngIf="typesOfCheckboxesAOI.length == 0">No attributes!</p>
+            <div class="mat-checkboxes">
+              <ng-container 
+                *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+                  <mat-checkbox
+                  color="primary"
+                  [(ngModel)]="item.selected"
+                  [ngModelOptions]="{standalone: true}"
+                  (change)="updateInfoTypesAoi($event, item)"
+                  >
+                  <div class="groupSpan">
+                    <span class="popupNameCheckbox" >
+                      {{item.Name}}
+                    </span>
+                    <span>
+                      <input 
+                      type="text" 
+                      placeholder="Enter name of attribute" 
+                      class="popUpInfoName" 
+                      [(ngModel)]="item.Value" 
+                      [ngModelOptions]="{standalone: true}"
+                      [value]="item.Value" 
+                      (input)="inputNewValue(item, $event.target.value)"
+                      *ngIf="item.HasValue == 1">
+                    </span>
+                  </div>
+                </mat-checkbox>
+              </ng-container>
+            </div>
+            </mat-card>
+        <button mat-raised-button color="primary" class="first-btn" (click)="closeModal1()">close</button>
+      </div>
+    </div>

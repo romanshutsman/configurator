@@ -5,7 +5,7 @@ import { SharedService } from './../../providers/shared.service';
 import { NodeTree } from './../../providers/node.interface';
 import { NgForm } from '@angular/forms';
 import { BaseTree } from './base-tree';
-import { ITreeNodeState } from '@ra-web-tech-ui-toolkit-navigation/navigation';
+import { ITreeNodeState, ITreeNode } from '@ra-web-tech-ui-toolkit-navigation/navigation';
 
 @Component({
   selector: 'app-model-tree',
@@ -74,6 +74,13 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     // setTimeout(() => {
     //   this.transferTree.emit(this.treeModel);
     // }, 0);
+    this.treeExtension.push(    {
+      iconClass: 'bgColorNode',
+      condition: (node: ITreeNode): boolean => {
+        this.chengeWidthInsertedNode(node);
+        return node.isInjected;
+      }
+    })
     this.config = {
       shouldExpandOnCaret: true,
       isNodeIconEnabled: true,

@@ -28,6 +28,7 @@ export interface NodeTree  {
     isAoi: boolean;
     nameAoi: string;
     lInfoAtt: InfoAttributesModel[];
+    isInjected: boolean;
 }
 
 export interface RealStateDintNode extends NodeTree {

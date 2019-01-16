@@ -6,7 +6,7 @@
   <div class="scroll">
     <!-- to scroll -->
     <!-- [ngStyle]="{'width': nodeTree?.InternalIndex == 32 ? '80%':'100%' }" -->
-    <ra-ui-tree [contextMenu]="basicMenu" [contextMenuSubject]="selectedNode" [(tree)]="treeModel" (dblclick)="onDblClick('model')"
+    <ra-ui-tree class="model" [contextMenu]="basicMenu" [contextMenuSubject]="selectedNode" [(tree)]="treeModel" (dblclick)="onDblClick('model')"
       (click)="getInfo($event)" (mouseover)="showTooltip($event)" (mouseout)="hideTooltip($event)" [config]="config"
       (treeNodeSelected)="onTreeNodeSelected($event)" (treeInitialized)="onTreeInitialized($event)">
     </ra-ui-tree>

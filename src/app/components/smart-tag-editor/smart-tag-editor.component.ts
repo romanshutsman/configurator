@@ -122,7 +122,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
       nameAoi: null,
-      lInfoAtt: []
+      lInfoAtt: item.lInfoAtt,
+      isInjected: false
     };
   }
   initSelectedTag(value) {

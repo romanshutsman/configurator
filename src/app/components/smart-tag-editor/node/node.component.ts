@@ -49,12 +49,11 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
     }
   }
-  showPopUpAttr = false;
+
 
 
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
-    this.getITypes();
     this.initOnAdd();
   }
 
@@ -92,7 +91,8 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
       nameAoi: null,
-      lInfoAtt: item.lInfoAtt
+      lInfoAtt: item.lInfoAtt,
+      isInjected: item.isInjected
     };
   }
   loadNode() {
@@ -111,19 +111,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     } else {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[4];
     }
-    this.initCheckbox();
-  }
-  initCheckbox() {
-    let Function = this.cloneSelectedNode.iFunction;
-    for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
-      if (Function % Math.pow(2, i + 1) > 0) {
-        this.typesOfCheckboxes[i].selected = true;
-      } else {
-        this.typesOfCheckboxes[i].selected = false;
-      }
-
-      Function -= (Function % Math.pow(2, i + 1));
-    }
   }
   removeMinus(e, num) {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
@@ -138,14 +125,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         this.checkAndSend();
       });
   }
-  getITypes() {
-    this.service.getInfoTypes().subscribe((value: any) => {
-      this.typesOfCheckboxes = JSON.parse(value);
-      this.typesOfCheckboxesAOI = JSON.parse(value);
-      this.resetCheckbox();
-      this.initCheckbox();
-    });
-  }
+
   resetCheckbox() {
     for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
       this.typesOfCheckboxes[i]['selected'] = false;
@@ -183,31 +163,8 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   }
 
-  updateFunctions() {
-    let rVal = 0;
-    const selected = this.typesOfCheckboxes.filter(it => it.selected == true).map(i => i.BIT);
-    selected.forEach(iBit => {
-      rVal += Math.pow(2, iBit);
-    });
-    this.cloneSelectedNode.iFunction = rVal;
-  }
-  showMore() {
-    this.showPopUpAttr = true;
-  }
-  closeModal1() {
-    this.showPopUpAttr = false;
-  }
   updateInfoTypesAoi(e, item) {
-    if (e.checked == true) {
-      const newItem = { name: item.Name, value: undefined };
-      if (item.HasValue === 1) newItem['value'] = item.Value;
-
-      let el = this.cloneSelectedNode.lInfoAtt.find(e => e.name == item.Name);
-      if (el) return;
-      this.cloneSelectedNode.lInfoAtt.push(newItem);
-    } else if (e.checked == false) {
-      this.cloneSelectedNode.lInfoAtt = this.cloneSelectedNode.lInfoAtt.filter(el => el.name !== item.Name);
-    }
+    this.updateInfoTypes(e, item);
     this.checkAndSend();
   }
   inputNewValue(item, v) {
@@ -216,11 +173,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     })
     this.checkAndSend();
   }
-  updateChecked(item) {
-    if (!this.cloneSelectedNode.lInfoAtt || this.cloneSelectedNode.lInfoAtt.length < 1) return false;
-    let el = this.cloneSelectedNode.lInfoAtt.find(i => i.name == item.Name);
-    return el ? true : false;
-  }
+
   checkAndSend() {
     if (this.formAction) {
       if (this.formAction['type'] === 'node') {
