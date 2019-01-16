@@ -23,10 +23,12 @@ export class AoiEditorComponent extends BaseTree implements OnInit {
   }
   @Input() set dataForm(value) {
     if (value) {
-      if (value.action === 'added') {
-        this.onAddNewNode(value.body)
-      } else if (value.action === 'edited') {
-        this.selectedNode && this.treeControlRa.refreshUi;
+      if(value.component == 'aoi') {
+        if (value.action === 'added') {
+          this.onAddNewNode(value.body)
+        } else if (value.action === 'edited') {
+          this.selectedNode && this.treeControlRa.refreshUi;
+        }
       }
     }
   }

@@ -47,6 +47,7 @@
         (itemSelected)="getNode($event)"
         [onActiveAOI]="showAOITab" 
         (transferTree)="getTree($event)"
+        (transferTreePost)="getTreeOnPost($event)"
         (showAOI)="onShowAOI($event)"
         >
         </app-aoi-editor>
@@ -54,7 +55,7 @@
     </div>
   </section>
   <section class="control-bar">
-    <app-control-bar (submitForm)="onSubmitted($event)" [selectedContent]="showBtn"></app-control-bar>
+    <app-control-bar [TreeOnPost]="treeModelPost" (submitForm)="onSubmitted($event)" [selectedContent]="showBtn"></app-control-bar>
   </section>
 </section>
 
