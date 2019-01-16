@@ -63,11 +63,11 @@ ra-ui-tree {
 }
 ::ng-deep .bgColorNode {
     padding-left: 0px !important;
-    position: absolute; 
+    position: fixed; 
     opacity: .2;
-    width: 200px;
+    width: 100%; //547px
     height: 28px;
     background: rebeccapurple;
-    left: 0;
+    left: 10;
     pointer-events: none;
 }

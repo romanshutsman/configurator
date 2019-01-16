@@ -77,7 +77,6 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.treeExtension.push(    {
       iconClass: 'bgColorNode',
       condition: (node: ITreeNode): boolean => {
-        this.chengeWidthInsertedNode(node);
         return node.isInjected;
       }
     })

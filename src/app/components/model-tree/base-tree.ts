@@ -80,16 +80,6 @@ export class BaseTree {
     this.treeControlRa = treeControl;
   }
 
-  chengeWidthInsertedNode(node) {
-    const tree = document.getElementsByClassName('model');
-    const w = tree[0].children[0].clientWidth;
-
-    const bg = document.getElementsByClassName('bgColorNode') as HTMLCollectionOf<HTMLElement>;
-    for (let i = 0; i < bg.length; i++) {
-      const element = bg[i];
-      element.style.width = w + 'px';
-    }
-  }
   cloneNode(item) {
     return {
       label: item.label,
