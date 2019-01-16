@@ -21,6 +21,7 @@ export class SharedService extends DataHelper {
 
   API_URL = 'http://localhost:13772/api/connect';
   API_URL_NODE = 'http://localhost:13772/api/node';
+  API_URL_AOI = 'http://localhost:13772/api/aoi';
   action = {
     add: 'add',
     edit: 'edit',
@@ -83,9 +84,12 @@ export class SharedService extends DataHelper {
     return this.http.get(this.API_URL_NODE + '/navigate');
   }
   loadAOI(name) {
-    return this.http.post(this.API_URL_NODE + '/load-aoi', { name: name });
+    return this.http.post(this.API_URL_AOI + '/load-aoi', { name: name });
   }
   insertAOI(id, name) {
-    return this.http.post(this.API_URL_NODE + '/insert-aoi', { id: id, name: name });
+    return this.http.post(this.API_URL_AOI + '/insert-aoi', { id: id, name: name });
+  }
+  saveAOI(model) {
+    return this.http.post(this.API_URL_AOI + '/save-aoi', model);
   }
 }
