@@ -25,6 +25,7 @@ export class ControlBarComponent implements OnInit {
   }
   @Output() submitForm = new EventEmitter();
   @Input() set TreeOnPost(tree) {
+    console.log('GET', tree);
     this.treePost = tree;
   }
 
@@ -83,22 +84,30 @@ export class ControlBarComponent implements OnInit {
       'body': this.dataForm,
       'component': this.operation.operation.component
     });
+    console.log(this.treePost)
     while (!this.treePost) {
+      console.log('STACK1')
       await this.waitingTreeAsync(100);
     }
-    const tree = this.parseTreeToServer(this.treePost);
+    console.log('STACK2')
+    let tree = this.parseTreeToServer(this.treePost[0]);
     console.log(tree)
     this.service.saveAOI(tree).subscribe((value) => {
+      console.log('CALL API ERROR1')
       this.responseOnAdd(value, false)
     },
       err => {
+        console.log(tree)
+        console.log('CALL API ERROR2')
         this.disableBtnAdd = false;
         this.onFailed('Addition');
       });
+      //this.treePost = undefined;
   }
   parseTreeToServer(tree) {
-    console.log(tree[0]);
-    let stringifyData = JSON.stringify(tree[0]);
+    console.log(tree);
+    let stringifyData = JSON.stringify(tree);
+    console.log(stringifyData);
     stringifyData = stringifyData.replace(/label/g, 'nameInModel');
     stringifyData = stringifyData.replace(/children/g, 'lChildrens');
     const object = JSON.parse(stringifyData);
@@ -106,7 +115,7 @@ export class ControlBarComponent implements OnInit {
   }
   responseOnAdd(value, component) {
     this.showSpinner = false;
-    this.treePost = undefined;
+    //this.treePost = undefined;
     if (value) {
       if (component) {
         this.submitForm.emit({
@@ -160,7 +169,7 @@ export class ControlBarComponent implements OnInit {
   responseOnEdit(value, component) {
     this.showSpinner = false;
     this.disableBtnEdit = false;
-    this.treePost = undefined;
+    //this.treePost = undefined;
     if (value) {
       if (component) {
         this.submitForm.emit({

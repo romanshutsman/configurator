@@ -185,11 +185,11 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   }
   editAoi(aoiName) {
     console.log(aoiName);
-    console.log(this.nodeTree);
     this.showAOI.emit({ emit: true, aoi: aoiName, selectedNode: this.nodeTree });
   }
 
   insertAoi(item) {
+    console.log(item)
     this.service.insertAOI(this.nodeTree.iD, item).subscribe(i=>{
       let tree = this.fixTreeLabels(JSON.stringify(i));
       this.onAddNewNode(tree[0]);

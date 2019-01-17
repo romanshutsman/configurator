@@ -43,6 +43,7 @@ export class HomeComponent {
     this.manageOfBtns(false, false, false);
   }
   getTreeOnPost(e) {
+    console.log('EMITTED')
     this.treeModelPost = e;
   }
   getNode(e) {
@@ -109,6 +110,15 @@ export class HomeComponent {
       this.selectedItem.label = node.label;
       this.selectedItem.updateRate = node.updateRate;
       this.selectedItem.bHasTrigger = node.bHasTrigger;
+      this.selectedItem.nameAoi = node.nameAoi;
+      this.selectedItem.lInfoAtt = node.lInfoAtt;
+      this.selectedItem.isAoi = node.isAoi;
+      this.selectedItem.isInjected = node.isInjected;
+      this.selectedItem.sParentTagName = node.sParentTagName;
+      this.selectedItem.sProgramParent = node.sProgramParent;
+      this.selectedItem.rung = node.rung;
+      this.selectedItem.updateRadio = node.updateRadio;
+
     }
     this.treeModelPost = this.treeModel;
   }
@@ -291,6 +301,11 @@ export class HomeComponent {
       e.emit = false;
       this.showAOITab = e;
       console.log(this.showAOITab);
+      // const body = e;
+      // body['resAoi'] = this.treeModel[0];
+      // this.showAOITab = body;
+      // this.manageOfContent(false, false, true);
+      // this.responseAoi = this.treeModel[0];
     });
   }
 }
