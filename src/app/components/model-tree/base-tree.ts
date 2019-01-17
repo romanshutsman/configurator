@@ -110,7 +110,7 @@ export class BaseTree {
       sParentTagName: item.TagName,
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
-      nameAoi: null,
+      nameAoi: item.nameAoi,
       lInfoAtt: item.lInfoAtt,
       isInjected: item.isInjected
     };
@@ -158,6 +158,10 @@ export class BaseTree {
     }, 0);
   }
   onAddNewNode(body) {
+    const allNode = [];
+    this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
+    body.iD = allNode.length + 1;
+
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [body]);
     this.transferTreePost.emit(this.treeModel);
   }

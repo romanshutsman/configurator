@@ -28,6 +28,7 @@ export class AoiEditorComponent extends BaseTree implements OnInit {
           this.onAddNewNode(value.body)
         } else if (value.action === 'edited') {
           this.selectedNode && this.treeControlRa.refreshUi;
+          this.transferTreePost.emit(this.treeModel);
         }
       }
     }

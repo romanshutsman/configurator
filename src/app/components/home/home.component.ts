@@ -2,6 +2,7 @@ import { NodeTree } from './../../providers/node.interface';
 import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
 
 import { SharedService } from '../../providers/shared.service';
+import { AoiHelper } from '../aoi-helper';
 
 @Component({
   selector: 'app-home',
@@ -43,8 +44,15 @@ export class HomeComponent {
     this.manageOfBtns(false, false, false);
   }
   getTreeOnPost(e) {
+    console.log('EMITTED')
+    this.treeModelPost = undefined;
     this.treeModelPost = e;
+    if (this.treeModelPost && this.treeModelPost[0].isAoi){
+      let helper = new AoiHelper(this.service, this.treeModelPost);
+      helper.saveAoi();
+    }
   }
+
   getNode(e) {
     this.selectedItem = e;
     this.manageOfBtns(false, false, false);
@@ -109,6 +117,15 @@ export class HomeComponent {
       this.selectedItem.label = node.label;
       this.selectedItem.updateRate = node.updateRate;
       this.selectedItem.bHasTrigger = node.bHasTrigger;
+      this.selectedItem.nameAoi = node.nameAoi;
+      this.selectedItem.lInfoAtt = node.lInfoAtt;
+      this.selectedItem.isAoi = node.isAoi;
+      this.selectedItem.isInjected = node.isInjected;
+      this.selectedItem.sParentTagName = node.sParentTagName;
+      this.selectedItem.sProgramParent = node.sProgramParent;
+      this.selectedItem.rung = node.rung;
+      this.selectedItem.updateRadio = node.updateRadio;
+
     }
     this.treeModelPost = this.treeModel;
   }
@@ -141,8 +158,8 @@ export class HomeComponent {
         this.manageMessageDialog(data, true, false, '', false);
       }
     },
-    error => {
-      this.onBlocking = false;
+      error => {
+        this.onBlocking = false;
         const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         this.checkVerification(body);
@@ -166,8 +183,8 @@ export class HomeComponent {
     bodyTransfer['Name'] = item.Version;
     body['Version'] = item.Version;
     const foundIndex = this.listOfControllers.findIndex(i => i === item);
-    this.service.VerifyLogixInfoServer(foundIndex).subscribe( data => {
-      if(data === true) {
+    this.service.VerifyLogixInfoServer(foundIndex).subscribe(data => {
+      if (data === true) {
         body['State'] = false;
         this.connectingToChosenVersion(body, item, bodyTransfer);
         this.disableBtnOfMenu = false;
@@ -187,12 +204,12 @@ export class HomeComponent {
     });
   }
   connectingToChosenVersion(body, item, bodyTransfer) {
-    this.service.connectToController(body).subscribe(data  => {
+    this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
       console.log(data);
       console.log(data['Status']);
       console.log(data['']);
-      if(data['Status'] != 6) {
+      if (data['Status'] != 6) {
         this.onHideAoi = true;
       }
       this.checkStatus = data;
@@ -204,24 +221,24 @@ export class HomeComponent {
         this.service.SubjectLoadTree.next(data['Tree']);
         this.errorConnect();
         this.disableBtnOfMenu = true;
-        if(item.Version) {
+        if (item.Version) {
           this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
         } else {
           this.manageMessageDialog([], false, false, '', false);
-          
+
         }
       }
     },
-    error => {
-      this.onLoading = false;
-      this.disableBtnOfMenu = true;
-      this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
-      if (item.Version !== '') {
-        this.errorConnect();
+      error => {
+        this.onLoading = false;
+        this.disableBtnOfMenu = true;
+        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
+        if (item.Version !== '') {
+          this.errorConnect();
         }
       });
   }
-  
+
   manageMessageDialog(list, show, showConnect, msg, showVerify) {
     this.onConnect = {
       list: list,
@@ -249,7 +266,7 @@ export class HomeComponent {
     bodyTransfer['Name'] = this.chosenVersion.Version;
     body['Version'] = this.chosenVersion.Version;
     body['State'] = e;
-    if(e) {
+    if (e) {
       this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     } else {
       this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
@@ -257,22 +274,22 @@ export class HomeComponent {
   }
   showNewMsg(e) {
     console.log(e);
-    if(e) {
+    if (e) {
       this.manageMessageDialog([], false, true, 'Controller should be offline!', false);
     }
   }
   onReconnecting(e) {
     console.log(e);
-    if(e) {
+    if (e) {
       this.getActiveControllerAndCheck();
     }
   }
   onShowAOI(e) {
     console.log(e)
     this.nameAoi = e.aoi;
-    
+
     this.service.loadAOI(e.aoi).subscribe(value => {
-      if(value) {
+      if (value) {
         const body = e;
         body['resAoi'] = value;
         this.showAOITab = body;
@@ -286,11 +303,16 @@ export class HomeComponent {
         this.manageOfContent(true, false, false);
       }
     },
-    error => {
-      this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
-      e.emit = false;
-      this.showAOITab = e;
-      console.log(this.showAOITab);
-    });
+      error => {
+        this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
+        e.emit = false;
+        this.showAOITab = e;
+        console.log(this.showAOITab);
+        // const body = e;
+        // body['resAoi'] = this.treeModel[0];
+        // this.showAOITab = body;
+        // this.manageOfContent(false, false, true);
+        // this.responseAoi = this.treeModel[0];
+      });
   }
 }

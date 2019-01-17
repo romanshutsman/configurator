@@ -29,6 +29,7 @@ export class DintComponent extends BaseSmartTag implements OnInit {
         this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
         this.initAoi(value);
         this.initAttributes();
+        this.cloneSelectedNode.iParent = this.node.iD;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);

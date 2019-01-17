@@ -25,6 +25,7 @@ export class ControlBarComponent implements OnInit {
   }
   @Output() submitForm = new EventEmitter();
   @Input() set TreeOnPost(tree) {
+    console.log('GET', tree);
     this.treePost = tree;
   }
 
@@ -74,39 +75,20 @@ export class ControlBarComponent implements OnInit {
           this.onFailed('Addition');
         });
     } else {
-      this.onAddSubmit()
+      this.onAddEditAoiSubmit('added')
     }
   }
-  async onAddSubmit() {
+   onAddEditAoiSubmit(action: string) {
     this.submitForm.emit({
-      'action': 'added',
+      'action': action,
       'body': this.dataForm,
       'component': this.operation.operation.component
     });
-    while (!this.treePost) {
-      await this.waitingTreeAsync(100);
-    }
-    const tree = this.parseTreeToServer(this.treePost);
-    console.log(tree)
-    this.service.saveAOI(tree).subscribe((value) => {
-      this.responseOnAdd(value, false)
-    },
-      err => {
-        this.disableBtnAdd = false;
-        this.onFailed('Addition');
-      });
+    
   }
-  parseTreeToServer(tree) {
-    console.log(tree[0]);
-    let stringifyData = JSON.stringify(tree[0]);
-    stringifyData = stringifyData.replace(/label/g, 'nameInModel');
-    stringifyData = stringifyData.replace(/children/g, 'lChildrens');
-    const object = JSON.parse(stringifyData);
-    return object;
-  }
+
   responseOnAdd(value, component) {
     this.showSpinner = false;
-    this.treePost = undefined;
     if (value) {
       if (component) {
         this.submitForm.emit({
@@ -135,41 +117,15 @@ export class ControlBarComponent implements OnInit {
           this.onFailed('Edition');
         });
     } else {
-      this.onEditSubmit()
+      this.onAddEditAoiSubmit('edited')
     }
   }
-  async onEditSubmit() {
-    this.submitForm.emit({
-      'action': 'edited',
-      'body': this.dataForm,
-      'component': this.operation.operation.component
-    });
-    while (!this.treePost) {
-      await this.waitingTreeAsync(100);
-    }
-    const tree = this.parseTreeToServer(this.treePost);
-    console.log(tree);
-    this.service.saveAOI(tree).subscribe((value) => {
-      this.responseOnEdit(value, false);
-    },
-      err => {
-        this.disableBtnEdit = false;
-        this.onFailed('Edition');
-      });
-  }
+
+
   responseOnEdit(value, component) {
     this.showSpinner = false;
     this.disableBtnEdit = false;
-    this.treePost = undefined;
     if (value) {
-      if (component) {
-        this.submitForm.emit({
-          'action': 'edited',
-          'body': this.dataForm,
-          'component': this.operation.operation.component
-        });
-      }
-      this.service.sendNotification('Node has been changed!', 'success');
       this.disableAllBtn();
     } else {
       this.onFailed('Edition');

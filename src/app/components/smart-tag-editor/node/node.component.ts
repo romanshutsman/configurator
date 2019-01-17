@@ -38,6 +38,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           }
           this.initAoi(value);
           this.initAttributes();
+          this.cloneSelectedNode.iParent = this.node.iD;
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
@@ -90,7 +91,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       sParentTagName: item.TagName,
       updateRadio: item.updateRadio,
       isAoi: item.isAoi,
-      nameAoi: null,
+      nameAoi: item.nameAoi,
       lInfoAtt: item.lInfoAtt,
       isInjected: item.isInjected
     };

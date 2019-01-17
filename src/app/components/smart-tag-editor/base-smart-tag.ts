@@ -313,7 +313,6 @@ export class BaseSmartTag {
     return el ? true : false;
   }
   showMore() {
-    console.log('dcds')
     this.showPopUpAttr = true;
   }
   closeModal1() {
