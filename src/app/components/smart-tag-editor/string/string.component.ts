@@ -31,12 +31,14 @@ export class StringComponent extends BaseSmartTag implements OnInit {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
         this.initAoi(value);
         this.initAttributes();
+        this.initCheckbox();
         this.cloneSelectedNode.iParent = this.node.iD;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.initAoi(value);
         this.initAttributes();
+        this.initCheckbox();
       }
     }
   }

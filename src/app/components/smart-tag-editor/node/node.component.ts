@@ -20,7 +20,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       this.cloneSelectedNode = value;
       this.nodeiD = this.cloneSelectedNode.iD;
     }
-    this.resetCheckbox();
   }
 
   @Input() set actionMenu(value) {
@@ -30,7 +29,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       if (value.type == 'node') {
         if (value.action === this.service.action.add) {
           this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
-          this.resetCheckbox();
           if (this.nodeFrm.controls['tagname'] && this.nodeFrm.controls['label'] && this.nodeFrm.controls['sProgram']) {
             this.nodeFrm.controls['tagname'].reset();
             this.nodeFrm.controls['label'].reset();
@@ -38,6 +36,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           }
           this.initAoi(value);
           this.initAttributes();
+          this.initCheckbox();
           this.cloneSelectedNode.iParent = this.node.iD;
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.cloneNode(this.node);
@@ -45,6 +44,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           this.loadNode();
           this.initAoi(value);
           this.initAttributes();
+          this.initCheckbox();
         }
       }
 
@@ -125,13 +125,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         this.cloneSelectedNode.iD = this.nodeiD;
         this.checkAndSend();
       });
-  }
-
-  resetCheckbox() {
-    for (let i = 0; i < this.typesOfCheckboxes.length; i++) {
-      this.typesOfCheckboxes[i]['selected'] = false;
-      this.typesOfCheckboxes[i]['BIT'] = 0;
-    }
   }
 
 

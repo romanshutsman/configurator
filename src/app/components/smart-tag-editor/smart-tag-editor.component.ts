@@ -87,7 +87,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
 
   ngOnInit() {
-
+    
   }
 
 

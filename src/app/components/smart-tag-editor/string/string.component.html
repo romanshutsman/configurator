@@ -1,4 +1,5 @@
 <form #nodeForm="ngForm">
+    <div class="readonly" *ngIf="cloneSelectedNode.isInjected"></div>
     <mat-card class="first-block">
       <div class="name">
         <p>Location in code</p>
