@@ -16,10 +16,18 @@ export class MenuComponent implements OnInit {
     console.log(value);
     if (value) {
       if (value.action === 'added') {
-        this.setPropertyMenu(true, false, true, false);
+        if(value.component == 'model') {
+          this.setPropertyMenu(true, false, true, false);
+        } else {
+          this.setPropertyMenu(false, false, true, true);
+        }
       }
       if (value.action === 'edited') {
-        this.setPropertyMenu(true, false, true, false);
+        if(value.component == 'model') {
+          this.setPropertyMenu(true, false, true, false);
+        } else {
+          this.setPropertyMenu(false, false, true, true);
+        }
       }
     }
   }
