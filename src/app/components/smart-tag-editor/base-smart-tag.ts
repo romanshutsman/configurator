@@ -70,6 +70,7 @@ export class BaseSmartTag {
   engeneringUnits = ['%'];
   testNamePattern = /^[A-Za-z_][A-Za-z0-9\s]{0,39}$/;
   typesOfCheckboxesAOI = [];
+  typesOfCheckboxes = [];
   showPopUpAttr = false;
 
   constructor(public service: SharedService) {
@@ -264,36 +265,50 @@ export class BaseSmartTag {
     }
   }
   initAttributes() {
-    this.typesOfCheckboxesAOI.forEach(e => {
-      // e.selected = false;
-      let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
-      e.selected = !!selected;
-    })
+    try {
+      if(this.typesOfCheckboxesAOI.length>0)
+        this.typesOfCheckboxesAOI.forEach(e => {
+          // e.selected = false;
+          let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
+          e.selected = !!selected;
+        })
+    } catch (error) {
+      console.log(error)
+    }
   }
   getITypes() {
     this.service.getInfoTypes().subscribe((value: any) => {
-      this.typesOfCheckboxesAOI = JSON.parse(value);
-      this.typesOfCheckboxesAOI.forEach(e => {
-        e.selected = false;
-      })
+      if(value) {
+        this.typesOfCheckboxesAOI = JSON.parse(value);
+        this.typesOfCheckboxes = JSON.parse(value);
+        this.typesOfCheckboxesAOI.forEach(e => {
+          e.selected = false;
+        })
+      } else {
+        this.typesOfCheckboxesAOI = undefined;
+        this.service.sendNotification('Cant load information types!', 'fail')
+      }
+    }, err => {
+      this.service.sendNotification('Cant load information types!', 'fail')
+      this.typesOfCheckboxesAOI  = undefined;
+      // this.typesOfCheckboxesAOI  = [
+      //   {
+      //     Name: 'Summary',
+      //     HasValue: 0,
+      //     Value: "5123" 
+      //   },
+      //   {
+      //     Name: 'OEE',
+      //     HasValue: 0,
+      //     Value: "5123"
+      //   },
+      //   {
+      //     Name: 'Sherlock',
+      //     HasValue: 1,
+      //     Value: "5123"
+      //   }
+      // ];
     })
-    // this.typesOfCheckboxesAOI = [
-    //   {
-    //     Name: 'Summary',
-    //     HasValue: 0,
-    //     Value: "5123" 
-    //   },
-    //   {
-    //     Name: 'OEE',
-    //     HasValue: 0,
-    //     Value: "5123"
-    //   },
-    //   {
-    //     Name: 'Sherlock',
-    //     HasValue: 1,
-    //     Value: "5123"
-    //   }
-    // ];
   }
   updateInfoTypes(e, item) {
     if (e.checked == true) {
@@ -317,5 +332,37 @@ export class BaseSmartTag {
   }
   closeModal1() {
     this.showPopUpAttr = false;
+  }
+  async initCheckbox() {
+    try {      
+      while (this.typesOfCheckboxesAOI.length == 0) {
+        console.log('PROMISE')
+        await this.waitingTreeAsync(100);
+      }
+      this.checkboxOnAction();
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  waitingTreeAsync(timer) {
+    return new Promise((resolve, reject) => {
+      timer = timer || 1500;
+      setTimeout(() => {
+        resolve()
+      }, timer);
+    })
+  }
+  checkboxOnAction(){
+    if(this.formAction['action'] == 'add') {
+      try {
+        if(this.typesOfCheckboxesAOI.length>0)
+          this.typesOfCheckboxesAOI.forEach(e=>e.Value=undefined)
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      this.typesOfCheckboxesAOI = JSON.parse(JSON.stringify(this.typesOfCheckboxes));
+    }
+    this.initAttributes();
   }
 }

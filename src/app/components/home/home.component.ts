@@ -106,7 +106,11 @@ export class HomeComponent {
     }
   }
   onSubmitted(e) {
-    this.manageOfContent(true, false, false);
+    if(e.component == 'model') {
+      this.manageOfContent(true, false, false);
+    } else {
+      this.manageOfContent(false, false, true);
+    }
     console.log(e);
     this.operationOnForm = e;
     this.bodyForm = e;

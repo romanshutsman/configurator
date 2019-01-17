@@ -20,7 +20,7 @@ export class ControlBarComponent implements OnInit {
   @Input() set selectedContent(value) {
     this.content = value;
     if (value && this.operation['isValid'] === 'VALID') {
-      this.checkOperation(this.operation['operation']['action']);
+      this.checkOperation(this.operation['operation']['action']); 
     }
   }
   @Output() submitForm = new EventEmitter();
@@ -43,6 +43,13 @@ export class ControlBarComponent implements OnInit {
         this.dataForm = value['body'];
         console.log(this.dataForm);
         this.checkOperation(value['operation']['action']);
+        if(this.dataForm.isInjected) {
+          this.disableAllBtn();
+          this.disableBtnNav = true;
+          // this.content.add = false;
+          // this.content.edit = false;
+          // this.content.navigate = false;
+        }
       } else {
         this.disableAllBtn();
       }

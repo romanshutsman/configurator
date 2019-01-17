@@ -76,7 +76,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     // setTimeout(() => {
     //   this.transferTree.emit(this.treeModel);
     // }, 0);
-    this.treeExtension.push(    {
+    this.treeExtension.push({
       iconClass: 'bgColorNode',
       condition: (node: ITreeNode): boolean => {
         return node.isInjected;
@@ -99,13 +99,14 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       const typeOfNode = node['iType'];
       if (typeOfNode === 0) {
         this.showContext = true;
+        if (node['isInjected']) {
+          this.showContext = false;
+        }
       } else {
         this.showContext = false;
       }
-
     }
     this.selectedNode = event.value ? event.node : undefined;
-    console.log(this.selectedNode);
   }
 
   contextMenuType(type, component) {
@@ -189,7 +190,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
   insertAoi(item) {
     console.log(item)
-    this.service.insertAOI(this.nodeTree.iD, item).subscribe(i=>{
+    this.service.insertAOI(this.nodeTree.iD, item).subscribe(i => {
       let tree = this.fixTreeLabels(JSON.stringify(i));
       this.onAddNewNode(tree[0]);
     })

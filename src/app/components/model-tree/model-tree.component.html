@@ -35,7 +35,7 @@
 <context-menu #basicMenu>
   <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext"> <span class="menu">Add</span>
   </ng-template>
-  <ng-template contextMenuItem [subMenu]="subMenuAOI"><span (mouseenter)="onHover()" class="menu" [class.empty-menu]="checkedStatus">AOI</span></ng-template>
+  <ng-template contextMenuItem [subMenu]="subMenuAOI" [visible]="showContext"><span (mouseenter)="onHover()" class="menu" [class.empty-menu]="checkedStatus">AOI</span></ng-template>
   <context-menu #someSubMenu class="item-menu-cont" id="item-menu-cont">
     <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'model')"> <i class="ra-icon ra-icon-folder"></i>
       <p>Node</p>

@@ -27,6 +27,7 @@ export class RealComponent extends BaseSmartTag implements OnInit {
         this.cloneSelectedNode.iSubType = this.ValueTypeReal.indexOf(this.defaultValueType);
         this.initAoi(value);
         this.initAttributes();
+        this.initCheckbox();
         this.cloneSelectedNode.iParent = this.node.iD;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
@@ -35,6 +36,7 @@ export class RealComponent extends BaseSmartTag implements OnInit {
         this.loadValue();
         this.initAoi(value);
         this.initAttributes();
+        this.initCheckbox();
       }
     }
   }
