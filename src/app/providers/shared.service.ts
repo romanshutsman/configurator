@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { NodeTree, RealStateDintNode } from './node.interface';
+import { Programs } from './common.interface';
 import { DataHelper } from './data-helper';
 
 @Injectable({
@@ -91,5 +92,8 @@ export class SharedService extends DataHelper {
   }
   saveAOI(model) {
     return this.http.post(this.API_URL_AOI + '/save-aoi', model);
+  }
+  getPrograms(): Observable<Programs[]> {
+    return this.http.get<Programs[]>(this.API_URL_NODE + '/programs');
   }
 }

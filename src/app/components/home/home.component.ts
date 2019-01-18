@@ -189,7 +189,10 @@ export class HomeComponent {
     const foundIndex = this.listOfControllers.findIndex(i => i === item);
     this.service.VerifyLogixInfoServer(foundIndex).subscribe(data => {
       if (data === true) {
-        body['State'] = false;
+        body['IsCodeInjectionNeeded'] = false;
+        body['Program'] = null;
+        body['Routine'] = null;
+        body['Rung'] = null;
         this.connectingToChosenVersion(body, item, bodyTransfer);
         this.disableBtnOfMenu = false;
       } else if (data === false) {
@@ -211,8 +214,6 @@ export class HomeComponent {
     this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
       console.log(data);
-      console.log(data['Status']);
-      console.log(data['']);
       if (data['Status'] != 6) {
         this.onHideAoi = true;
       }
@@ -269,9 +270,12 @@ export class HomeComponent {
     const body = {};
     bodyTransfer['Name'] = this.chosenVersion.Version;
     body['Version'] = this.chosenVersion.Version;
-    body['State'] = e;
-    if (e) {
-      this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
+    body['IsCodeInjectionNeeded'] = e.verify;
+    body['Program'] = e.Program;
+    body['Routine'] = e.Routine;
+    body['Rung'] = e.Rung;
+    if (e.verify) {
+    this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     } else {
       this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
     }
@@ -311,7 +315,6 @@ export class HomeComponent {
         this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
         e.emit = false;
         this.showAOITab = e;
-        console.log(this.showAOITab);
         // const body = e;
         // body['resAoi'] = this.treeModel[0];
         // this.showAOITab = body;
