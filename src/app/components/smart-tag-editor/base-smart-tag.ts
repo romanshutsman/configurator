@@ -27,18 +27,10 @@ export class BaseSmartTag {
   public formComp: NgForm;
   arrayOfRadioBtns = [
     'Parent',
-    'Parent + Trigger',
     'Rate',
-    'Rate + Trigger',
-    'Trigger Only'
+    'Nothing'
   ];
-  arrayOfRadioBtns2 = [
-    'Parent',
-    'Parent + Change',
-    'Rate',
-    'Rate + Change',
-    'Change Only'
-  ];
+  arrayOfRadioBtns2 = this.arrayOfRadioBtns;
   times = [
     'min',
     'sec',
@@ -72,6 +64,10 @@ export class BaseSmartTag {
   typesOfCheckboxesAOI = [];
   typesOfCheckboxes = [];
   showPopUpAttr = false;
+  hasTriggerNS = false;
+  hasTriggerRSD = false;
+  hasChange = false;
+  logIn = false;
 
   constructor(public service: SharedService) {
     this.getITypes();
@@ -196,7 +192,7 @@ export class BaseSmartTag {
         console.log(data);
       });
     this.routineDefault = this.routines[0];
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
     this.disableGroupBtn(true);
     this.loadValue();
   }

@@ -64,14 +64,14 @@ export class StateComponent extends BaseSmartTag implements OnInit {
   }
   getCurrentValue(e) {
     if (e.target.value > 0) {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
     }
   }
   onChangeSelect(e) {
     this.onCheckRadio(e, this.nodeFrm);
   }
   removeMinus(e, num) {
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
     return this.deleteMinus(e, num);
   }
   updateInfoTypesAoi(e, item) {

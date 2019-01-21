@@ -53,6 +53,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
 
 
+
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
     this.initOnAdd();
@@ -96,24 +97,25 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     };
   }
   loadNode() {
+    this.hasTriggerNS = this.cloneSelectedNode.bHasTrigger;
     if (this.cloneSelectedNode.updateRate > 0) {
       if (this.cloneSelectedNode.bHasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[3];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       }
     } else if (this.cloneSelectedNode.updateRate == 0) {
       if (this.cloneSelectedNode.bHasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
       } else {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
       }
     } else {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[4];
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
     }
   }
   removeMinus(e, num) {
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
   }
 
@@ -144,7 +146,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   getCurrentValue(e) {
     if (e.target.value > 0) {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     }
     this.tempValueOfRadio = e.target.value;
     if (this.selectedOption === 'ms') {

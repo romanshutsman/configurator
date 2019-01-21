@@ -161,12 +161,11 @@
   
             </div>
           </div>
-          <!-- <div class="has-trigger-inline">
-            <mat-checkbox color="primary" >Has Trigger</mat-checkbox>
-          </div> -->
         </div>
-        <div>
-          <mat-checkbox color="primary" >Has Trigger</mat-checkbox>
+        <div class="checkbox-block">
+          <mat-checkbox color="primary" [checked]="hasTriggerRSD">Has Trigger</mat-checkbox>
+          <mat-checkbox color="primary" [checked]="hasChange">Has Change</mat-checkbox>
+          <mat-checkbox color="primary" [checked]="logIn">Log in</mat-checkbox>
         </div>
       </div>
     </mat-card>
