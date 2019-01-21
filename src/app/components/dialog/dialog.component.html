@@ -30,30 +30,30 @@
             <mat-card class="select">
               <div class="mat-select-center">
                 <mat-form-field class="routineProgramselect">
-                  <mat-select [formControl]="selectedProgram" id="matSelect1" placeholder="Programs" style="color:black"
+                  <mat-select [formControl]="selectProgram" [(ngModel)]="selectedProgram" id="matSelect1" placeholder="Programs" style="color:black"
                     required="true" (selectionChange)="onSelectedProgram($event)">
                     <mat-option *ngFor="let item of insertForm" [value]="item.Name">{{item.Name}}</mat-option>
                   </mat-select>
-                  <mat-error *ngIf="selectedProgram.hasError('required')">You must make a selection</mat-error>
+                  <mat-error *ngIf="selectProgram.hasError('required')">You must make a selection</mat-error>
                 </mat-form-field>
               </div>
               <div class="mat-select-center">
                 <mat-form-field class="routineProgramselect">
-                  <mat-select [formControl]="selectedRoutines" placeholder="Routines" style="color:black"
+                  <mat-select [formControl]="selectRoutines" [(ngModel)]="selectedRoutine" placeholder="Routines" style="color:black"
                     required="true">
                     <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
                   </mat-select>
-                  <mat-error *ngIf="selectedRoutines.hasError('required')">You must make a selection</mat-error>
+                  <mat-error *ngIf="selectRoutines.hasError('required')">You must make a selection</mat-error>
                 </mat-form-field>
               </div>
               <div class="inputs">
                 <div>
                   <mat-form-field class="UpdateRate">
-                    <input matInput [formControl]="selectedRung" placeholder="Rung" type="number" pattern="^\d*[0-9]\d*$"
+                    <input matInput [formControl]="selectRung" placeholder="Rung" type="number" pattern="^\d*[0-9]\d*$"
                       name="rung" [value]="rung" [(ngModel)]="rung" (keydown)="removeMinus($event)" min="0" id="rung"
                       required="true">
-                    <mat-error *ngIf="selectedRung.hasError('required')">Rung is required!</mat-error>
-                    <mat-error *ngIf="selectedRung.hasError('pattern')">Only positive or 0!</mat-error>
+                      <mat-error *ngIf="selectRung.hasError('required')">Rung is required!</mat-error>
+                      <mat-error *ngIf="selectRung.hasError('pattern')">Only positive or 0!</mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -63,9 +63,9 @@
               <button mat-raised-button color="primary" (click)="onResponseVerify(false)">Cancel</button>
               <button mat-raised-button color="primary" 
               [disabled]="
-              selectedProgram.status == 'INVALID' ||
-              selectedRoutines.status == 'INVALID' ||
-              selectedRung.status == 'INVALID'"
+              selectProgram.status == 'INVALID' ||
+              selectRoutines.status == 'INVALID' ||
+              selectRung.status == 'INVALID'"
               (click)="onResponseVerify(true)">Insert</button>
           </section>
         </div>
