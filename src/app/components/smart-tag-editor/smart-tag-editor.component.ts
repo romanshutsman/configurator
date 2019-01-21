@@ -36,7 +36,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
     if (value) {
       this.initSelectedTag(value);
       this.cloneSelectedNode = this.cloneNode(value);
-      this.nodeiD = this.cloneSelectedNode.iD;
+      this.nodeiD = this.cloneSelectedNode.ID;
     }
   }
 
@@ -95,17 +95,16 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   cloneNode(item: NodeTree) {
     return {
       label: item.label,
-      iParent: item.iParent,
-      iD: item.iD,
-      iType: item.iType,
-      iSubType: item.iSubType,
-      iFunction: item.iFunction,
-      sEU: item.sEU,
-      dMin: item.dMin,
-      dMax: item.dMax,
-      dMul: item.dMul,
-      sExp: item.sExp,
-      sProgram: item.sProgram,
+      ParentID: item.ParentID,
+      ID: item.ID,
+      Type: item.Type,
+      SubType: item.SubType,
+      EU: item.EU,
+      Min: item.Min,
+      Max: item.Max,
+      Mul: item.Mul,
+      Exp: item.Exp,
+      Program: item.Program,
       TagName: item.TagName,
       UID: item.UID,
       iStartD: item.iStartD,
@@ -137,11 +136,11 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
     this.writePath(node.label);
     this.getParent(node);
 
-    if (node.iParent === 0) return;
+    if (node.ParentID === 0) return;
     this.found = undefined;
     console.log(this.tree)
     console.log(node)
-    const parent = this.findTreeElement(this.tree, node.iParent);
+    const parent = this.findTreeElement(this.tree, node.ParentID);
     if (parent) {
       this.searchAbsolutePath(parent);
     }
@@ -152,7 +151,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
   findTreeElement(nodeList: NodeTree[], id) {
     nodeList.forEach(item => {
-      if (id == item.iD) {
+      if (id == item.ID) {
         this.found = item;
         return;
       } else {

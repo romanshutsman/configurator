@@ -18,7 +18,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   @Input() set cloneSelected(value) {
     if (value) {
       this.cloneSelectedNode = value;
-      this.nodeiD = this.cloneSelectedNode.iD;
+      this.nodeiD = this.cloneSelectedNode.ID;
     }
   }
 
@@ -37,7 +37,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           this.initAoi(value);
           this.initAttributes();
           this.initCheckbox();
-          this.cloneSelectedNode.iParent = this.node.iD;
+          this.cloneSelectedNode.ParentID = this.node.ID;
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
@@ -65,17 +65,16 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   cloneNode(item: NodeTree) {
     return {
       label: item.label,
-      iParent: item.iParent,
-      iD: item.iD,
-      iType: item.iType,
-      iSubType: item.iSubType,
-      iFunction: item.iFunction,
-      sEU: item.sEU,
-      dMin: item.dMin,
-      dMax: item.dMax,
-      dMul: item.dMul,
-      sExp: item.sExp,
-      sProgram: item.sProgram,
+      ParentID: item.ParentID,
+      ID: item.ID,
+      Type: item.Type,
+      SubType: item.SubType,
+      EU: item.EU,
+      Min: item.Min,
+      Max: item.Max,
+      Mul: item.Mul,
+      Exp: item.Exp,
+      Program: item.Program,
       TagName: item.TagName,
       UID: item.UID,
       iStartD: item.iStartD,
@@ -122,7 +121,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.routine = this.routineDefault;
-        this.cloneSelectedNode.iD = this.nodeiD;
+        this.cloneSelectedNode.ID = this.nodeiD;
         this.checkAndSend();
       });
   }

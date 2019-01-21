@@ -31,12 +31,10 @@ export class DialogComponent implements OnInit {
       }
     }
   }
-  selectProgram = new FormControl(null, [Validators.required]);
-  selectRoutines = new FormControl(null, [Validators.required]);
-  selectRung = new FormControl(null, [Validators.required, Validators.pattern('^\d*[0-9]\d*$')]);
+  selectedProgram = new FormControl(null, [Validators.required]);
+  selectedRoutines = new FormControl(null, [Validators.required]);
+  selectedRung = new FormControl(null, [Validators.required, Validators.pattern('^\d*[0-9]\d*$')]);
   showInsert = false;
-  selectedProgram;
-  selectedRoutine;
 
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
   }
@@ -67,10 +65,11 @@ export class DialogComponent implements OnInit {
     this.responseVerify.emit({
       verify: e,
       Program: this.selectedProgram.value,
-      Routine: this.selectRoutines.value,
-      Rung: this.selectRung.value,
+      Routine: this.selectedRoutines.value,
+      Rung: this.selectedRung.value,
     });
     this.showVerify = false;
+    // if(e)  
     this.showInsert = false; 
     this.cdRef.detectChanges();
   }
@@ -86,23 +85,12 @@ export class DialogComponent implements OnInit {
     this.routines = programRoutines[0].Routines;
   }
   showInsertForm() {
-    this.resetForm();
+    this.insertForm = [];
+    this.routines = [];
     this.service.getPrograms().subscribe(programs => {
       this.insertForm = programs;
       this.showInsert = true;
     }, 
-    err => {
-      this.service.sendNotification('Cant load Programs!', 'fail')
-    })
-  }
-  resetForm() {
-    this.insertForm = [];
-    this.routines = [];
-    this.rung = 0;
-    this.selectedProgram = undefined;
-    this.selectedRoutine = undefined;
-    this.selectProgram.markAsUntouched();
-    this.selectRoutines.markAsUntouched();
-    this.cdRef.detectChanges();
+    err => this.service.sendNotification('Cant load Programs!', 'fail'))
   }
 }

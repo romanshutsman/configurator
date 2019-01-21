@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Output, EventEmitter, Input, ViewChildren, ElementRef } from '@angular/core';
 import { ContextMenuComponent } from 'ngx-contextmenu';
-import { Nullable } from '@ra-web-tech-ui-toolkit/common-utils';
+import { Nullable } from '@ra-web-tech-ui-toolkit-common-utils';
 import { SharedService } from './../../providers/shared.service';
 import { NodeTree } from './../../providers/node.interface';
 import { NgForm } from '@angular/forms';
@@ -96,7 +96,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       this.oldUnknowNode = this.cloneNode(node);
       this.service.SubjectControlTab.next('hide_form_model');
       this.itemSelected.emit(node);
-      const typeOfNode = node['iType'];
+      const typeOfNode = node['Type'];
       if (typeOfNode === 0) {
         this.showContext = true;
         if (node['isInjected']) {
@@ -139,18 +139,18 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   }
 
   searchAllParentID(node) {
-    this.writeFoundID(node.iParent);
-    if (node.iParent < 0) return;
+    this.writeFoundID(node.ParentID);
+    if (node.ParentID < 0) return;
     this.found = undefined;
-    // const parent = this.findTreeNode(this.treeModel, node.iParent);
+    // const parent = this.findTreeNode(this.treeModel, node.ParentID);
     this.treeModel.forEach(item => {
-      if (item.iParent) {
-        this.writeFoundID(item.iParent);
+      if (item.ParentID) {
+        this.writeFoundID(item.ParentID);
       } else {
         if (item.children.length) {
           item.children.forEach(elem => {
-            if (elem.iParent) {
-              this.writeFoundID(item.iParent);
+            if (elem.ParentID) {
+              this.writeFoundID(item.ParentID);
             } else {
               this.searchAllParentID(elem);
             }
@@ -164,7 +164,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   }
   // findTreeNode(nodeList: NodeTree[], id) {
   //   nodeList.forEach(item => {
-  //     if (item.iParent) {
+  //     if (item.ParentID) {
   //       this.found = item;
   //       return;
   //     } else {
@@ -190,7 +190,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
   insertAoi(item) {
     console.log(item)
-    this.service.insertAOI(this.nodeTree.iD, item).subscribe(i => {
+    this.service.insertAOI(this.nodeTree.ID, item).subscribe(i => {
       let tree = this.fixTreeLabels(JSON.stringify(i));
       this.onAddNewNode(tree[0]);
     })

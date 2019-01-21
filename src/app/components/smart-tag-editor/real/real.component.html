@@ -65,10 +65,10 @@
             matInput
             placeholder="Engineering Units"
             type="text" 
-            name="sEU"  
+            name="EU"  
             required 
-            [value]="cloneSelectedNode.sEU" 
-            [(ngModel)]="cloneSelectedNode.sEU"
+            [value]="cloneSelectedNode.EU" 
+            [(ngModel)]="cloneSelectedNode.EU"
             >
           </mat-form-field>
       </div>
@@ -82,8 +82,8 @@
               name="minval" 
               pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
               required 
-              [value]="cloneSelectedNode.dMin" 
-              [(ngModel)]="cloneSelectedNode.dMin" 
+              [value]="cloneSelectedNode.Min" 
+              [(ngModel)]="cloneSelectedNode.Min" 
               min="0" 
               (keyup)="testPattern($event, 1)"
               >
@@ -101,8 +101,8 @@
               name="maxval" 
               pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
               required 
-              [value]="cloneSelectedNode.dMax" 
-              [(ngModel)]="cloneSelectedNode.dMax" 
+              [value]="cloneSelectedNode.Max" 
+              [(ngModel)]="cloneSelectedNode.Max" 
               min="0" 
               (keyup)="testPattern($event, 2)"
               >

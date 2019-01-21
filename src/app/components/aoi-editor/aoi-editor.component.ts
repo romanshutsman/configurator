@@ -3,7 +3,7 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { BaseTree } from '../model-tree/base-tree';
 import { SharedService } from 'src/app/providers/shared.service';
 import { NodeTree } from 'src/app/providers/node.interface';
-import { ITreeNodeState } from '@ra-web-tech-ui-toolkit/navigation';
+import { ITreeNodeState } from '@ra-web-tech-ui-toolkit-navigation';
 
 @Component({
   selector: 'app-aoi-editor',
@@ -80,7 +80,7 @@ export class AoiEditorComponent extends BaseTree implements OnInit {
       this.oldUnknowNode = this.cloneNode(node);
       this.service.SubjectControlTab.next('hide_form_aoi');
       this.itemSelected.emit(node);
-      const typeOfNode = node['iType'];
+      const typeOfNode = node['Type'];
       if (typeOfNode === 0) {
         this.showContext = true;
       } else {

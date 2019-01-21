@@ -1,16 +1,15 @@
 export interface NodeTree  { 
     label: string;
-    iParent: number;
-    iD: number;
-    iType: number;
-    iSubType: number;
-    iFunction: number;
-    sEU: string;
-    dMin: number;
-    dMax: number;
-    dMul: number;
-    sExp: boolean;
-    sProgram: string;
+    ParentID: number;
+    ID: number;
+    Type: number;
+    SubType: number;
+    EU: string;
+    Min: number;
+    Max: number;
+    Mul: number;
+    Exp: boolean;
+    Program: string;
     TagName: string;
     UID: number;
     iStartD: number;

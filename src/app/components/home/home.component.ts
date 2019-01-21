@@ -46,7 +46,7 @@ export class HomeComponent {
   getTreeOnPost(e) {
     console.log('EMITTED')
     this.treeModelPost = undefined;
-    this.treeModelPost = e;
+    this.treeModelPost = Object.assign({}, e);
     if (this.treeModelPost && this.treeModelPost[0].isAoi){
       let helper = new AoiHelper(this.service, this.treeModelPost);
       helper.saveAoi();
@@ -117,7 +117,6 @@ export class HomeComponent {
     this.manageOfBtns(false, false, false);
     if (e['action'] === 'edited') {
       const node = e['body'];
-      this.selectedItem.iFunction = node.iFunction;
       this.selectedItem.label = node.label;
       this.selectedItem.updateRate = node.updateRate;
       this.selectedItem.bHasTrigger = node.bHasTrigger;

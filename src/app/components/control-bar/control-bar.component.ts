@@ -20,13 +20,16 @@ export class ControlBarComponent implements OnInit {
   @Input() set selectedContent(value) {
     this.content = value;
     if (value && this.operation['isValid'] === 'VALID') {
-      this.checkOperation(this.operation['operation']['action']); 
+      this.checkOperation(this.operation['operation']['action']);
     }
   }
   @Output() submitForm = new EventEmitter();
   @Input() set TreeOnPost(tree) {
     console.log('GET', tree);
     this.treePost = tree;
+    if (this.treePost && this.treePost[0].isAoi){
+      this.saveAoi();
+    }
   }
 
   constructor(private service: SharedService) {
@@ -43,7 +46,7 @@ export class ControlBarComponent implements OnInit {
         this.dataForm = value['body'];
         console.log(this.dataForm);
         this.checkOperation(value['operation']['action']);
-        if(this.dataForm.isInjected) {
+        if (this.dataForm.isInjected) {
           this.disableAllBtn();
           this.disableBtnNav = true;
           // this.content.add = false;
@@ -85,19 +88,19 @@ export class ControlBarComponent implements OnInit {
       this.onAddEditAoiSubmit('added')
     }
   }
-   onAddEditAoiSubmit(action: string) {
+  onAddEditAoiSubmit(action: string) {
     this.submitForm.emit({
       'action': action,
       'body': this.dataForm,
       'component': this.operation.operation.component
     });
-    
+
   }
 
-  responseOnAdd(value, component) {
+  responseOnAdd(value, isInfoModel) {
     this.showSpinner = false;
     if (value) {
-      if (component) {
+      if (isInfoModel) {
         this.submitForm.emit({
           'action': 'added',
           'body': this.dataForm,
@@ -167,4 +170,28 @@ export class ControlBarComponent implements OnInit {
     this.showSpinner = false;
     this.service.sendNotification(op + ' failed!', 'fail');
   }
+
+  saveAoi() {
+    let tree = this.parseTreeToServer(this.treePost[0]);
+    this.service.saveAOI(tree).subscribe((value) => {
+      this.responseOnAdd(value, false);
+    },
+      err => {
+        // this.disableBtnAdd = false;
+        this.onFailed('Addition');
+      });
+  }
+  parseTreeToServer(tree) {
+    let stringifyData = JSON.stringify(tree);
+    stringifyData = stringifyData.replace(/label/g, 'nameInModel');
+    stringifyData = stringifyData.replace(/children/g, 'lChildrens');
+    const object = JSON.parse(stringifyData);
+    return object;
+  }
+
+
+
+
+
+
 }

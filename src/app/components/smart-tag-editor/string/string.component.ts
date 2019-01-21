@@ -17,7 +17,7 @@ export class StringComponent extends BaseSmartTag implements OnInit {
   @Input() set cloneSelected(value) {
     if (value) {
       this.cloneSelectedNode = value;
-      this.nodeiD = this.cloneSelectedNode.iD;
+      this.nodeiD = this.cloneSelectedNode.ID;
     } else {
       this.cloneSelectedNode.TagName = '';
 
@@ -32,7 +32,7 @@ export class StringComponent extends BaseSmartTag implements OnInit {
         this.initAoi(value);
         this.initAttributes();
         this.initCheckbox();
-        this.cloneSelectedNode.iParent = this.node.iD;
+        this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
@@ -53,8 +53,8 @@ export class StringComponent extends BaseSmartTag implements OnInit {
     this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.routine = this.routineDefault;
-        this.cloneSelectedNode.iD = this.nodeiD;
-        this.cloneSelectedNode.iType = 3;
+        this.cloneSelectedNode.ID = this.nodeiD;
+        this.cloneSelectedNode.Type = 3;
         this.sendSmartTagData(this.nodeFrm);
       });
   }

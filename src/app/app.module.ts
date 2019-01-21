@@ -46,11 +46,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedService } from './providers/shared.service';
 import { ContextMenuModule } from 'ngx-contextmenu';
 //WBTUI
-import { RaUiStaticTextModule } from '@ra-web-tech-ui-toolkit/common-utils';
-import { RaUiTreeModule } from '@ra-web-tech-ui-toolkit/navigation';
-import { RaUiInputModule } from '@ra-web-tech-ui-toolkit/form-system';
-import { RaUiFormModule } from '@ra-web-tech-ui-toolkit/form-system';
-import { RaUiButtonModule } from '@ra-web-tech-ui-toolkit/common-utils';
+import { RaUiStaticTextModule } from '@ra-web-tech-ui-toolkit-common-utils';
+import { RaUiTreeModule } from '@ra-web-tech-ui-toolkit-navigation';
+import { RaUiInputModule } from '@ra-web-tech-ui-toolkit-form-system';
+import { RaUiFormModule } from '@ra-web-tech-ui-toolkit-form-system';
+import { RaUiButtonModule } from '@ra-web-tech-ui-toolkit-common-utils';
 
 //Components
 import { AppComponent } from './app.component';

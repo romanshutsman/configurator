@@ -26,15 +26,15 @@ export class StateComponent extends BaseSmartTag implements OnInit {
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
         this.defaultValueType = this.ValueTypeStateDint[2];
-        this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
+        this.cloneSelectedNode.SubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
         this.initAoi(value);
         this.initAttributes();
         this.initCheckbox();
-        this.cloneSelectedNode.iParent = this.node.iD;
+        this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
-        this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.iSubType];
+        this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.SubType];
         this.loadValue();
         this.initAoi(value);
         this.initAttributes();
@@ -54,13 +54,13 @@ export class StateComponent extends BaseSmartTag implements OnInit {
       .subscribe((value) => {
         this.cloneSelectedNode.valueType = value['ValueTypeDint'];
         this.cloneSelectedNode.routine = this.routineDefault;
-        this.cloneSelectedNode.iD = this.nodeiD;
-        this.cloneSelectedNode.iType = 2;
+        this.cloneSelectedNode.ID = this.nodeiD;
+        this.cloneSelectedNode.Type = 2;
         this.sendSmartTagData(this.nodeFrm);
       });
   }
   updateValueType(e) {
-    this.cloneSelectedNode.iSubType = this.ValueTypeStateDint.indexOf(e.value);
+    this.cloneSelectedNode.SubType = this.ValueTypeStateDint.indexOf(e.value);
   }
   getCurrentValue(e) {
     if (e.target.value > 0) {

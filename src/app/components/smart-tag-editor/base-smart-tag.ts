@@ -9,7 +9,7 @@ export class BaseSmartTag {
   @Input() set cloneSelected(value: RealStateDintNode) {
     if (value) {
       this.cloneSelectedNode = value;
-      this.nodeiD = this.cloneSelectedNode.iD;
+      this.nodeiD = this.cloneSelectedNode.ID;
     }
   }
   @Input() set getPathNode(value) {
@@ -80,17 +80,16 @@ export class BaseSmartTag {
   initOnAdd() {
     this.cloneSelectedNode = {
       label: '',
-      iParent: 0,
-      iD: 0,
-      iType: 0,
-      iSubType: 0,
-      iFunction: 0,
-      sEU: '',
-      dMin: 0,
-      dMax: 0,
-      dMul: 0,
-      sExp: false,
-      sProgram: '',
+      ParentID: 0,
+      ID: 0,
+      Type: 0,
+      SubType: 0,
+      EU: '',
+      Min: 0,
+      Max: 0,
+      Mul: 0,
+      Exp: false,
+      Program: '',
       TagName: '',
       UID: 0,
       iStartD: 0,
@@ -181,18 +180,18 @@ export class BaseSmartTag {
         this.routines = data['Routines'];
         this.routineDefault = this.routines[0];
         if (this.programs.length > 0) {
-          const defaltProgramIndex: any = this.programs.findIndex(i => i === this.node.sProgram);
-          this.cloneSelectedNode.sProgram = this.programs[defaltProgramIndex];
+          const defaltProgramIndex: any = this.programs.findIndex(i => i === this.node.Program);
+          this.cloneSelectedNode.Program = this.programs[defaltProgramIndex];
         }
       });
     this.cloneSelectedNode.updateRadio = radio[2];
-    this.cloneSelectedNode.sProgramParent = this.node.sProgram;
+    this.cloneSelectedNode.sProgramParent = this.node.Program;
     this.cloneSelectedNode.sParentTagName = this.node.TagName;
     this.disableGroupBtn(false);
   }
   defaultValueOnEdit(form) {
     this.disableReuiredItems(form);
-    this.service.getInfoOnEditNode(this.cloneSelectedNode.iD)
+    this.service.getInfoOnEditNode(this.cloneSelectedNode.ID)
       .subscribe((data: any) => {
         console.log(data);
       });

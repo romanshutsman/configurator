@@ -42,7 +42,7 @@ import {
   MatTreeModule
 } from '@angular/material';
 import { ContextMenuModule } from 'ngx-contextmenu';
-import { RaUiTreeModule } from '@ra-web-tech-ui-toolkit/navigation';
+import { RaUiTreeModule } from '@ra-web-tech-ui-toolkit-navigation';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
