@@ -34,41 +34,6 @@
         }
     }
 }
-.second-block {
-    display: flex;
-    padding-top: 10px;
-    padding-bottom: 0;
-    height: 70px;
-    .model {
-        display: flex;
-        flex-direction: column;
-        width: 200px;
-        p {
-            height: 30px;
-            &:first-child {
-                @include label;
-                padding-top: 8px;
-            }
-            @include labelContent;
-            padding-top: 0;
-            box-sizing: border-box;
-        }
-    }
-    .nameinmodel {
-        label {
-            margin-right: 20px;
-            width: 110px;
-            flex-shrink: 0;
-            height: 30px;
-            padding-top: 8px;
-            display: inline-block;
-            @include label;
-        }
-        input {
-            margin-right: 20px;
-        }
-    }
-}
 .infomation-type {
     display: flex;
     @include labelContent;
@@ -88,7 +53,7 @@
         }
     }
     .radio-block {
-        margin-left: 50px;
+        margin-left: 35px;
         p.update {
             margin-bottom: 10px;
         }
@@ -176,7 +141,7 @@ mat-form-field {
 .paragraph-error {
     font-size: 12px;
     position: absolute;
-    width: 344px;
+    
 }
 .paragraph-error.valueOfRadio {
     position: absolute;
@@ -365,4 +330,9 @@ span.mat-checkbox-label {
 }
 .groupSpan {
     display: flex;
+}
+
+.tagname mat-form-field {
+    width: 150px;
+    margin-right: 50px;
 }

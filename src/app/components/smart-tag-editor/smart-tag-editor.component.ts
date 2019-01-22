@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { SharedService } from '../../providers/shared.service';
 import { NodeTree } from '../../providers/node.interface';
@@ -81,6 +81,15 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       }
     }
   }
+  @Output() pathSelectedNode = new EventEmitter();
+  transferPrograms;
+  @Input() set getAllPrograms(value) {
+    if(value) {
+      this.transferPrograms = undefined;
+      this.transferPrograms = Object.assign({}, value)
+    }
+  }
+
 
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
@@ -151,6 +160,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
   writePath(path) {
     this.pathNode = path + '/' + this.pathNode;
+    console.log(this.pathNode);
+    this.pathSelectedNode.emit(this.pathNode);
   }
   findTreeElement(nodeList: NodeTree[], id) {
     nodeList.forEach(item => {

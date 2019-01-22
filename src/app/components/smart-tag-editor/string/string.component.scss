@@ -1,7 +1,7 @@
 @import './../theme.scss';
 .first-block {
     display: flex;
-    padding-top: 60px;
+    padding-top: 40px;
     .name {
         display: flex;
         flex-direction: column;
@@ -24,40 +24,6 @@
             padding-top: 8px;
             width: 110px;
             flex-shrink: 0;
-            display: inline-block;
-            @include label;
-        }
-        input {
-            margin-right: 20px;
-        }
-    }
-}
-.second-block {
-    padding-bottom: 40px;
-    padding-top: 40px;
-    display: flex;
-    .model {
-        display: flex;
-        flex-direction: column;
-        width: 200px;
-        p {
-            height: 30px;
-            &:first-child {
-                @include label;
-                padding-top: 8px;
-            }
-            @include labelContent;
-            padding-top: 0;
-            box-sizing: border-box;
-        }
-    }
-    .nameinmodel {
-        label {
-            margin-right: 20px;
-            width: 110px;
-            flex-shrink: 0;
-            height: 30px;
-            padding-top: 8px;
             display: inline-block;
             @include label;
         }
@@ -148,7 +114,7 @@ mat-form-field {
 .paragraph-error {
     font-size: 12px;
     position: absolute;
-    width: 344px;
+    
 }
 .paragraph-error.valueOfRadio {
     position: absolute;
@@ -382,4 +348,8 @@ span.mat-checkbox-label {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+.tagname mat-form-field {
+    width: 150px;
+    margin-right: 50px;
 }

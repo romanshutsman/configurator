@@ -3,7 +3,7 @@ import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core'
 
 import { SharedService } from '../../providers/shared.service';
 import { AoiHelper } from '../aoi-helper';
-
+import { Programs } from '../../providers/common.interface';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,6 +34,8 @@ export class HomeComponent {
   showAOITab = false;
   responseAoi;
   nameAoi: any;
+  pathSelectedItem;
+  programsAndRoutines;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -55,6 +57,7 @@ export class HomeComponent {
 
   getNode(e) {
     this.selectedItem = e;
+    this.pathSelectedItem = Object.assign({}, {path: undefined});
     this.manageOfBtns(false, false, false);
   }
   actionMenu(e) {
@@ -160,6 +163,7 @@ export class HomeComponent {
         this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, true, false, '', false);
       }
+      this.getProgram();
     },
       error => {
         this.onBlocking = false;
@@ -169,6 +173,8 @@ export class HomeComponent {
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
         this.disableBtnOfMenu = true;
       });
+      // comment ↓
+      this.getProgram();
   }
   successConnect(data, body, item) {
     this.statusController({ 'status': true, 'project': item });
@@ -320,5 +326,20 @@ export class HomeComponent {
         // this.manageOfContent(false, false, true);
         // this.responseAoi = this.treeModel[0];
       });
+  }
+  getPath(e) {
+    this.pathSelectedItem = undefined;
+    this.pathSelectedItem = Object.assign({}, {path:e});
+  }
+  getProgram() {
+    this.service.getPrograms().subscribe(programs => {
+      this.programsAndRoutines = undefined;
+      this.programsAndRoutines = Object.assign({}, {programs: programs});
+    }, 
+    err => {
+      this.service.sendNotification('Cant load Programs!', 'fail')
+      this.programsAndRoutines = undefined;
+      this.programsAndRoutines = Object.assign({}, {programs: [{Name: 'p1', Routines: ['a', 'b']}, {Name: 'p2', Routines: ['a2', 'b2']}]});
+    })
   }
 }

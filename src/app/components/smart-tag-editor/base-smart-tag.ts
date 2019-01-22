@@ -68,6 +68,15 @@ export class BaseSmartTag {
   hasTriggerRSD = false;
   hasChange = false;
   logIn = false;
+  allPrograms;
+
+  @Input() set getProgram(value) {
+    if(value) {
+      console.log('HERE HERE')
+      console.log(value);
+      this.allPrograms = value;
+    }
+  }
 
   constructor(public service: SharedService) {
     this.getITypes();

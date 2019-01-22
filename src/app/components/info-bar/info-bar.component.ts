@@ -11,6 +11,7 @@ export class InfoBarComponent implements OnInit {
   statusController = false;
   name: string;
   version: string;
+  pathNode: string;
   @Input() set SelectedNode(value) {
     if(value) {
       this.node = value;
@@ -21,6 +22,12 @@ export class InfoBarComponent implements OnInit {
       this.name = value['project']['Name'];
       this.version = value['project']['Version'];
       this.statusController = value.status;
+    }
+  }
+  @Input() set pathSelectedItem(path) {
+    if(path) {
+      console.log(path);
+      this.pathNode = path['path'];
     }
   }
   constructor() { }

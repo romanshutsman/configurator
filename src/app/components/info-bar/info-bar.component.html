@@ -1,7 +1,10 @@
 <div class="container">
   <div class="info" *ngIf="node">
-    <h1>sProgram: {{node.sProgram}}</h1>
-    <h1>TagName: {{node.TagName}}</h1>
+    <h1><span>Program:</span>{{node.Program}}</h1>
+    <h1><span>TagName:</span>{{node.TagName}}</h1>
+  </div>
+  <div class="path" *ngIf="pathNode">
+    <h1 ><span>Position in model:</span><br><span>{{pathNode}}</span></h1>
   </div>
   <div class="status" >
 

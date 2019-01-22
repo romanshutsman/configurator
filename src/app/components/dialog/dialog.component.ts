@@ -31,6 +31,12 @@ export class DialogComponent implements OnInit {
       }
     }
   }
+  @Input() set getAllPrograms(value) {
+    if(value) {
+      this.resetForm();
+      this.insertForm = value.programs;
+    }
+  }
   selectProgram = new FormControl(null, [Validators.required]);
   selectRoutines = new FormControl(null, [Validators.required]);
   selectRung = new FormControl(null, [Validators.required, Validators.pattern('^\d*[0-9]\d*$')]);
@@ -85,12 +91,7 @@ export class DialogComponent implements OnInit {
     this.routines = programRoutines[0].Routines;
   }
   showInsertForm() {
-    this.resetForm();
-    this.service.getPrograms().subscribe(programs => {
-      this.insertForm = programs;
-      this.showInsert = true;
-    }, 
-    err => this.service.sendNotification('Cant load Programs!', 'fail'))
+    this.showInsert = true;
   }
   resetForm() {
     this.insertForm = [];

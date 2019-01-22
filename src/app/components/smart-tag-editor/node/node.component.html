@@ -1,10 +1,11 @@
 <form #nodeForm="ngForm">
   <div class="readonly" *ngIf="cloneSelectedNode.isInjected"></div>
   <mat-card class="first-block">
-    <div class="name">
+    <!-- <div class="name">
       <p>Location in code</p>
-      <p>{{node.sProgram}}</p>
-    </div>
+      <p>{{node.Program}}</p>
+    </div> -->
+
     <div class="tagname">
       <mat-form-field class="example-full-width input">
           <input 
@@ -24,35 +25,29 @@
         First letter must be letter or _. You can type letters and numbers.
       </p>
     </div>
-  </mat-card>
-  <mat-card class="second-block">
-    <div class="model">
-      <p>Position in model</p>
-      <p>{{ pathNode}}</p>
-    </div>
     <div class="nameinmodel">
-      <mat-form-field class="example-full-width input">
-          <input 
-          matInput
-          placeholder="Name in model"
-          type="text" 
-          name="label" 
-          style="font-size:16px"
-          [(ngModel)]="cloneSelectedNode.label"
-          validateName
-          [dataNode]="getParentNode"
-          [pattern]="testNamePattern"
-          id="tagname"
-          maxlength="40"
-          required >
-      </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
-        First letter must be letter or _. You can type letters and numbers.
-      </p>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
-        This name already exist!
-      </p>
-    </div>
+        <mat-form-field class="example-full-width input">
+            <input 
+            matInput
+            placeholder="Name in model"
+            type="text" 
+            name="label" 
+            style="font-size:16px"
+            [(ngModel)]="cloneSelectedNode.label"
+            validateName
+            [dataNode]="getParentNode"
+            [pattern]="testNamePattern"
+            id="tagname"
+            maxlength="40"
+            required >
+        </mat-form-field>
+        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+          First letter must be letter or _. You can type letters and numbers.
+        </p>
+        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+          This name already exist!
+        </p>
+      </div>
   </mat-card>
   <mat-card class="infomation-type" >
     <div class="type" >
