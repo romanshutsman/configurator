@@ -88,7 +88,7 @@ export class BaseTree {
       TagName: item.TagName,
       UID: item.UID,
       iStartD: item.iStartD,
-      bHasTrigger: item.bHasTrigger,
+      hasTrigger: item.hasTrigger,
       updateRate: item.updateRate,
       isMulp: item.isMulp,
       InternalIndex: item.InternalIndex,
@@ -102,7 +102,10 @@ export class BaseTree {
       isAoi: item.isAoi,
       nameAoi: item.nameAoi,
       lInfoAtt: item.lInfoAtt,
-      isInjected: item.isInjected
+      isInjected: item.isInjected,
+      hasChange: item.hasChange,
+      hasBuffer: item.hasBuffer,
+      isLogIn: item.isLogIn,
     };
   }
   onDblClick(comp) {

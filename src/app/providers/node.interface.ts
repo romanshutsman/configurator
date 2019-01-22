@@ -1,4 +1,4 @@
-export interface NodeTree  { 
+export interface NodeTree {
     label: string;
     ParentID: number;
     ID: number;
@@ -13,7 +13,6 @@ export interface NodeTree  {
     TagName: string;
     UID: number;
     iStartD: number;
-    bHasTrigger: boolean;
     updateRate: number;
     isMulp: boolean;
     InternalIndex: number;
@@ -28,6 +27,10 @@ export interface NodeTree  {
     nameAoi: string;
     lInfoAtt: InfoAttributesModel[];
     isInjected: boolean;
+    hasTrigger: boolean;
+    hasChange: boolean;
+    hasBuffer: boolean;
+    isLogIn: boolean;
 }
 
 export interface RealStateDintNode extends NodeTree {

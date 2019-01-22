@@ -14,7 +14,7 @@ export class DataHelper {
         TagName: '',
         UID: null,
         iStartD: null,
-        bHasTrigger: false,
+        hasTrigger: false,
         updateRate: null,
         isMulp: false,
         InternalIndex: null,
@@ -28,7 +28,10 @@ export class DataHelper {
         isAoi: false,
         nameAoi: null,
         lInfoAtt: [],
-        isInjected: false
+        isInjected: false,
+        hasChange: false,
+        hasBuffer: false,
+        isLogIn: false
     }
     nodeValueType = {
         label: '',
@@ -45,7 +48,7 @@ export class DataHelper {
         TagName: '',
         UID: null,
         iStartD: null,
-        bHasTrigger: false,
+        hasTrigger: false,
         updateRate: null,
         isMulp: false,
         InternalIndex: null,
@@ -60,10 +63,13 @@ export class DataHelper {
         isAoi: false,
         nameAoi: null,
         lInfoAtt: [],
-        isInjected: false
+        isInjected: false,
+        hasChange: false,
+        hasBuffer: false,
+        isLogIn: false
     }
 
-    // Tree = { "nameInModel": "Root", "ParentID": 0, "ID": 1, "Type": 0, "SubType": 0, "EU": "", "Min": 0.0, "Max": 0.0, "Mul": 0.0, "Exp": true, "Program": "MainProgram", "TagName": "TestLogic", "UID": 0, "iStartD": 112, "bHasTrigger": false, "updateRate": 0.3072, "isMulp": false, "InternalIndex": 19, "lChildrens": []}
+    // Tree = { "nameInModel": "Root", "ParentID": 0, "ID": 1, "Type": 0, "SubType": 0, "EU": "", "Min": 0.0, "Max": 0.0, "Mul": 0.0, "Exp": true, "Program": "MainProgram", "TagName": "TestLogic", "UID": 0, "iStartD": 112, "hasTrigger": false, "updateRate": 0.3072, "isMulp": false, "InternalIndex": 19, "lChildrens": []}
     // Tree =  JSON.parse("{\"nameInModel\":\"Information Model\",\"lChildrens\":[{\"nameInModel\":\"My First Node\",\"lChildrens\":[{\"nameInModel\":\"R01\",\"lChildrens\":[],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: R01 (P)\",\"ParentID\":2,\"ID\":5,\"Type\":1,\"SubType\":0,\"EU\":\"R01\",\"Min\":0.0,\"Max\":0.0,\"Mul\":0.0,\"Exp\":true,\"Program\":\"MainProgram\",\"TagName\":\"R01\",\"UID\":357773032,\"iStartD\":4,\"hasTrigger\":false,\"hasChange\":true,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":0.0,\"isMulp\":false,\"InternalIndex\":4,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false},{\"nameInModel\":\"D01\",\"lChildrens\":[],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: D01 (P)\",\"ParentID\":2,\"ID\":3,\"Type\":2,\"SubType\":0,\"EU\":\"\",\"Min\":0.0,\"Max\":0.0,\"Mul\":1.0,\"Exp\":true,\"Program\":\"MainProgram\",\"TagName\":\"D01\",\"UID\":1805350266,\"iStartD\":1,\"hasTrigger\":false,\"hasChange\":true,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":0.0,\"isMulp\":false,\"InternalIndex\":24,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false},{\"nameInModel\":\"D02\",\"lChildrens\":[],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: D02 (P)\",\"ParentID\":2,\"ID\":4,\"Type\":2,\"SubType\":0,\"EU\":\"\",\"Min\":0.0,\"Max\":0.0,\"Mul\":1.0,\"Exp\":true,\"Program\":\"MainProgram\",\"TagName\":\"D02\",\"UID\":28761764,\"iStartD\":2,\"hasTrigger\":false,\"hasChange\":true,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":0.0,\"isMulp\":false,\"InternalIndex\":24,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false},{\"nameInModel\":\"Child Node\",\"lChildrens\":[],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: Child Node (P)\",\"ParentID\":2,\"ID\":6,\"Type\":0,\"SubType\":0,\"EU\":\"\",\"Min\":0.0,\"Max\":0.0,\"Mul\":0.0,\"Exp\":true,\"Program\":\"MainProgram\",\"TagName\":\"ChildNode\",\"UID\":976015756,\"iStartD\":0,\"hasTrigger\":false,\"hasChange\":false,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":0.0,\"isMulp\":false,\"InternalIndex\":1,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false}],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: My First Node (1s)\",\"ParentID\":1,\"ID\":2,\"Type\":0,\"SubType\":0,\"EU\":\"\",\"Min\":0.0,\"Max\":0.0,\"Mul\":0.0,\"Exp\":true,\"Program\":\"MainProgram\",\"TagName\":\"MyFirstNode\",\"UID\":1074049440,\"iStartD\":3,\"hasTrigger\":false,\"hasChange\":false,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":1.000448,\"isMulp\":false,\"InternalIndex\":1,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false}],\"lInfoAtt\":[],\"oTreeNode\":\"TreeNode: \",\"ParentID\":0,\"ID\":1,\"Type\":0,\"SubType\":0,\"EU\":\"\",\"Min\":0.0,\"Max\":0.0,\"Mul\":0.0,\"Exp\":true,\"Program\":\"\",\"TagName\":\"\",\"UID\":0,\"iStartD\":0,\"hasTrigger\":false,\"hasChange\":false,\"hasBuffer\":false,\"hasAttributes\":false,\"updateRate\":0.0,\"isMulp\":false,\"InternalIndex\":0,\"isAoi\":false,\"aoiName\":null,\"isInjected\":false}")
     Tree =  {"nameInModel":"Root from AOI","lChildrens":[{"nameInModel":"DINT From AOI","lChildrens":[],"lInfoAtt":[{"name":"OEE","value":null},{"name":"Sherlock","value":"fqaweas"},{"name":"Summary","value":"25"}],"oTreeNode":"TreeNode: ","ParentID":1,"ID":2,"Type":2,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"LocalDINT01","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false},{"nameInModel":"N01","lChildrens":[{"nameInModel":"N02","lChildrens":[],"lInfoAtt":[],"oTreeNode":"TreeNode: ","ParentID":3,"ID":4,"Type":0,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"N02","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false}],"lInfoAtt":[],"oTreeNode":"TreeNode: ","ParentID":1,"ID":3,"Type":0,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"N01","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false},{"nameInModel":"N02","lChildrens":[],"lInfoAtt":[],"oTreeNode":"TreeNode: ","ParentID":1,"ID":5,"Type":0,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"N02","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false},{"nameInModel":"N03","lChildrens":[],"lInfoAtt":[{"name":"OEE","value":null},{"name":"Test01","value":"3"}],"oTreeNode":"TreeNode: ","ParentID":1,"ID":6,"Type":0,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"N03","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false},{"nameInModel":"string","lChildrens":[],"lInfoAtt":[{"name":"Test01","value":null}],"oTreeNode":"TreeNode: ","ParentID":1,"ID":7,"Type":3,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"string","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false}],"lInfoAtt":[{"name":"OEE","value":null}],"oTreeNode":"TreeNode: ","ParentID":0,"ID":1,"Type":0,"SubType":0,"EU":"","Min":0.0,"Max":0.0,"Mul":0.0,"Exp":true,"Program":"","TagName":"LocalRoot","UID":0,"iStartD":0,"hasTrigger":false,"hasChange":false,"hasBuffer":false,"hasAttributes":false,"updateRate":0.0,"isMulp":false,"InternalIndex":0,"isAoi":true,"aoiName":"TestSmarTags","isInjected":false}
 }

@@ -79,7 +79,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       TagName: item.TagName,
       UID: item.UID,
       iStartD: item.iStartD,
-      bHasTrigger: item.bHasTrigger,
+      hasTrigger: item.hasTrigger,
       updateRate: item.updateRate,
       isMulp: item.isMulp,
       InternalIndex: item.InternalIndex,
@@ -93,19 +93,22 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       isAoi: item.isAoi,
       nameAoi: item.nameAoi,
       lInfoAtt: item.lInfoAtt,
-      isInjected: item.isInjected
+      isInjected: item.isInjected,
+      hasChange: item.hasChange,
+      hasBuffer: item.hasBuffer,
+      isLogIn: item.isLogIn
     };
   }
   loadNode() {
-    this.hasTriggerNS = this.cloneSelectedNode.bHasTrigger;
+    this.hasTriggerNS = this.cloneSelectedNode.hasTrigger;
     if (this.cloneSelectedNode.updateRate > 0) {
-      if (this.cloneSelectedNode.bHasTrigger) {
+      if (this.cloneSelectedNode.hasTrigger) {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       } else {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       }
     } else if (this.cloneSelectedNode.updateRate == 0) {
-      if (this.cloneSelectedNode.bHasTrigger) {
+      if (this.cloneSelectedNode.hasTrigger) {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
       } else {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];

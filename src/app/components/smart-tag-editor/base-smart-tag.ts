@@ -89,7 +89,10 @@ export class BaseSmartTag {
       TagName: '',
       UID: 0,
       iStartD: 0,
-      bHasTrigger: false,
+      hasTrigger: false,
+      hasChange: false,
+      hasBuffer: false,
+      isLogIn: false,
       updateRate: 0,
       isMulp: false,
       InternalIndex: 0,
@@ -150,13 +153,13 @@ export class BaseSmartTag {
   }
   loadValue() {
     if (this.cloneSelectedNode.updateRate > 0) {
-      if (this.cloneSelectedNode.bHasTrigger) {
+      if (this.cloneSelectedNode.hasTrigger) {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[3];
       } else {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
       }
     } else if (this.cloneSelectedNode.updateRate == 0) {
-      if (this.cloneSelectedNode.bHasTrigger) {
+      if (this.cloneSelectedNode.hasTrigger) {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
       } else {
         this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[0];
@@ -242,7 +245,7 @@ export class BaseSmartTag {
     this.sendSmartTagData(form);
   }
   isEnableTriggerInput(trig, inp, num) {
-    this.cloneSelectedNode.bHasTrigger = trig;
+    this.cloneSelectedNode.hasTrigger = trig;
     this.inputDisable = inp;
     this.cloneSelectedNode.updateRate = num;
   }

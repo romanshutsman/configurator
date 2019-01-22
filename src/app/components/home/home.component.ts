@@ -119,7 +119,7 @@ export class HomeComponent {
       const node = e['body'];
       this.selectedItem.label = node.label;
       this.selectedItem.updateRate = node.updateRate;
-      this.selectedItem.bHasTrigger = node.bHasTrigger;
+      this.selectedItem.hasTrigger = node.hasTrigger;
       this.selectedItem.nameAoi = node.nameAoi;
       this.selectedItem.lInfoAtt = node.lInfoAtt;
       this.selectedItem.isAoi = node.isAoi;

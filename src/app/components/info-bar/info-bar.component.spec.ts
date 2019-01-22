@@ -55,7 +55,7 @@ fdescribe('InfoBarComponent', () => {
       TagName: 'TESTTEST',
       UID: 0,
       iStartD: 0,
-      bHasTrigger: false,
+      hasTrigger: false,
       updateRate: 0,
       isMulp: false,
       InternalIndex: 0,
