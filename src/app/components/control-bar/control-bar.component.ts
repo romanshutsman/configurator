@@ -188,10 +188,4 @@ export class ControlBarComponent implements OnInit {
     const object = JSON.parse(stringifyData);
     return object;
   }
-
-
-
-
-
-
 }

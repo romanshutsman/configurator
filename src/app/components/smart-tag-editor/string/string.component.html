@@ -86,9 +86,16 @@
     <mat-card class="select" *ngIf="!cloneSelectedNode.isAoi">
       <div class="mat-select-center">
         <mat-form-field class="routineProgramselect">
-          <mat-select id="matSelect1" [disabled]="programNameDisabled" name="sProgram" placeholder="Programs" style="color:black"
-            [(ngModel)]="cloneSelectedNode.sProgram" required="isRequired ? '' : null">
-            <mat-option *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
+          <mat-select 
+          id="matSelect1"
+          [disabled]="programNameDisabled"  
+          name="sProgram" 
+          placeholder="Programs" 
+          style="color:black" 
+          (selectionChange)="onSelectedProgram($event)"
+          [(ngModel)]="cloneSelectedNode.Program" 
+          required="isRequired ? '' : null">
+            <mat-option  *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">

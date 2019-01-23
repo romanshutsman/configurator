@@ -168,9 +168,10 @@
           name="sProgram" 
           placeholder="Programs" 
           style="color:black" 
-          [(ngModel)]="cloneSelectedNode.sProgram" 
+          (selectionChange)="onSelectedProgram($event)"
+          [(ngModel)]="cloneSelectedNode.Program" 
           required="isRequired ? '' : null">
-            <mat-option  *ngFor="let item of programs" [value]="item">{{item}}</mat-option>
+            <mat-option  *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">

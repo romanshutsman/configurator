@@ -72,8 +72,7 @@ export class BaseSmartTag {
 
   @Input() set getProgram(value) {
     if(value) {
-      console.log('HERE HERE')
-      console.log(value);
+      console.log('HERE HERE', value)
       this.allPrograms = value;
     }
   }
@@ -154,10 +153,8 @@ export class BaseSmartTag {
   }
   clearUpdateValidator(control) {
     if (this.formComp.controls[control]) {
-      console.log('HERE');
       this.formComp.controls[control].clearValidators();
       this.formComp.controls[control].updateValueAndValidity();
-      console.log(this.formComp);
     }
   }
   loadValue() {
@@ -182,20 +179,30 @@ export class BaseSmartTag {
   defaultValueOnAdd(form, radio) {
     this.initOnAdd();
     this.enableReuiredItems(form);
+    this.routineDefault = '';
     this.service.getInfoNode(this.nodeiD)
-      .subscribe((data: any) => {
-        this.programs = data['Programs'];
-        this.routines = data['Routines'];
-        this.routineDefault = this.routines[0];
-        if (this.programs.length > 0) {
-          const defaltProgramIndex: any = this.programs.findIndex(i => i === this.node.Program);
-          this.cloneSelectedNode.Program = this.programs[defaltProgramIndex];
+      .subscribe((program: string) => {
+        if(this.nodeiD !== 1) {
+          this.cloneSelectedNode.Program = program;
+        }
+        this.programs = this.allPrograms['programs'];
+        const found = this.allPrograms['programs'].filter(i=>i.Name==this.cloneSelectedNode.Program);
+        if(found.length>0) {
+          this.routines = found[0].Routines;
+          this.routineDefault = found[0].Routines[0];
         }
       });
     this.cloneSelectedNode.updateRadio = radio[2];
     this.cloneSelectedNode.sProgramParent = this.node.Program;
     this.cloneSelectedNode.sParentTagName = this.node.TagName;
     this.disableGroupBtn(false);
+  }
+  onSelectedProgram(e) {
+    const found = this.programs.filter(i=>i.Name==e.value);
+    if(found.length>0) { 
+      this.routines = found[0].Routines;
+      this.routineDefault = found[0].Routines[0];
+    }
   }
   defaultValueOnEdit(form) {
     this.disableReuiredItems(form);
@@ -258,10 +265,6 @@ export class BaseSmartTag {
     this.inputDisable = inp;
     this.cloneSelectedNode.updateRate = num;
   }
-  // getParentSelectedNode(node: NodeTree) {
-  //   this.parentOfNode = node;
-  //   console.log(this.parentOfNode)
-  // }
   initAoi(value) {
     if (value.component == 'model') {
       this.cloneSelectedNode.isAoi = false;
@@ -275,12 +278,11 @@ export class BaseSmartTag {
     try {
       if(this.typesOfCheckboxesAOI.length>0)
         this.typesOfCheckboxesAOI.forEach(e => {
-          // e.selected = false;
           let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
           e.selected = !!selected;
         })
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
   getITypes() {
@@ -343,12 +345,11 @@ export class BaseSmartTag {
   async initCheckbox() {
     try {      
       while (this.typesOfCheckboxesAOI.length == 0) {
-        console.log('PROMISE')
         await this.waitingTreeAsync(100);
       }
       this.checkboxOnAction();
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
   }
   waitingTreeAsync(timer) {
@@ -365,7 +366,7 @@ export class BaseSmartTag {
         if(this.typesOfCheckboxesAOI.length>0)
           this.typesOfCheckboxesAOI.forEach(e=>e.Value=undefined)
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     } else {
       this.typesOfCheckboxesAOI = JSON.parse(JSON.stringify(this.typesOfCheckboxes));

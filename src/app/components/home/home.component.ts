@@ -338,8 +338,8 @@ export class HomeComponent {
     }, 
     err => {
       this.service.sendNotification('Cant load Programs!', 'fail')
-      this.programsAndRoutines = undefined;
-      this.programsAndRoutines = Object.assign({}, {programs: [{Name: 'p1', Routines: ['a', 'b']}, {Name: 'p2', Routines: ['a2', 'b2']}]});
+      // this.programsAndRoutines = undefined;
+      // this.programsAndRoutines = Object.assign({}, {programs: [{Name: 'p1', Routines: ['a', 'b']}, {Name: 'p2', Routines: ['a2', 'b2']}]});
     })
   }
 }
