@@ -31,6 +31,7 @@ export interface NodeTree {
     hasChange: boolean;
     hasBuffer: boolean;
     isLogIn: boolean;
+    Del: number;
 }
 
 export interface RealStateDintNode extends NodeTree {

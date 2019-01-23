@@ -134,7 +134,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       isInjected: item.isInjected,
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
-      isLogIn: item.isLogIn
+      isLogIn: item.isLogIn,
+      Del: item.Del
     };
   }
   initSelectedTag(value) {

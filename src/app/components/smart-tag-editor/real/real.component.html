@@ -70,7 +70,6 @@
               placeholder="Min Value"
               type="number" 
               name="minval" 
-              pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
               required 
               [value]="cloneSelectedNode.Min" 
               [(ngModel)]="cloneSelectedNode.Min" 
@@ -89,7 +88,6 @@
               placeholder="Max Value"
               type="number" 
               name="maxval" 
-              pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
               required 
               [value]="cloneSelectedNode.Max" 
               [(ngModel)]="cloneSelectedNode.Max" 
@@ -102,6 +100,24 @@
             </p>
         </div>
       </div>
+          <div class="delta">
+            <mat-form-field class="example-full-width">          
+                <input 
+                matInput
+                placeholder="Delta Change"
+                type="number" 
+                name="delta" 
+                pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
+                required 
+                [value]="cloneSelectedNode.Del" 
+                [(ngModel)]="cloneSelectedNode.Del" 
+                min="0" 
+                >
+              </mat-form-field>
+              <p class="paragraph-error deltaError err" *ngIf="nodeFrm.controls.delta?.status === 'INVALID'">
+                  This must be a integer or number with up to 2 decimal places!
+              </p>
+          </div>
     </mat-card>
     <mat-card class="infomation-type">
         <div class="type" >

@@ -25,7 +25,6 @@ export class ControlBarComponent implements OnInit {
   }
   @Output() submitForm = new EventEmitter();
   @Input() set TreeOnPost(tree) {
-    console.log('GET', tree);
     this.treePost = tree;
     if (this.treePost && this.treePost[0].isAoi){
       this.saveAoi();
@@ -44,14 +43,10 @@ export class ControlBarComponent implements OnInit {
       this.operation = value;
       if (value['isValid'] === 'VALID') {
         this.dataForm = value['body'];
-        console.log(this.dataForm);
         this.checkOperation(value['operation']['action']);
         if (this.dataForm.isInjected) {
           this.disableAllBtn();
           this.disableBtnNav = true;
-          // this.content.add = false;
-          // this.content.edit = false;
-          // this.content.navigate = false;
         }
       } else {
         this.disableAllBtn();
@@ -131,11 +126,13 @@ export class ControlBarComponent implements OnInit {
   }
 
 
-  responseOnEdit(value, component) {
+  responseOnEdit(value, isInfoModel) {
     this.showSpinner = false;
     this.disableBtnEdit = false;
     if (value) {
       this.disableAllBtn();
+      if(isInfoModel)
+        this.onAddEditAoiSubmit('edited');
     } else {
       this.onFailed('Edition');
     }
@@ -176,7 +173,6 @@ export class ControlBarComponent implements OnInit {
       this.responseOnAdd(value, false);
     },
       err => {
-        // this.disableBtnAdd = false;
         this.onFailed('Chnages not saved');
       });
   }

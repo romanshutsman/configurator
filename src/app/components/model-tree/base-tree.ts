@@ -106,6 +106,7 @@ export class BaseTree {
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
       isLogIn: item.isLogIn,
+      Del: item.Del
     };
   }
   onDblClick(comp) {

@@ -130,6 +130,7 @@ export class HomeComponent {
       this.selectedItem.sProgramParent = node.sProgramParent;
       this.selectedItem.rung = node.rung;
       this.selectedItem.updateRadio = node.updateRadio;
+      this.selectedItem.Del = node.Del;
 
     }
     this.treeModelPost = this.treeModel;

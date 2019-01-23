@@ -114,7 +114,8 @@ export class BaseSmartTag {
       isAoi: false,
       nameAoi: null,
       lInfoAtt: [],
-      isInjected: false
+      isInjected: false,
+      Del: null
     };
   }
   getOptionTime(e) {

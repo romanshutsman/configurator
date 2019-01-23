@@ -206,6 +206,9 @@ mat-form-field.input {
         display: flex;
         align-items: center;
         position: relative;
+        &:first-child {
+            margin-bottom: 10px;
+        }
         label {
             padding-bottom: 5px;
             width: 130px;
@@ -268,7 +271,7 @@ mat-select.select {
     max-width: 100px;
 }
 .minMaxError {
-    bottom: 4px;
+    bottom: -11px;
 }
 .select {
     padding-top: 10px;
@@ -402,4 +405,15 @@ span.mat-checkbox-label {
 .tagname mat-form-field {
     width: 150px;
     margin-right: 50px;
+}
+.delta {
+    position: relative;
+    top: -3px;
+    margin-left: 50px;
+    mat-form-field {
+        width: 100px;
+    }
+}
+.deltaError {
+    top: 38px;
 }
