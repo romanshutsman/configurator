@@ -94,7 +94,6 @@ export class ControlBarComponent implements OnInit {
       'body': this.dataForm,
       'component': this.operation.operation.component
     });
-
   }
 
   responseOnAdd(value, isInfoModel) {
@@ -178,7 +177,7 @@ export class ControlBarComponent implements OnInit {
     },
       err => {
         // this.disableBtnAdd = false;
-        this.onFailed('Addition');
+        this.onFailed('Chnages not saved');
       });
   }
   parseTreeToServer(tree) {
