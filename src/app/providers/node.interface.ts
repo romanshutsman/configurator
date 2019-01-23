@@ -17,7 +17,6 @@ export interface NodeTree {
     isMulp: boolean;
     InternalIndex: number;
     children: NodeTree[];
-    oTreeNode: string;
     rung: number;
     routine: string;
     sProgramParent: string;
