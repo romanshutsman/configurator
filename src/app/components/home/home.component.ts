@@ -2,7 +2,6 @@ import { NodeTree } from './../../providers/node.interface';
 import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
 
 import { SharedService } from '../../providers/shared.service';
-import { AoiHelper } from '../aoi-helper';
 import { Programs } from '../../providers/common.interface';
 @Component({
   selector: 'app-home',
@@ -45,13 +44,13 @@ export class HomeComponent {
     this.treeModel = e;
     this.manageOfBtns(false, false, false);
   }
+
   getTreeOnPost(e) {
     console.log('EMITTED')
-    this.treeModelPost = undefined;
-    this.treeModelPost = Object.assign({}, e);
-    if (this.treeModelPost && this.treeModelPost[0].isAoi){
-      let helper = new AoiHelper(this.service, this.treeModelPost);
-      helper.saveAoi();
+    if (this.treeModelPost && this.treeModelPost[0].isAoi) {
+      this.treeModelPost = Object.assign({}, e);
+    } else {
+      this.treeModelPost = e;
     }
   }
 
