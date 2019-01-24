@@ -16,6 +16,8 @@ export class ControlBarComponent implements OnInit {
   content = { navigate: false, edit: false, add: false };
   showSpinner = false;
   treePost;
+  isChangesAllowed = true;
+ @Output() showMsgChangesNotAllowed = new EventEmitter();
 
   @Input() set selectedContent(value) {
     this.content = value;
@@ -30,6 +32,7 @@ export class ControlBarComponent implements OnInit {
       this.saveAoi();
     }
   }
+  @Input() changesAllowed;
 
   constructor(private service: SharedService) {
     this.onEditForm();
@@ -69,18 +72,22 @@ export class ControlBarComponent implements OnInit {
   }
   addNode() {
     console.log('ADDNODE', this.dataForm);
-    this.showSpinner = true;
-    this.disableAllBtn();
-    if (this.operation.operation.component == 'model') {
-      this.service.addNode(this.dataForm).subscribe((value) => {
-        this.responseOnAdd(value, true);
-      },
-        err => {
-          this.disableBtnAdd = false;
-          this.onFailed('Addition');
-        });
+    if(this.changesAllowed) {
+      this.showSpinner = true;
+      this.disableAllBtn();
+      if (this.operation.operation.component == 'model') {
+        this.service.addNode(this.dataForm).subscribe((value) => {
+          this.responseOnAdd(value, true);
+        },
+          err => {
+            this.disableBtnAdd = false;
+            this.onFailed('Addition');
+          });
+      } else {
+        this.onAddEditAoiSubmit('added')
+      }
     } else {
-      this.onAddEditAoiSubmit('added')
+      this.showMsgChangesNotAllowed.emit();
     }
   }
   onAddEditAoiSubmit(action: string) {
@@ -110,18 +117,22 @@ export class ControlBarComponent implements OnInit {
   }
 
   updateNode() {
-    this.showSpinner = true;
-    this.disableAllBtn();
-    if (this.operation.operation.component == 'model') {
-      this.service.updateNode(this.dataForm).subscribe((value) => {
-        this.responseOnEdit(value, true);
-      },
-        err => {
-          this.disableBtnEdit = false;
-          this.onFailed('Edition');
-        });
+    if(this.changesAllowed) {
+      this.showSpinner = true;
+      this.disableAllBtn();
+      if (this.operation.operation.component == 'model') {
+        this.service.updateNode(this.dataForm).subscribe((value) => {
+          this.responseOnEdit(value, true);
+        },
+          err => {
+            this.disableBtnEdit = false;
+            this.onFailed('Edition');
+          });
+      } else {
+        this.onAddEditAoiSubmit('edited')
+      }
     } else {
-      this.onAddEditAoiSubmit('edited')
+      this.showMsgChangesNotAllowed.emit();
     }
   }
 

@@ -1,6 +1,9 @@
 <section class="home">
   <section class="info-bar">
-    <app-info-bar [SelectedNode]="selectedItem" [status]="statusOfController" [pathSelectedItem]="pathSelectedItem"></app-info-bar>
+    <app-info-bar 
+    [SelectedNode]="selectedItem" 
+    [status]="statusOfController" 
+    [pathSelectedItem]="pathSelectedItem"></app-info-bar>
   </section>
   <section class="message-bar">
     <app-message-bar></app-message-bar>
@@ -57,14 +60,19 @@
     </div>
   </section>
   <section class="control-bar">
-    <app-control-bar [TreeOnPost]="treeModelPost" (submitForm)="onSubmitted($event)" [selectedContent]="showBtn"></app-control-bar>
+    <app-control-bar 
+    [TreeOnPost]="treeModelPost" 
+    (submitForm)="onSubmitted($event)"
+    [changesAllowed]="isChangesAllowed"
+    (showMsgChangesNotAllowed)="onChangesNotAllowed()"
+    [selectedContent]="showBtn"></app-control-bar>
   </section>
 </section>
 
 <app-dialog 
 class="dialog" 
 (postController)="getChosenController($event)" 
-[manageOfMessageBox]="onConnect" 
+[manageOfMessageBox]="onShowInfoMsg" 
 [getAllPrograms]="programsAndRoutines"
 (responseVerify)="verifyingChosenController($event)">
   <app-dialog>

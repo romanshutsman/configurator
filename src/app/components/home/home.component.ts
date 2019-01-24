@@ -19,7 +19,7 @@ export class HomeComponent {
   bodyForm: any;
   statusOfController: any;
   showBtn = {};
-  onConnect: any;
+  onShowInfoMsg: any;
   controller: string;
   chosenVersion: any;
   listOfControllers = [];
@@ -35,6 +35,7 @@ export class HomeComponent {
   nameAoi: any;
   pathSelectedItem;
   programsAndRoutines;
+  isChangesAllowed = true;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -172,9 +173,7 @@ export class HomeComponent {
         this.checkVerification(body);
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
         this.disableBtnOfMenu = true;
-      });
-      // comment ↓
-      this.getProgram();
+});
   }
   successConnect(data, body, item) {
     this.statusController({ 'status': true, 'project': item });
@@ -219,14 +218,13 @@ export class HomeComponent {
     this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
       console.log(data);
-      if (data['Status'] != 6) {
+      if (data['Status'] != this.service.controllerMode.rsModeOffline) {
         this.onHideAoi = true;
       }
       this.checkStatus = data;
       if (data['Tree']) {
         this.successConnect(data['Tree'], bodyTransfer, item);
         this.disableBtnOfMenu = false;
-        // this.manageMessageDialog([], false, true, 'Succesfully connected', false);
       } else {
         this.service.SubjectLoadTree.next(data['Tree']);
         this.errorConnect();
@@ -238,6 +236,12 @@ export class HomeComponent {
 
         }
       }
+      if(data['Status'] == this.service.controllerMode.rsModeRemRun && data['IsOldVersion']) {
+        this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
+        this.isChangesAllowed = false;
+      } else {
+        this.isChangesAllowed = true;
+      }
     },
       error => {
         this.onLoading = false;
@@ -247,15 +251,17 @@ export class HomeComponent {
           this.errorConnect();
         }
       });
+    }
+  onChangesNotAllowed() {
+    this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
   }
-
-  manageMessageDialog(list, show, showConnect, msg, showVerify) {
-    this.onConnect = {
+  manageMessageDialog(list, showInfoList, showInfoMessage, msg, showVerifyMessage) {
+    this.onShowInfoMsg = {
       list: list,
-      show: show,
-      showConnect: showConnect,
+      showInfoList: showInfoList,
+      showInfoMessage: showInfoMessage,
       message: msg,
-      showVerify: showVerify
+      showVerifyMessage: showVerifyMessage
     };
   }
   manageOfContent(tabTree, tabForm, tabAoi) {
@@ -320,11 +326,6 @@ export class HomeComponent {
         this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
         e.emit = false;
         this.showAOITab = e;
-        // const body = e;
-        // body['resAoi'] = this.treeModel[0];
-        // this.showAOITab = body;
-        // this.manageOfContent(false, false, true);
-        // this.responseAoi = this.treeModel[0];
       });
   }
   getPath(e) {
@@ -338,8 +339,6 @@ export class HomeComponent {
     }, 
     err => {
       this.service.sendNotification('Cant load Programs!', 'fail')
-      // this.programsAndRoutines = undefined;
-      // this.programsAndRoutines = Object.assign({}, {programs: [{Name: 'p1', Routines: ['a', 'b']}, {Name: 'p2', Routines: ['a2', 'b2']}]});
-    })
+})
   }
 }

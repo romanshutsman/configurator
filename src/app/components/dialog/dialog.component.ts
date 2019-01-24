@@ -8,9 +8,9 @@ import { Programs } from '../../providers/common.interface';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent implements OnInit {
-  show: boolean = false;
-  showConnect: boolean = false;
-  showVerify: boolean = false;
+  showInfoList: boolean = false;
+  showInfoMessage: boolean = false;
+  showVerifyMessage: boolean = false;
   list: any = [];
   controller: string;
   message: any;
@@ -22,10 +22,10 @@ export class DialogComponent implements OnInit {
   @Input() set manageOfMessageBox(value: any) {
     if (value) {
       this.list = value.list;
-      this.show = value.show;
+      this.showInfoList = value.showInfoList;
       this.message = value.message;
-      this.showConnect = value.showConnect;
-      this.showVerify = value.showVerify;
+      this.showInfoMessage = value.showInfoMessage;
+      this.showVerifyMessage = value.showVerifyMessage;
       if (value.message == 'Can\'t connect to controller!') {
         this.controller = '';
       }
@@ -54,18 +54,18 @@ export class DialogComponent implements OnInit {
     this.cdRef.detectChanges();
     this.postController.emit(item);
     setTimeout(() => {
-      this.show = false;
+      this.showInfoList = false;
       this.cdRef.detectChanges();
     }, 3000);
   }
 
   closeModal1() {
-    this.show = false;
+    this.showInfoList = false;
     this.cdRef.detectChanges();
   }
 
   closeModal2() {
-    this.showConnect = false;
+    this.showInfoMessage = false;
     this.cdRef.detectChanges();
   }
   onResponseVerify(e) {
@@ -75,7 +75,7 @@ export class DialogComponent implements OnInit {
       Routine: this.selectRoutines.value,
       Rung: this.selectRung.value,
     });
-    this.showVerify = false;
+    this.showVerifyMessage = false;
     this.showInsert = false; 
     this.cdRef.detectChanges();
   }

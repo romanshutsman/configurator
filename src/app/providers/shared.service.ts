@@ -19,6 +19,7 @@ export class SharedService extends DataHelper {
   initNode: NodeTree = this.node;
   initNodeValueType: RealStateDintNode = this.nodeValueType;
   dataTREE = this.Tree;
+  controllerMode = this.ControllerModeEnum;
 
   API_URL = 'http://localhost:13772/api/connect';
   API_URL_NODE = 'http://localhost:13772/api/node';

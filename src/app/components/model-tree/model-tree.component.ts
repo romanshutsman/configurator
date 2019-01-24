@@ -45,7 +45,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   @Input() set CheckStatusOfController(value) {
     console.log(value)
     if (value) {
-      if (value['Status'] != 6) {
+      if (value['Status'] != this.service.controllerMode.rsModeOffline) {
         this.checkedStatus = false;
       } else {
         this.checkedStatus = true;
