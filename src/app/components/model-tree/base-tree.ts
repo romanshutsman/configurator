@@ -93,7 +93,6 @@ export class BaseTree {
       isMulp: item.isMulp,
       InternalIndex: item.InternalIndex,
       children: item.children,
-      oTreeNode: item.oTreeNode,
       rung: item.rung,
       routine: item.routine,
       sProgramParent: item.sProgramParent,
