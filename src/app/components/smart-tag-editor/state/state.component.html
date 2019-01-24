@@ -105,6 +105,7 @@
                   placeholder="Enter attr"
                   [(ngModel)]="item.Value" 
                   [value]="item.Value" 
+                  (input)="inputNewValue(item, $event.target.value)"
                   [ngModelOptions]="{standalone: true}"
                   class="input-info-type" 
                   *ngIf="item.HasValue == 1">

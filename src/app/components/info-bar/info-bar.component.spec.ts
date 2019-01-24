@@ -60,7 +60,6 @@ fdescribe('InfoBarComponent', () => {
       isMulp: false,
       InternalIndex: 0,
       children: [],
-      oTreeNode: 'vfd',
       rung: 0,
       routine: 'gvbtrfg',
       sProgramParent: 'gvfd',

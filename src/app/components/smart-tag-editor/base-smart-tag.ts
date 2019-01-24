@@ -105,7 +105,6 @@ export class BaseSmartTag {
       isMulp: false,
       InternalIndex: 0,
       children: [],
-      oTreeNode: '',
       routine: '',
       rung: 0,
       sProgramParent: '',

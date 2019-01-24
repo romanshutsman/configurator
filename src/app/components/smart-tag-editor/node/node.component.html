@@ -72,6 +72,7 @@
             [value]="item.Value" 
             [ngModelOptions]="{standalone: true}"
             class="input-info-type" 
+            (input)="inputNewValue(item, $event.target.value)"
             *ngIf="item.HasValue == 1">
           </mat-checkbox>
         </ng-container>
