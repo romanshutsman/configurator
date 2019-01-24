@@ -164,7 +164,6 @@ export class HomeComponent {
         this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, true, false, '', false);
       }
-      this.getProgram();
     },
       error => {
         this.onBlocking = false;
@@ -236,12 +235,13 @@ export class HomeComponent {
 
         }
       }
-      if(data['Status'] == this.service.controllerMode.rsModeRemRun && data['IsOldVersion']) {
+      if(data['Status'] != this.service.controllerMode.rsModeOffline && data['IsOldVersion']) {
         this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
         this.isChangesAllowed = false;
       } else {
         this.isChangesAllowed = true;
       }
+      this.getProgram();
     },
       error => {
         this.onLoading = false;

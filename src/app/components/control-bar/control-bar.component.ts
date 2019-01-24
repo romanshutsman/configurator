@@ -117,7 +117,6 @@ export class ControlBarComponent implements OnInit {
   }
 
   updateNode() {
-    if(this.changesAllowed) {
       this.showSpinner = true;
       this.disableAllBtn();
       if (this.operation.operation.component == 'model') {
@@ -131,9 +130,6 @@ export class ControlBarComponent implements OnInit {
       } else {
         this.onAddEditAoiSubmit('edited')
       }
-    } else {
-      this.showMsgChangesNotAllowed.emit();
-    }
   }
 
 
