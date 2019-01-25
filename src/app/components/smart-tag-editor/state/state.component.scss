@@ -77,9 +77,9 @@
             }
             .group-2 {
                 display: flex;
+                position: relative;
                 div {
                     height: 30px;
-                    position: relative;
                     display: flex;
                     align-items: center;
                     input {
@@ -255,9 +255,9 @@ mat-select.select {
     max-width: 76px;
 }
 .updateRateError {
-    bottom: -30px;
+    bottom: -8px;
     font-weight: 400;
-    max-width: 100px;
+    max-width: 122px;
 }
 .dMulError {
     bottom: 0;

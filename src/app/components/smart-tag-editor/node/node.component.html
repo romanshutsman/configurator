@@ -1,11 +1,6 @@
 <form #nodeForm="ngForm">
   <div class="readonly" *ngIf="cloneSelectedNode.isInjected"></div>
   <mat-card class="first-block">
-    <!-- <div class="name">
-      <p>Location in code</p>
-      <p>{{node.Program}}</p>
-    </div> -->
-
     <div class="tagname">
       <mat-form-field class="example-full-width input">
           <input 
@@ -21,7 +16,7 @@
           maxlength="40"
           required >
       </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
         First letter must be letter or _. You can type letters and numbers.
       </p>
     </div>

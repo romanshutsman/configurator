@@ -16,7 +16,7 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <p class="paragraph-error ErrorTagNameInModelState err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+        <p class="paragraph-error ErrorTagNameInModelState err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
             First letter must be letter or _. You can type letters and numbers.
         </p>
       </div>
@@ -141,7 +141,7 @@
                 (keydown)="removeMinus($event, 1)" >
               </mat-form-field>
               <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
-                Required!<br>Only positive or 0!
+                Required! Only positive or 0!
               </p>
             </div>
             <div>

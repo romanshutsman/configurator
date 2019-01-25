@@ -122,13 +122,13 @@ export class BaseSmartTag {
     this.calculateTime(this.selectedOption);
   }
   calculateTime(time) {
-    if (time === this.times[0]) {
-      this.cloneSelectedNode.updateRate = this.tempValueOfRadio / 60;
-    } else if (time === this.times[1]) {
-      this.cloneSelectedNode.updateRate = this.tempValueOfRadio;
-    } else if (time === this.times[2]) {
-      this.cloneSelectedNode.updateRate = this.tempValueOfRadio * 1000;
-    }
+    // if (time === this.times[0]) {
+    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio / 60;
+    // } else if (time === this.times[1]) {
+    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio;
+    // } else if (time === this.times[2]) {
+    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio * 1000;
+    // }
   }
   enableReuiredItems(form: NgForm) {
     this.formComp = form;

@@ -16,7 +16,7 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <p class="paragraph-error ErrorTagNameInModelString err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+          <p class="paragraph-error ErrorTagNameInModelString err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
               First letter must be letter or _. You can type letters and numbers.
           </p>
       </div>

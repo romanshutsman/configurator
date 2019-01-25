@@ -151,13 +151,13 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
     if (e.target.value > 0) {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     }
-    this.tempValueOfRadio = e.target.value;
-    if (this.selectedOption === 'ms') {
-      this.tempValueOfRadio = this.tempValueOfRadio / 1000;
-    }
-    if (this.selectedOption === 'min') {
-      this.tempValueOfRadio = this.tempValueOfRadio * 60;
-    }
+    // this.tempValueOfRadio = e.target.value;
+    // if (this.selectedOption === 'ms') {
+    //   this.tempValueOfRadio = this.tempValueOfRadio / 1000;
+    // }
+    // if (this.selectedOption === 'min') {
+    //   this.tempValueOfRadio = this.tempValueOfRadio * 60;
+    // }
 
   }
 

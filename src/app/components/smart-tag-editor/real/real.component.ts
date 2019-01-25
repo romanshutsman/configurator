@@ -17,6 +17,8 @@ export class RealComponent extends BaseSmartTag implements OnInit {
   cloneSelectedNode: RealStateDintNode = this.service.initNodeValueType;
   node: RealStateDintNode = this.service.initNodeValueType;
   defaultValueType;
+  isRequriedValidation1: boolean;
+  isRequriedValidation2: boolean;
 
   @Input() set actionMenu(value) {
     if (value) {
@@ -52,12 +54,10 @@ export class RealComponent extends BaseSmartTag implements OnInit {
   onChanges(): void {
     this.nodeFrm.valueChanges
       .subscribe((value) => {
-        console.log(value);
         this.cloneSelectedNode.valueType = value['ValueTypeDint'];
         this.cloneSelectedNode.routine = this.routineDefault;
         this.cloneSelectedNode.ID = this.nodeiD;
         this.cloneSelectedNode.Type = 1;
-        console.log(this.cloneSelectedNode);
         this.sendSmartTagData(this.nodeFrm);
       });
   }
@@ -65,8 +65,10 @@ export class RealComponent extends BaseSmartTag implements OnInit {
     this.cloneSelectedNode.SubType = this.ValueTypeReal.indexOf(e.value);
   }
   testPattern(e, check) {
-    const test = /^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$/.test(e.target.value);
-    check === 1 ? this.inputInvalidMin = test : this.inputInvalidMax = test;
+    this.nodeFrm.controls.minval.updateValueAndValidity();
+    this.nodeFrm.controls.maxval.updateValueAndValidity();
+    // const test = this.patternValue.test(e.target.value);
+    // check === 1 ? this.inputInvalidMin = test : this.inputInvalidMax = test;
   }
   getCurrentValue(e) {
     if (e.target.value > 0) {
@@ -94,6 +96,46 @@ export class RealComponent extends BaseSmartTag implements OnInit {
   checkAndSend() {
     if (this.formAction) {
       this.sendSmartTagData(this.nodeFrm);
+    }
+  }
+  updateValidity() {
+    this.nodeFrm.controls.minval.updateValueAndValidity();
+    this.nodeFrm.controls.maxval.updateValueAndValidity();
+    if(this.nodeFrm.controls.minval.errors) {
+      if(!this.nodeFrm.controls.minval.errors.pattern) {
+        this.isRequriedValidation1 = false;
+      }
+    }
+    if(this.nodeFrm.controls.maxval.errors) {
+      if(!this.nodeFrm.controls.maxval.errors.pattern) {
+        this.isRequriedValidation2 = false;
+      }
+    }
+  }
+  checkRequiredValidation(control) {
+    if(this.nodeFrm.controls[control]) {
+      if(this.nodeFrm.controls[control].errors) {
+        if(this.nodeFrm.controls[control].errors.required && this.nodeFrm.controls[control].touched) {
+          this.isRequriedValidation1 = true;
+          this.isRequriedValidation2 = true;
+          return true;
+        }
+      }
+    }
+  }
+  checkMinMaxValidation(control) {
+    if(this.nodeFrm.controls[control]) {
+      if(this.nodeFrm.controls[control].errors) {
+        if(this.nodeFrm.controls[control].errors.errMinMax && this.nodeFrm.controls[control].touched) {
+          if(control == 'minval') {
+            if(this.isRequriedValidation1) return false;
+          }
+          if(control == 'maxval') {
+            if(this.isRequriedValidation2) return false;
+          }
+          return true;
+        }  
+      }
     }
   }
 }

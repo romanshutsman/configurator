@@ -16,7 +16,7 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.tagname?.invalid && nodeFrm.controls.tagname?.touched">
+        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
             First letter must be letter or _. You can type letters and numbers.
         </p>
       </div>
@@ -73,12 +73,19 @@
               required 
               [value]="cloneSelectedNode.Min" 
               [(ngModel)]="cloneSelectedNode.Min" 
-              min="0" 
-              (keyup)="testPattern($event, 1)"
+              [dataNode]="cloneSelectedNode"
+              validateMinValue
+              (change)="updateValidity()"
               >
             </mat-form-field>
-            <p class="paragraph-error minMaxError err" *ngIf="nodeFrm.controls.minval?.status === 'INVALID' || !inputInvalidMin">
-                This must be a integer or number with up to 2 decimal places!
+            <p class="paragraph-error minMaxError err" 
+              style="bottom:0"
+              *ngIf="checkRequiredValidation('minval')">
+                Required!
+            </p>
+            <p class="paragraph-error minMaxError err" 
+              *ngIf="checkMinMaxValidation('minval')">
+              {{nodeFrm.controls.minval.errors.errMinMax}}
             </p>
         </div>
         <div>
@@ -89,14 +96,21 @@
               type="number" 
               name="maxval" 
               required 
+              validateMaxValue
+              [dataNode]="cloneSelectedNode"
               [value]="cloneSelectedNode.Max" 
               [(ngModel)]="cloneSelectedNode.Max" 
-              min="0" 
-              (keyup)="testPattern($event, 2)"
+              (change)="updateValidity()"
               >
             </mat-form-field>
-            <p class="paragraph-error minMaxError err" *ngIf="nodeFrm.controls.maxval?.status === 'INVALID' || !inputInvalidMax">
-                This must be a integer or number with up to 2 decimal places!
+            <p class="paragraph-error minMaxError err" 
+              style="bottom:0"
+              *ngIf="checkRequiredValidation('maxval')">
+                Required!
+            </p>
+            <p class="paragraph-error minMaxError err" 
+              *ngIf="checkMinMaxValidation('maxval')">
+              {{nodeFrm.controls.maxval.errors.errMinMax}}
             </p>
         </div>
       </div>
@@ -107,7 +121,7 @@
                 placeholder="Delta Change"
                 type="number" 
                 name="delta" 
-                pattern="^(([1-9]{1}[\d]{1}|[1-9]{1})|0|((\d|\d\d)\.\d{1,2})|100(\.[0]{1,2})?)$"
+                [pattern]="patternValue"
                 required 
                 [value]="cloneSelectedNode.Del" 
                 [(ngModel)]="cloneSelectedNode.Del" 
@@ -174,7 +188,7 @@
                 (keydown)="removeMinus($event, 1)" >
               </mat-form-field>
               <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
-                Required!<br>Only positive or 0!
+                Required! Only positive or 0!
               </p>
             </div>
             <div>
@@ -182,7 +196,6 @@
                 [(ngModel)]="timeDefault">
                 <mat-option *ngFor="let item of times" [value]="item">{{item}}</mat-option>
               </mat-select>
-  
             </div>
           </div>
           <!-- <div class="has-trigger-inline">

@@ -68,7 +68,9 @@ import { StateComponent } from './components/smart-tag-editor/state/state.compon
 import { DintComponent } from './components/smart-tag-editor/dint/dint.component';
 import { StringComponent } from './components/smart-tag-editor/string/string.component';
 import { AoiEditorComponent } from './components/aoi-editor/aoi-editor.component';
-import { CustomValidatorDirective } from './providers/custom-validator.directive'
+import { CustomValidatorDirective } from './providers/custom-validator.directive';
+import { ValidateMinValueDirective } from './components/smart-tag-editor/real/validate-min-value.directive';
+import { ValidateMaxValueDirective } from './components/smart-tag-editor/real/validate-max-value.directive'
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { CustomValidatorDirective } from './providers/custom-validator.directive
     DintComponent,
     StringComponent,
     AoiEditorComponent,
-    CustomValidatorDirective
+    CustomValidatorDirective,
+    ValidateMinValueDirective,
+    ValidateMaxValueDirective
   ],
   imports: [
     BrowserModule,
