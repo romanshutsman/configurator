@@ -74,7 +74,7 @@ export class SharedService extends DataHelper {
     return this.http.get(this.API_URL_NODE + '/info/' + id);
   }
   getInfoTypes() {
-    return this.http.get(this.API_URL_NODE + '/infotypes');
+    return this.http.get(this.API_URL + '/infotypes');
   }
   getInfoOnEditNode(id) {
     return this.http.get(this.API_URL_NODE + '/edit/' + id);
@@ -95,6 +95,6 @@ export class SharedService extends DataHelper {
     return this.http.post(this.API_URL_AOI + '/save-aoi', model);
   }
   getPrograms(): Observable<Programs[]> {
-    return this.http.get<Programs[]>(this.API_URL_NODE + '/programs');
+    return this.http.get<Programs[]>(this.API_URL + '/programs');
   }
 }
