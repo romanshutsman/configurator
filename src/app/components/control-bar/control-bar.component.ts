@@ -103,11 +103,18 @@ export class ControlBarComponent implements OnInit {
   }
 
 
-  responseOnEdit(value) {
+  responseOnEdit(value, isInfoModel) {
     this.showSpinner = false;
     this.disableBtnAddEdit = false;
     if (value) {
       this.disableAllBtn();
+      if (isInfoModel) {
+        this.submitForm.emit({
+          'action': 'edited',
+          'body': this.dataForm,
+          'component': this.operation.operation.component
+        });
+      }
     } else {
       this.onFailed('Edition');
     }
