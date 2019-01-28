@@ -51,6 +51,11 @@ export class BaseTree {
   showContext: boolean;
   oldUnknowNode: NodeTree;
   nameAOI;
+  arrayOfRadioBtns = [
+    'Parent',
+    'Rate',
+    'Nothing'
+  ];
 
   @Output() itemSelected = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
@@ -70,11 +75,79 @@ export class BaseTree {
   }
   onTreeInitialized(treeControl: RaUiNestedTreeControl) {
     this.treeControlRa = treeControl;
+    this.treeControlRa.runForEachChild(this.treeModel, e => {
+      this.loadUpdate(e);
+      e.label = e.label + ' ' + this.addInfoNode(e);
+    })
+    this.treeControlRa.refreshUi.emit();
+
+  }
+  addInfoNode(node) {
+    let arrayOfAttr = [];
+    console.log(node)
+    if(node.updateRadio=='Parent') {
+      arrayOfAttr.push('P');
+      if(node.isLogIn)  {
+        arrayOfAttr = [];
+      }
+      if(node.hasTrigger) {
+        if(node.isLogIn) {
+          arrayOfAttr.push('P');
+        }
+        arrayOfAttr.push('T');
+      }
+    }
+
+    if(node.updateRadio=='Rate') {
+      let tempStr = node.updateRate + 'sec';
+      arrayOfAttr.push(tempStr);
+      if(node.hasTrigger) arrayOfAttr.push('T');
+      if(node.hasChange) arrayOfAttr.push('Ch');
+      if(!node.isLogIn) arrayOfAttr.push('NL');
+    }
+
+    if(node.updateRadio=='Nothing') {
+      if(node.hasTrigger) arrayOfAttr.push('N');
+      let tempStr = node.updateRate + ' sec';
+      arrayOfAttr.push(tempStr);
+      if(node.hasTrigger) arrayOfAttr.push('T');
+      if(node.hasChange) arrayOfAttr.push('Ch');
+      if(!node.isLogIn) arrayOfAttr.push('NL');
+    }
+    console.log(arrayOfAttr)
+    const stringOfAttr = arrayOfAttr.join(' + ');
+    if(arrayOfAttr.length>0) {
+      let finishedInfoString = '';
+      const arrayWithParathethis = ['(', stringOfAttr, ')']
+      finishedInfoString = arrayWithParathethis.join('');
+      return finishedInfoString;
+    }
+    return '';
+
+  }
+  loadUpdate(node) {
+    if (node.updateRate > 0) {
+      if (node.hasTrigger) {
+        node.updateRadio = this.arrayOfRadioBtns[1];
+      } else {
+        node.updateRadio = this.arrayOfRadioBtns[1];
+      }
+    } else if (node.updateRate == 0) {
+      if (node.hasTrigger) {
+        node.updateRadio = this.arrayOfRadioBtns[0];
+      } else {
+        node.updateRadio = this.arrayOfRadioBtns[0];
+      }
+    } else {
+      node.updateRadio = this.arrayOfRadioBtns[2];
+    }
   }
 
+  // }
   cloneNode(item) {
     return {
       label: item.label,
+      labelEdit: item.label,
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,

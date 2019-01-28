@@ -46,6 +46,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           this.initAttributes();
           this.initCheckbox();
         }
+        this.filterValueLabel();
       }
 
     }
@@ -66,6 +67,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   cloneNode(item: NodeTree) {
     return {
       label: item.label,
+      labelEdit: item.label,
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,

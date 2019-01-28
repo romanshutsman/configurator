@@ -1,5 +1,6 @@
 export interface NodeTree {
     label: string;
+    labelEdit: string;
     ParentID: number;
     ID: number;
     Type: number;
