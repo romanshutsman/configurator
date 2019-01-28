@@ -71,7 +71,7 @@ export class BaseSmartTag {
   allPrograms;
 
   @Input() set getProgram(value) {
-    if(value) {
+    if (value) {
       console.log('HERE HERE', value)
       this.allPrograms = value;
     }
@@ -180,26 +180,27 @@ export class BaseSmartTag {
     this.initOnAdd();
     this.enableReuiredItems(form);
     this.routineDefault = '';
-    this.service.getInfoNode(this.nodeiD)
-      .subscribe((program: string) => {
-        if(this.nodeiD !== 1) {
-          this.cloneSelectedNode.Program = program;
-        }
-        this.programs = this.allPrograms['programs'];
-        const found = this.allPrograms['programs'].filter(i=>i.Name==this.cloneSelectedNode.Program);
-        if(found.length>0) {
-          this.routines = found[0].Routines;
-          this.routineDefault = found[0].Routines[0];
-        }
-      });
+    if (!this.cloneSelectedNode.isAoi)
+      this.service.getInfoNode(this.nodeiD)
+        .subscribe((program: string) => {
+          if (this.nodeiD !== 1) {
+            this.cloneSelectedNode.Program = program;
+          }
+          this.programs = this.allPrograms['programs'];
+          const found = this.allPrograms['programs'].filter(i => i.Name == this.cloneSelectedNode.Program);
+          if (found.length > 0) {
+            this.routines = found[0].Routines;
+            this.routineDefault = found[0].Routines[0];
+          }
+        });
     this.cloneSelectedNode.updateRadio = radio[2];
     this.cloneSelectedNode.sProgramParent = this.node.Program;
     this.cloneSelectedNode.sParentTagName = this.node.TagName;
     this.disableGroupBtn(false);
   }
   onSelectedProgram(e) {
-    const found = this.programs.filter(i=>i.Name==e.value);
-    if(found.length>0) { 
+    const found = this.programs.filter(i => i.Name == e.value);
+    if (found.length > 0) {
       this.routines = found[0].Routines;
       this.routineDefault = found[0].Routines[0];
     }
@@ -276,7 +277,7 @@ export class BaseSmartTag {
   }
   initAttributes() {
     try {
-      if(this.typesOfCheckboxesAOI.length>0)
+      if (this.typesOfCheckboxesAOI.length > 0)
         this.typesOfCheckboxesAOI.forEach(e => {
           let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
           e.selected = !!selected;
@@ -287,7 +288,7 @@ export class BaseSmartTag {
   }
   getITypes() {
     this.service.getInfoTypes().subscribe((value: any) => {
-      if(value) {
+      if (value) {
         this.typesOfCheckboxesAOI = JSON.parse(value);
         this.typesOfCheckboxes = JSON.parse(value);
         this.typesOfCheckboxesAOI.forEach(e => {
@@ -299,7 +300,7 @@ export class BaseSmartTag {
       }
     }, err => {
       this.service.sendNotification('Cant load information types!', 'fail')
-      this.typesOfCheckboxesAOI  = undefined;
+      this.typesOfCheckboxesAOI = undefined;
       // this.typesOfCheckboxesAOI  = [
       //   {
       //     Name: 'Summary',
@@ -343,7 +344,7 @@ export class BaseSmartTag {
     this.showPopUpAttr = false;
   }
   async initCheckbox() {
-    try {      
+    try {
       while (this.typesOfCheckboxesAOI.length == 0) {
         await this.waitingTreeAsync(100);
       }
@@ -360,11 +361,11 @@ export class BaseSmartTag {
       }, timer);
     })
   }
-  checkboxOnAction(){
-    if(this.formAction['action'] == 'add') {
+  checkboxOnAction() {
+    if (this.formAction['action'] == 'add') {
       try {
-        if(this.typesOfCheckboxesAOI.length>0)
-          this.typesOfCheckboxesAOI.forEach(e=>e.Value=undefined)
+        if (this.typesOfCheckboxesAOI.length > 0)
+          this.typesOfCheckboxesAOI.forEach(e => e.Value = undefined)
       } catch (error) {
         // console.log(error)
       }
