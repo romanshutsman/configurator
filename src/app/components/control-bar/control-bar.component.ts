@@ -1,4 +1,3 @@
-import { NodeTree } from './../../providers/node.interface';
 import { SharedService } from './../../providers/shared.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
@@ -8,8 +7,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./control-bar.component.scss']
 })
 export class ControlBarComponent implements OnInit {
-  disableBtnAdd = true;
-  disableBtnEdit = true;
+  disableBtnAddEdit = true;
   disableBtnNav = false;
   dataForm: any;
   operation;
@@ -17,20 +15,17 @@ export class ControlBarComponent implements OnInit {
   showSpinner = false;
   treePost;
   isChangesAllowed = true;
- @Output() showMsgChangesNotAllowed = new EventEmitter();
+  @Output() showMsgChangesNotAllowed = new EventEmitter();
 
   @Input() set selectedContent(value) {
     this.content = value;
     if (value && this.operation['isValid'] === 'VALID') {
-      this.checkOperation(this.operation['operation']['action']);
+      this.disableBtnAddEdit = false;
     }
   }
   @Output() submitForm = new EventEmitter();
   @Input() set TreeOnPost(tree) {
     this.treePost = tree;
-    if (this.treePost && this.treePost[0].isAoi){
-      this.saveAoi();
-    }
   }
   @Input() changesAllowed;
 
@@ -40,13 +35,14 @@ export class ControlBarComponent implements OnInit {
 
   ngOnInit() {
   }
+
   onEditForm() {
     this.service.SubjectOperationOnForm.subscribe((value) => {
       console.log(value);
       this.operation = value;
       if (value['isValid'] === 'VALID') {
         this.dataForm = value['body'];
-        this.checkOperation(value['operation']['action']);
+        this.disableBtnAddEdit = false;
         if (this.dataForm.isInjected) {
           this.disableAllBtn();
           this.disableBtnNav = true;
@@ -56,90 +52,83 @@ export class ControlBarComponent implements OnInit {
       }
     });
   }
-  checkOperation(compare) {
-    if (compare === 'add') {
-      this.disableBtnAdd = false;
-      this.disableBtnEdit = true;
-    }
-    if (compare === 'edit') {
-      this.disableBtnAdd = true;
-      this.disableBtnEdit = false;
-    }
-  }
+
   disableAllBtn() {
-    this.disableBtnAdd = true;
-    this.disableBtnEdit = true;
+    this.disableBtnAddEdit = true;
   }
   addNode() {
     console.log('ADDNODE', this.dataForm);
-    if(this.changesAllowed) {
+    if (this.changesAllowed) {
       this.showSpinner = true;
       this.disableAllBtn();
       if (this.operation.operation.component == 'model') {
         this.service.addNode(this.dataForm).subscribe((value) => {
-          this.responseOnAdd(value, true);
+          this.responseOnAdd(value);
         },
           err => {
-            this.disableBtnAdd = false;
+            this.disableBtnAddEdit = false;
             this.onFailed('Addition');
           });
       } else {
-        this.onAddEditAoiSubmit('added')
+        this.service.addAoiNode(this.dataForm).subscribe((value) => {
+          this.responseOnAdd(value);
+          this.saveAoi();
+        },
+          err => {
+            this.disableBtnAddEdit = false;
+            this.onFailed('Addition');
+          });
       }
     } else {
       this.showMsgChangesNotAllowed.emit();
     }
   }
-  onAddEditAoiSubmit(action: string) {
-    this.submitForm.emit({
-      'action': action,
-      'body': this.dataForm,
-      'component': this.operation.operation.component
-    });
-  }
 
-  responseOnAdd(value, isInfoModel) {
+  responseOnAdd(value) {
     this.showSpinner = false;
     if (value) {
-      if (isInfoModel) {
-        this.submitForm.emit({
-          'action': 'added',
-          'body': this.dataForm,
-          'component': this.operation.operation.component
-        });
-      }
+      this.submitForm.emit({
+        'action': 'added',
+        'body': this.dataForm,
+        'component': this.operation.operation.component
+      });
       this.service.sendNotification('Node has been added!', 'success');
       this.disableAllBtn();
     } else {
-      this.disableBtnAdd = false;
+      this.disableBtnAddEdit = false;
       this.onFailed('Addition');
     }
   }
 
   updateNode() {
-      this.showSpinner = true;
-      this.disableAllBtn();
-      if (this.operation.operation.component == 'model') {
-        this.service.updateNode(this.dataForm).subscribe((value) => {
-          this.responseOnEdit(value, true);
-        },
-          err => {
-            this.disableBtnEdit = false;
-            this.onFailed('Edition');
-          });
-      } else {
-        this.onAddEditAoiSubmit('edited')
-      }
+    this.showSpinner = true;
+    this.disableAllBtn();
+    if (this.operation.operation.component == 'model') {
+      this.service.updateNode(this.dataForm).subscribe((value) => {
+        this.responseOnEdit(value);
+      },
+        err => {
+          this.disableBtnAddEdit = false;
+          this.onFailed('Edition');
+        });
+    } else {
+      this.service.updateAoiNode(this.dataForm).subscribe((value) => {
+        this.responseOnEdit(value);
+        this.saveAoi();
+      },
+        err => {
+          this.disableBtnAddEdit = false;
+          this.onFailed('Edition');
+        });
+    }
   }
 
 
-  responseOnEdit(value, isInfoModel) {
+  responseOnEdit(value) {
     this.showSpinner = false;
-    this.disableBtnEdit = false;
+    this.disableBtnAddEdit = false;
     if (value) {
       this.disableAllBtn();
-      if(isInfoModel)
-        this.onAddEditAoiSubmit('edited');
     } else {
       this.onFailed('Edition');
     }
@@ -176,13 +165,9 @@ export class ControlBarComponent implements OnInit {
 
   saveAoi() {
     let tree = this.parseTreeToServer(this.treePost[0]);
-    this.service.saveAOI(tree).subscribe((value) => {
-      this.responseOnAdd(value, false);
-    },
-      err => {
-        this.onFailed('Chnages not saved');
-      });
+    this.service.saveAOI(tree).subscribe((value) => { });
   }
+
   parseTreeToServer(tree) {
     let stringifyData = JSON.stringify(tree);
     stringifyData = stringifyData.replace(/label/g, 'nameInModel');

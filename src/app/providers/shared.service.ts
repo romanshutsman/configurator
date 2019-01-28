@@ -97,4 +97,11 @@ export class SharedService extends DataHelper {
   getPrograms(): Observable<Programs[]> {
     return this.http.get<Programs[]>(this.API_URL + '/programs');
   }
+
+  addAoiNode(body) {
+    return this.http.post(this.API_URL_AOI + '/add-aoi-node', body);
+  }
+  updateAoiNode(body) {
+    return this.http.post(this.API_URL_AOI + '/update-aoi-node', body);
+  }
 }

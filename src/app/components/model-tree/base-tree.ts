@@ -13,13 +13,13 @@ export class BaseTree {
     {
       iconClass: 'ra-icon ra-icon-home',
       condition: (node: ITreeNode): boolean => {
-        return node.ID === 1;
+        return node.ID === 0;
       }
     },
     {
       iconClass: 'ra-icon ra-icon-folder',
       condition: (node: ITreeNode): boolean => {
-        return node.Type === 0 && node.ID !== 1;
+        return node.Type === 0 && node.ID !== 0;
       }
     },
     {
