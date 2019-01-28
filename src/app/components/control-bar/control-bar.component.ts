@@ -105,7 +105,8 @@ export class ControlBarComponent implements OnInit {
     this.disableAllBtn();
     if (this.operation.operation.component == 'model') {
       this.service.updateNode(this.dataForm).subscribe((value) => {
-        this.responseOnEdit(value);
+        this.responseOnEdit(value, true);
+        
       },
         err => {
           this.disableBtnAddEdit = false;
@@ -113,7 +114,7 @@ export class ControlBarComponent implements OnInit {
         });
     } else {
       this.service.updateAoiNode(this.dataForm).subscribe((value) => {
-        this.responseOnEdit(value);
+        this.responseOnEdit(value, false);
         this.saveAoi();
       },
         err => {
@@ -124,11 +125,18 @@ export class ControlBarComponent implements OnInit {
   }
 
 
-  responseOnEdit(value) {
+  responseOnEdit(value, isInfoModel) {
     this.showSpinner = false;
     this.disableBtnAddEdit = false;
     if (value) {
       this.disableAllBtn();
+      if (isInfoModel) {
+        this.submitForm.emit({
+          'action': 'edited',
+          'body': this.dataForm,
+          'component': this.operation.operation.component
+        });
+      }
     } else {
       this.onFailed('Edition');
     }
