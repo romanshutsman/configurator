@@ -61,24 +61,14 @@ export class ControlBarComponent implements OnInit {
     if (this.changesAllowed) {
       this.showSpinner = true;
       this.disableAllBtn();
-      if (this.operation.operation.component == 'model') {
         this.service.addNode(this.dataForm).subscribe((value) => {
           this.responseOnAdd(value);
+          //this.saveAoi();
         },
           err => {
             this.disableBtnAddEdit = false;
             this.onFailed('Addition');
           });
-      } else {
-        this.service.addAoiNode(this.dataForm).subscribe((value) => {
-          this.responseOnAdd(value);
-          this.saveAoi();
-        },
-          err => {
-            this.disableBtnAddEdit = false;
-            this.onFailed('Addition');
-          });
-      }
     } else {
       this.showMsgChangesNotAllowed.emit();
     }
@@ -103,40 +93,26 @@ export class ControlBarComponent implements OnInit {
   updateNode() {
     this.showSpinner = true;
     this.disableAllBtn();
-    if (this.operation.operation.component == 'model') {
-      this.service.updateNode(this.dataForm).subscribe((value) => {
-        this.responseOnEdit(value, true);
-        
-      },
-        err => {
-          this.disableBtnAddEdit = false;
-          this.onFailed('Edition');
-        });
-    } else {
-      this.service.updateAoiNode(this.dataForm).subscribe((value) => {
-        this.responseOnEdit(value, false);
-        this.saveAoi();
-      },
-        err => {
-          this.disableBtnAddEdit = false;
-          this.onFailed('Edition');
-        });
-    }
+    this.service.updateNode(this.dataForm).subscribe((value) => {
+      this.responseOnEdit(value);
+    },
+      err => {
+        this.disableBtnAddEdit = false;
+        this.onFailed('Edition');
+      });
   }
 
 
-  responseOnEdit(value, isInfoModel) {
+  responseOnEdit(value) {
     this.showSpinner = false;
     this.disableBtnAddEdit = false;
     if (value) {
       this.disableAllBtn();
-      if (isInfoModel) {
         this.submitForm.emit({
           'action': 'edited',
           'body': this.dataForm,
           'component': this.operation.operation.component
         });
-      }
     } else {
       this.onFailed('Edition');
     }
