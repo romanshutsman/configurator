@@ -40,6 +40,7 @@ export class StringComponent extends BaseSmartTag implements OnInit {
         this.initAttributes();
         this.initCheckbox();
       }
+      this.filterValueLabel();
     }
   }
   constructor(public service: SharedService) {

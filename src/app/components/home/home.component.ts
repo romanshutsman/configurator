@@ -133,6 +133,9 @@ export class HomeComponent {
       this.selectedItem.rung = node.rung;
       this.selectedItem.updateRadio = node.updateRadio;
       this.selectedItem.Del = node.Del;
+      this.selectedItem.EU = node.EU;
+      this.selectedItem.isLogIn = node.isLogIn;
+      this.selectedItem.hasChange = node.hasChange;
 
     }
     this.treeModelPost = this.treeModel;

@@ -72,7 +72,6 @@ export class BaseSmartTag {
 
   @Input() set getProgram(value) {
     if(value) {
-      console.log('HERE HERE', value)
       this.allPrograms = value;
     }
   }
@@ -161,20 +160,19 @@ export class BaseSmartTag {
   loadValue() {
     if (this.cloneSelectedNode.updateRate > 0) {
       if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[3];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[2];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
       }
     } else if (this.cloneSelectedNode.updateRate == 0) {
       if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
       } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[0];
+        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
       }
     } else {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[4];
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
     }
-    console.log(this.cloneSelectedNode);
   }
 
   defaultValueOnAdd(form, radio) {
@@ -249,11 +247,12 @@ export class BaseSmartTag {
     });
   }
   renameLabel() {
+    this.cloneSelectedNode.label = this.cloneSelectedNode.labelEdit;
     const regExp = /\(([^)]+)\)/;
     const matches = regExp.exec(this.cloneSelectedNode.label);
     if(matches) {
       const parathesis = matches[0];
-      this.cloneSelectedNode.label = this.cloneSelectedNode.labelEdit + ' ' + parathesis;
+      this.cloneSelectedNode.label += ' ' + parathesis;
     }
   }
   onCheckRadio(e, form) {

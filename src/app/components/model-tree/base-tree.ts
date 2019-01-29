@@ -71,7 +71,6 @@ export class BaseTree {
     // data.push(object);
     // this.treeModel = data;
     // console.log(this.treeModel);
-    // console.log(data);
   }
   onTreeInitialized(treeControl: RaUiNestedTreeControl) {
     this.treeControlRa = treeControl;
@@ -84,7 +83,6 @@ export class BaseTree {
   }
   addInfoNode(node) {
     let arrayOfAttr = [];
-    console.log(node)
     if(node.updateRadio=='Parent') {
       arrayOfAttr.push('P');
       if(node.isLogIn)  {
@@ -96,6 +94,7 @@ export class BaseTree {
         }
         arrayOfAttr.push('T');
       }
+      if(node.hasChange) arrayOfAttr.push('Ch');
     }
 
     if(node.updateRadio=='Rate') {
@@ -114,7 +113,6 @@ export class BaseTree {
       if(node.hasChange) arrayOfAttr.push('Ch');
       if(!node.isLogIn) arrayOfAttr.push('NL');
     }
-    console.log(arrayOfAttr)
     const stringOfAttr = arrayOfAttr.join(' + ');
     if(arrayOfAttr.length>0) {
       let finishedInfoString = '';
@@ -143,7 +141,6 @@ export class BaseTree {
     }
   }
 
-  // }
   cloneNode(item) {
     return {
       label: item.label,

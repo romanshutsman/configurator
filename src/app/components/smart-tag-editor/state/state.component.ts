@@ -40,6 +40,7 @@ export class StateComponent extends BaseSmartTag implements OnInit {
         this.initAttributes();
         this.initCheckbox();
       }
+      this.filterValueLabel();
     }
   }
   constructor(public service: SharedService) {

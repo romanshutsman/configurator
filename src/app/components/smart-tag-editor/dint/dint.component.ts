@@ -21,7 +21,6 @@ export class DintComponent extends BaseSmartTag implements OnInit {
 
   @Input() set actionMenu(value) {
     if (value) {
-      console.log('AGHGGUH',value)
       this.formAction = value;
       if (value.action === this.service.action.add) {
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
@@ -40,6 +39,7 @@ export class DintComponent extends BaseSmartTag implements OnInit {
         this.initAttributes();
         this.initCheckbox();
       }
+      this.filterValueLabel();
     }
   }
   constructor(public service: SharedService) {

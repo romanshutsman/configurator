@@ -30,7 +30,7 @@
               validateName
               [dataNode]="getParentNode"
               style="font-size:16px"
-              [(ngModel)]="cloneSelectedNode.label"
+              [(ngModel)]="cloneSelectedNode.labelEdit"
               [pattern]="testNamePattern"
               maxlength="40"
               required >
@@ -80,7 +80,7 @@
             </mat-select>
           </mat-form-field>
           <div class="has-trigger">
-            <mat-checkbox color="primary" [checked]="hasTriggerNS">Has Trigger</mat-checkbox>
+            <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasTrigger" [ngModelOptions]="{standalone: true}">Has Trigger</mat-checkbox>
           </div>
         </div>
   </mat-card>

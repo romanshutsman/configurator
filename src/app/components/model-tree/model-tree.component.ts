@@ -34,6 +34,8 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     if (value) {
       if(value.component == 'model') {
         if (value.action === 'added') {
+          value.body.label = value.body.label.replace(/ *\([^)]*\) */g, '');
+          value.body.label = value.body.label + ' ' +  this.addInfoNode(value.body);
           this.onAddNewNode(value.body)
         } else if (value.action === 'edited') {
           this.selectedNode.label = this.selectedNode.label.replace(/ *\([^)]*\) */g, '');

@@ -30,7 +30,7 @@
             style="font-size:16px"
             validateName
             [dataNode]="getParentNode"
-            [(ngModel)]="cloneSelectedNode.label"
+            [(ngModel)]="cloneSelectedNode.labelEdit"
             [pattern]="testNamePattern"
             id="tagname"
             maxlength="40"
@@ -154,9 +154,9 @@
           </div>
         </div>
         <div class="checkbox-block">
-          <mat-checkbox color="primary" [checked]="hasTriggerRSD">Has Trigger</mat-checkbox>
-          <mat-checkbox color="primary" [checked]="hasChange">Has Change</mat-checkbox>
-          <mat-checkbox color="primary" [checked]="logIn">Log in</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasTrigger" [ngModelOptions]="{standalone: true}">Has Trigger</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasChange" [ngModelOptions]="{standalone: true}">Has Change</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.isLogIn" [ngModelOptions]="{standalone: true}">Logging</mat-checkbox>
         </div>
       </div>
     </mat-card>

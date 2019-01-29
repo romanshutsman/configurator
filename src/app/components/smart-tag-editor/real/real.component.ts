@@ -40,6 +40,7 @@ export class RealComponent extends BaseSmartTag implements OnInit {
         this.initAttributes();
         this.initCheckbox();
       }
+      this.filterValueLabel();
     }
   }
 
