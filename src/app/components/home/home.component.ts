@@ -134,7 +134,7 @@ export class HomeComponent {
       this.selectedItem.updateRadio = node.updateRadio;
       this.selectedItem.Del = node.Del;
       this.selectedItem.EU = node.EU;
-      this.selectedItem.isLogIn = node.isLogIn;
+      this.selectedItem.hasBuffer = node.hasBuffer;
       this.selectedItem.hasChange = node.hasChange;
 
     }

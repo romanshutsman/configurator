@@ -20,8 +20,9 @@
     "@ra-web-tech-ui-toolkit/form-system": "file:@ra-web-tech-ui-toolkit-form-system",
     "@ra-web-tech-ui-toolkit/navigation": "file:@ra-web-tech-ui-toolkit-navigation",
     "hammerjs": "^2.0.8",
+    "ngx-contextmenu": "^5.0.3",
     "rxjs-compat": "^6.1.0",
-    "ngx-contextmenu": "^5.0.3"
+    "signalr": "^2.4.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",

@@ -97,7 +97,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       isInjected: item.isInjected,
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
-      isLogIn: item.isLogIn,
       Del: item.Del
     };
   }

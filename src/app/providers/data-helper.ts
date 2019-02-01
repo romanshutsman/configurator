@@ -31,7 +31,6 @@ export class DataHelper {
         isInjected: false,
         hasChange: false,
         hasBuffer: false,
-        isLogIn: false,
         Del: null
     }
     nodeValueType = {
@@ -67,7 +66,6 @@ export class DataHelper {
         isInjected: false,
         hasChange: false,
         hasBuffer: false,
-        isLogIn: false,
         Del: null
     }
     ControllerModeEnum = {

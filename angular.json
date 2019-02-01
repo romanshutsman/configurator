@@ -24,12 +24,14 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/scripts/jquery-3.1.1.min.js", 
+              "src/scripts/jquery.signalR-2.2.1.min.js"
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["src/scripts/jquery-3.1.1.min.js", "src/scripts/jquery.signalR-2.2.1.min.js", "src/scripts/hubs.js"]
           },
           "configurations": {
             "production": {
