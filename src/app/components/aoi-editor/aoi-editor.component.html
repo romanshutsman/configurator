@@ -15,6 +15,12 @@
       [config]="config"
       (treeNodeSelected)="onTreeNodeSelected($event)"
       (treeInitialized)="onTreeInitialized($event)">
+        <ng-template #node let-data="model">
+          <div class="ra-tree-template"> 
+            <p>{{data.label}}</p>
+            <p class="label-info">{{data.labelInfo}}</p>
+          </div>
+        </ng-template>
       </ra-ui-tree>
     </div>
 

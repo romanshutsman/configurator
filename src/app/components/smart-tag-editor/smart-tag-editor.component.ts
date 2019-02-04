@@ -54,6 +54,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       this.pathNode = '';
       this.countOfCall = 0;
       this.parentOfSelectedNode = undefined;
+      console.log(this.detailsOfNode['0']);
       this.searchAbsolutePath(this.detailsOfNode['0']);
       if (value.action === this.service.action.add) {
         if (value.type === 'node') {
@@ -104,7 +105,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   cloneNode(item: NodeTree) {
     return {
       label: item.label,
-      labelEdit: item.label,
+      labelInfo: item.label,
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,
@@ -150,8 +151,6 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
 
     if (node.ParentID === 0) return;
     this.found = undefined;
-    console.log(this.tree)
-    console.log(node)
     const parent = this.findTreeElement(this.tree, node.ParentID);
     if (parent) {
       this.searchAbsolutePath(parent);

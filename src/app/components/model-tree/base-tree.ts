@@ -76,8 +76,7 @@ export class BaseTree {
     this.treeControlRa = treeControl;
     this.treeControlRa.runForEachChild(this.treeModel, e => {
       this.loadUpdate(e);
-      //TODO logic for info about ajustet settigs for node not fully completed 
-     // e.label = e.label + ' ' + this.addInfoNode(e);
+      e.labelInfo = this.addInfoNode(e);
     })
     this.treeControlRa.refreshUi.emit();
 
@@ -145,7 +144,7 @@ export class BaseTree {
   cloneNode(item) {
     return {
       label: item.label,
-      labelEdit: item.label,
+      labelInfo: item.label,
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,

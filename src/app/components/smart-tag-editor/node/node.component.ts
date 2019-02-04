@@ -67,7 +67,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   cloneNode(item: NodeTree) {
     return {
       label: item.label,
-      labelEdit: item.label,
+      labelInfo: item.label,
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,

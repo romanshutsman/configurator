@@ -83,7 +83,7 @@ export class BaseSmartTag {
   initOnAdd() {
     this.cloneSelectedNode = {
       label: '',
-      labelEdit: '',
+      labelInfo: '',
       ParentID: 0,
       ID: 0,
       Type: 0,
@@ -239,21 +239,11 @@ export class BaseSmartTag {
   }
 
   sendSmartTagData(form) {
-    this.renameLabel();
     this.service.SubjectOperationOnForm.next({
       'isValid': form.valid ? 'VALID' : 'INVALID',
       'body': this.cloneSelectedNode,
       'operation': this.formAction
     });
-  }
-  renameLabel() {
-    this.cloneSelectedNode.label = this.cloneSelectedNode.labelEdit;
-    const regExp = /\(([^)]+)\)/;
-    const matches = regExp.exec(this.cloneSelectedNode.label);
-    if (matches) {
-      const parathesis = matches[0];
-      this.cloneSelectedNode.label += ' ' + parathesis;
-    }
   }
   onCheckRadio(e, form) {
     if (e.value === this.arrayOfRadioBtns2[4]) {
@@ -384,6 +374,6 @@ export class BaseSmartTag {
     this.initAttributes();
   }
   filterValueLabel() {
-    this.cloneSelectedNode.labelEdit = this.cloneSelectedNode.labelEdit.replace(/ *\([^)]*\) */g, '');
+    this.cloneSelectedNode.labelInfo = this.cloneSelectedNode.labelInfo.replace(/ *\([^)]*\) */g, '');
   }
 }

@@ -71,3 +71,16 @@ ra-ui-tree {
     left: 10;
     pointer-events: none;
 }
+
+.ra-tree-template {
+    display: flex;
+}
+.ra-tree-template p {
+    font-size: 16px;
+    line-height: 28px;
+ }
+ .ra-tree-template .label-info {
+    color: #b316ab;
+    padding-left: 10px;
+    font-size: 13px;
+}
