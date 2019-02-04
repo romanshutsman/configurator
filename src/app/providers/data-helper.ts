@@ -1,7 +1,7 @@
 export class DataHelper {
     node = {
         label: '',
-        labelEdit: '',
+        labelInfo: '',
         ParentID: null,
         ID: null,
         Type: null,
@@ -36,7 +36,7 @@ export class DataHelper {
     }
     nodeValueType = {
         label: '',
-        labelEdit: '',
+        labelInfo: '',
         ParentID: null,
         ID: null,
         Type: null,

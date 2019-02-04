@@ -5,7 +5,7 @@ import { SharedService } from './../../providers/shared.service';
 import { NodeTree } from './../../providers/node.interface';
 import { NgForm } from '@angular/forms';
 import { BaseTree } from './base-tree';
-import { ITreeNodeState, ITreeNode } from '@ra-web-tech-ui-toolkit-navigation/navigation';
+import { ITreeNode, ITreeNodeState } from './../../../../@ra-web-tech-ui-toolkit-navigation';
 
 @Component({
   selector: 'app-model-tree',
@@ -35,11 +35,11 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       if(value.component == 'model') {
         if (value.action === 'added') {
           value.body.label = value.body.label.replace(/ *\([^)]*\) */g, '');
-          value.body.label = value.body.label + ' ' +  this.addInfoNode(value.body);
+          value.body.labelInfo = this.addInfoNode(value.body);
           this.onAddNewNode(value.body)
         } else if (value.action === 'edited') {
           this.selectedNode.label = this.selectedNode.label.replace(/ *\([^)]*\) */g, '');
-          this.selectedNode.label = this.selectedNode.label + ' ' +  this.addInfoNode(this.selectedNode);
+          this.selectedNode.labelInfo =  this.addInfoNode(this.selectedNode);
           this.selectedNode && this.treeControlRa.refreshUi.emit();
         }
       }

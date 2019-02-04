@@ -121,7 +121,6 @@ export class HomeComponent {
     if (e['action'] === 'edited') {
       const node = e['body'];
       this.selectedItem.label = node.label;
-      this.selectedItem.labelEdit = node.label;
       this.selectedItem.updateRate = node.updateRate;
       this.selectedItem.hasTrigger = node.hasTrigger;
       this.selectedItem.nameAoi = node.nameAoi;

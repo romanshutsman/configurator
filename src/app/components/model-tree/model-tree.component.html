@@ -9,6 +9,12 @@
     <ra-ui-tree class="model" [contextMenu]="basicMenu" [contextMenuSubject]="selectedNode" [(tree)]="treeModel" (dblclick)="onDblClick('model')"
       (click)="getInfo($event)" (mouseover)="showTooltip($event)" (mouseout)="hideTooltip($event)" [config]="config"
       (treeNodeSelected)="onTreeNodeSelected($event)" (treeInitialized)="onTreeInitialized($event)">
+      <ng-template #node let-data="model">
+        <div class="ra-tree-template"> 
+          <p>{{data.label}}</p>
+          <p class="label-info">{{data.labelInfo}}</p>
+        </div>
+      </ng-template>
     </ra-ui-tree>
     <!-- <div class="tooltip" [ngStyle]="{'top': offsetTopTooltip, 'left':  offsetLeftTooltip}">Attributes is missing!</div> -->
   </div>
