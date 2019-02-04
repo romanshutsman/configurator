@@ -20,7 +20,8 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   ParentIDOfNodes = [];
   found: any;
 
-
+  programsAndRoutines: any;
+  onShowInfoMsg: any;
 
   newChangedNode: NodeTree;
 
@@ -30,16 +31,17 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   offsetTopEdit: any;
   offsetTopTooltip: any;
   offsetLeftTooltip: any;
+  aoiName: any;
   @Input() set dataForm(value) {
     if (value) {
-      if(value.component == 'model') {
+      if (value.component == 'model') {
         if (value.action === 'added') {
           value.body.label = value.body.label.replace(/ *\([^)]*\) */g, '');
-          value.body.label = value.body.label + ' ' +  this.addInfoNode(value.body);
+          value.body.label = value.body.label + ' ' + this.addInfoNode(value.body);
           this.onAddNewNode(value.body)
         } else if (value.action === 'edited') {
           this.selectedNode.label = this.selectedNode.label.replace(/ *\([^)]*\) */g, '');
-          this.selectedNode.label = this.selectedNode.label + ' ' +  this.addInfoNode(this.selectedNode);
+          this.selectedNode.label = this.selectedNode.label + ' ' + this.addInfoNode(this.selectedNode);
           this.selectedNode && this.treeControlRa.refreshUi.emit();
         }
       }
@@ -192,12 +194,35 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.showAOI.emit({ emit: true, aoi: aoiName, selectedNode: this.nodeTree });
   }
 
+  prepareInsertAoi(e) {
+    const body = {};
+    body['id'] = this.nodeTree.ID;
+    body['tagName'] = e.Name;
+    body['program'] = e.Program;
+    body['routine'] = e.Routine;
+    body['rung'] = e.Rung;
+    body['name'] = this.aoiName.name;
+
+    if (e.Name && e.Program) {
+      this.service.insertAOI(body).subscribe(i => {
+        let tree = this.fixTreeLabels(JSON.stringify(i));
+        this.onAddNewNode(tree[0]);
+      })
+    }
+  }
+
   insertAoi(item) {
     console.log(item)
-    this.service.insertAOI(this.nodeTree.ID, item).subscribe(i => {
-      let tree = this.fixTreeLabels(JSON.stringify(i));
-      this.onAddNewNode(tree[0]);
-    })
+    this.aoiName = Object.assign({ name: item });
+    console.log(this.service);
+    if (this.service.programsAndRoutines)
+      this.programsAndRoutines = Object.assign({}, { programs: this.service.programsAndRoutines.programs });
+    console.log(this.programsAndRoutines);
+
+    this.manageMessageDialog([], false, false, '', true);
+
+    console.log(item)
+
   }
 
   showTooltip(e) {
@@ -220,4 +245,17 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       }
     }
   }
+
+
+  manageMessageDialog(list, showInfoList, showInfoMessage, msg, showVerifyMessage) {
+    this.onShowInfoMsg = {
+      list: list,
+      showInfoList: showInfoList,
+      showInfoMessage: showInfoMessage,
+      message: msg,
+      showVerifyMessage: showVerifyMessage
+    };
+  }
+
+
 }

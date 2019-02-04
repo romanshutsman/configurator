@@ -20,6 +20,7 @@ export class SharedService extends DataHelper {
   initNodeValueType: RealStateDintNode = this.nodeValueType;
   dataTREE = this.Tree;
   controllerMode = this.ControllerModeEnum;
+  programsAndRoutines: any;
 
   API_URL = 'http://localhost:13772/api/connect';
   API_URL_NODE = 'http://localhost:13772/api/node';
@@ -88,8 +89,8 @@ export class SharedService extends DataHelper {
   loadAOI(name) {
     return this.http.post(this.API_URL_AOI + '/load-aoi', { name: name });
   }
-  insertAOI(id, name) {
-    return this.http.post(this.API_URL_AOI + '/insert-aoi', { id: id, name: name });
+  insertAOI(body) {
+    return this.http.post(this.API_URL_AOI + '/insert-aoi', body);
   }
   getPrograms(): Observable<Programs[]> {
     return this.http.get<Programs[]>(this.API_URL + '/programs');

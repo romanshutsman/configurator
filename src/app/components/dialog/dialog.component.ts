@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { SharedService } from './../../providers/shared.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Programs } from '../../providers/common.interface';
@@ -14,11 +14,15 @@ export class DialogComponent implements OnInit {
   list: any = [];
   controller: string;
   message: any;
-  insertForm: Programs[];
-  routines =  [];
+  insertForm: Array<Programs> ;
+  routines = [];
   rung = 0;
+  @Input() IsInsert: boolean = false
+
+  name: string = '';
   @Output() postController = new EventEmitter();
   @Output() responseVerify = new EventEmitter();
+  @Output() prepareForm = new EventEmitter();
   @Input() set manageOfMessageBox(value: any) {
     if (value) {
       this.list = value.list;
@@ -32,15 +36,16 @@ export class DialogComponent implements OnInit {
     }
   }
   @Input() set getAllPrograms(value) {
-    if(value) {
+    if (value) {
       this.resetForm();
       this.insertForm = value.programs;
     }
   }
   selectProgram = new FormControl(null, [Validators.required]);
   selectRoutines = new FormControl(null, [Validators.required]);
+  enteredName = new FormControl(null, [Validators.required]);
   selectRung = new FormControl(null, [Validators.required, Validators.pattern('^\d*[0-9]\d*$')]);
-  showInsert = false;
+  @Input() showInsert = false;
   selectedProgram;
   selectedRoutine;
   constructor(private service: SharedService, private cdRef: ChangeDetectorRef) {
@@ -74,9 +79,10 @@ export class DialogComponent implements OnInit {
       Program: this.selectProgram.value,
       Routine: this.selectRoutines.value,
       Rung: this.selectRung.value,
+      Name: this.name
     });
     this.showVerifyMessage = false;
-    this.showInsert = false; 
+    this.showInsert = false;
     this.cdRef.detectChanges();
   }
   removeMinus(e) {
@@ -87,14 +93,16 @@ export class DialogComponent implements OnInit {
     }
   }
   onSelectedProgram(e) {
-    const programRoutines = this.insertForm.filter(i=>i.Name==e.value);
+    const programRoutines = this.insertForm.filter(i => i.Name == e.value);
     this.routines = programRoutines[0].Routines;
   }
   showInsertForm() {
     this.showInsert = true;
+    this.prepareForm.emit();
   }
   resetForm() {
     this.insertForm = [];
+    this.name = '';
     this.routines = [];
     this.rung = 0;
     this.selectedProgram = undefined;

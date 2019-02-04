@@ -74,5 +74,7 @@ class="dialog"
 (postController)="getChosenController($event)" 
 [manageOfMessageBox]="onShowInfoMsg" 
 [getAllPrograms]="programsAndRoutines"
+[IsInsert]="false"
+(prepareForm)="initForm()"
 (responseVerify)="verifyingChosenController($event)">
   <app-dialog>

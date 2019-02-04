@@ -168,6 +168,7 @@ export class HomeComponent {
         this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, true, false, '', false);
       }
+      
     },
       error => {
         this.onBlocking = false;
@@ -217,6 +218,8 @@ export class HomeComponent {
       this.disableBtnOfMenu = true;
     });
   }
+
+
   connectingToChosenVersion(body, item, bodyTransfer) {
     this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
@@ -259,6 +262,11 @@ export class HomeComponent {
   onChangesNotAllowed() {
     this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
   }
+
+  initForm(){
+    this.getProgram();
+  }
+
   manageMessageDialog(list, showInfoList, showInfoMessage, msg, showVerifyMessage) {
     this.onShowInfoMsg = {
       list: list,
@@ -268,11 +276,13 @@ export class HomeComponent {
       showVerifyMessage: showVerifyMessage
     };
   }
+
   manageOfContent(tabTree, tabForm, tabAoi) {
     this.showTabTree = tabTree;
     this.showTabOperation = tabForm;
     this.showTabAOI = tabAoi;
   }
+
   manageOfBtns(add, edit, nav) {
     this.showBtn = {
       'add': add,
@@ -338,8 +348,8 @@ export class HomeComponent {
   }
   getProgram() {
     this.service.getPrograms().subscribe(programs => {
-      this.programsAndRoutines = undefined;
-      this.programsAndRoutines = Object.assign({}, {programs: programs});
+      this.service.programsAndRoutines = Object.assign({}, {programs: programs});
+      this.programsAndRoutines = this.service.programsAndRoutines;
     }, 
     err => {
       this.service.sendNotification('Cant load Programs!', 'fail')
