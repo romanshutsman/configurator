@@ -147,16 +147,4 @@ export class ControlBarComponent implements OnInit {
     this.service.sendNotification(op + ' failed!', 'fail');
   }
 
-  saveAoi() {
-    let tree = this.parseTreeToServer(this.treePost[0]);
-    this.service.saveAOI(tree).subscribe((value) => { });
-  }
-
-  parseTreeToServer(tree) {
-    let stringifyData = JSON.stringify(tree);
-    stringifyData = stringifyData.replace(/label/g, 'nameInModel');
-    stringifyData = stringifyData.replace(/children/g, 'lChildrens');
-    const object = JSON.parse(stringifyData);
-    return object;
-  }
 }

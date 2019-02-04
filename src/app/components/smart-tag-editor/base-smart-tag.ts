@@ -71,7 +71,7 @@ export class BaseSmartTag {
   allPrograms;
 
   @Input() set getProgram(value) {
-    if(value) {
+    if (value) {
       this.allPrograms = value;
     }
   }
@@ -99,8 +99,7 @@ export class BaseSmartTag {
       iStartD: 0,
       hasTrigger: false,
       hasChange: false,
-      hasBuffer: false,
-      isLogIn: false,
+      hasBuffer: true,
       updateRate: 0,
       isMulp: false,
       InternalIndex: 0,
@@ -109,7 +108,7 @@ export class BaseSmartTag {
       rung: 0,
       sProgramParent: '',
       sParentTagName: '',
-      updateRadio: 'Rate',
+      updateRadio: 'Parent',
       isAoi: false,
       nameAoi: null,
       lInfoAtt: [],
@@ -206,7 +205,7 @@ export class BaseSmartTag {
   }
   defaultValueOnEdit(form) {
     this.disableReuiredItems(form);
-    this.service.getInfoOnEditNode(this.cloneSelectedNode.ID)
+    this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
         console.log(data);
       });
@@ -280,6 +279,7 @@ export class BaseSmartTag {
         this.typesOfCheckboxesAOI.forEach(e => {
           let selected = this.cloneSelectedNode.lInfoAtt.find(i => i.name == e.Name);
           e.selected = !!selected;
+          e.Value = selected ? selected.value : null;
         })
     } catch (error) {
       // console.log(error)

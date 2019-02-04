@@ -30,7 +30,6 @@ export interface NodeTree {
     hasTrigger: boolean;
     hasChange: boolean;
     hasBuffer: boolean;
-    isLogIn: boolean;
     Del: number;
 }
 

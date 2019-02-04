@@ -83,7 +83,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.treeExtension.push({
       iconClass: 'bgColorNode',
       condition: (node: ITreeNode): boolean => {
-        return node.isInjected;
+        return node.isInjected || node.isMulp;
       }
     })
     this.config = {
@@ -103,7 +103,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       const typeOfNode = node['Type'];
       if (typeOfNode === 0) {
         this.showContext = true;
-        if (node['isInjected']) {
+        if (node['isInjected'] || node['isMulp']) {
           this.showContext = false;
         }
       } else {

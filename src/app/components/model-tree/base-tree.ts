@@ -85,11 +85,11 @@ export class BaseTree {
     let arrayOfAttr = [];
     if(node.updateRadio=='Parent') {
       arrayOfAttr.push('P');
-      if(node.isLogIn)  {
+      if(node.hasBuffer)  {
         arrayOfAttr = [];
       }
       if(node.hasTrigger) {
-        if(node.isLogIn) {
+        if(node.hasBuffer) {
           arrayOfAttr.push('P');
         }
         arrayOfAttr.push('T');
@@ -102,7 +102,7 @@ export class BaseTree {
       arrayOfAttr.push(tempStr);
       if(node.hasTrigger) arrayOfAttr.push('T');
       if(node.hasChange) arrayOfAttr.push('Ch');
-      if(!node.isLogIn) arrayOfAttr.push('NL');
+      if(!node.hasBuffer) arrayOfAttr.push('NL');
     }
 
     if(node.updateRadio=='Nothing') {
@@ -111,7 +111,7 @@ export class BaseTree {
       arrayOfAttr.push(tempStr);
       if(node.hasTrigger) arrayOfAttr.push('T');
       if(node.hasChange) arrayOfAttr.push('Ch');
-      if(!node.isLogIn) arrayOfAttr.push('NL');
+      if(!node.hasBuffer) arrayOfAttr.push('NL');
     }
     const stringOfAttr = arrayOfAttr.join(' + ');
     if(arrayOfAttr.length>0) {
@@ -174,7 +174,6 @@ export class BaseTree {
       isInjected: item.isInjected,
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
-      isLogIn: item.isLogIn,
       Del: item.Del
     };
   }
@@ -223,7 +222,7 @@ export class BaseTree {
   onAddNewNode(body) {
     const allNode = [];
     this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
-    body.ID = allNode.length + 1;
+    body.ID = allNode.length;
 
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [body]);
     this.transferTreePost.emit(this.treeModel);
