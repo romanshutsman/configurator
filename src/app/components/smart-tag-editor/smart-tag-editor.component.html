@@ -17,6 +17,15 @@
     [actionMenu]="actionOnContextMenu"
     [oldNode]="node">
   </app-real>
+  <app-real-write 
+    *ngIf="nodeType === 'real-write'" 
+    [cloneSelected]="cloneSelectedNode" 
+    [getParentNode]="parentOfSelectedNode"
+    [getPathNode]="pathNode" 
+    [getProgram]="transferPrograms"
+    [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-real-write>
   <app-state 
     *ngIf="nodeType === 'state'" 
     [cloneSelected]="cloneSelectedNode" 
@@ -35,6 +44,15 @@
     [actionMenu]="actionOnContextMenu"
     [oldNode]="node">
   </app-dint>
+  <app-dint-write 
+    *ngIf="nodeType === 'dint-write'" 
+    [cloneSelected]="cloneSelectedNode" 
+    [getParentNode]="parentOfSelectedNode"
+    [getPathNode]="pathNode" 
+    [getProgram]="transferPrograms"
+    [actionMenu]="actionOnContextMenu"
+    [oldNode]="node">
+  </app-dint-write>
   <app-string 
     *ngIf="nodeType === 'string'" 
     [cloneSelected]="cloneSelectedNode" 

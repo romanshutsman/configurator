@@ -45,6 +45,18 @@ export class BaseTree {
       condition: (node: ITreeNode): boolean => {
         return node.Type === 3;
       }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-add-examples',
+      condition: (node: ITreeNode): boolean => {
+        return node.Type === 4;
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-data-server',
+      condition: (node: ITreeNode): boolean => {
+        return node.Type === 5;
+      }
     }
   ];
   nodeTree;
@@ -188,6 +200,10 @@ export class BaseTree {
       this.sendActionAndType('edit', 'dint', comp);
     } else if (this.selectedNode.Type === 3) {
       this.sendActionAndType('edit', 'string', comp);
+    } else if (this.selectedNode.Type === 4) {
+      this.sendActionAndType('edit', 'real-write', comp);
+    } else if (this.selectedNode.Type === 5) {
+      this.sendActionAndType('edit', 'dint-write', comp);
     }
   }
   sendActionAndType(action, type, component) {

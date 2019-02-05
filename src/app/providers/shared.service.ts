@@ -32,8 +32,10 @@ export class SharedService extends DataHelper {
   }
   nodeType = {
     real: 'real',
+    realWrite: 'real-write',
     state: 'state',
     dint: 'dint',
+    dintWrite: 'dint-write',
     string: 'string',
     node: 'node'
   };

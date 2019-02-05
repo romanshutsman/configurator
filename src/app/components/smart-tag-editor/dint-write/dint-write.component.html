@@ -1,0 +1,184 @@
+<form #nodeForm="ngForm">
+  <div class="readonly" *ngIf="cloneSelectedNode.isInjected"></div>
+    <mat-card class="first-block">
+      <div class="tagname">
+        <mat-form-field class="example-full-width input">          
+          <input 
+          matInput
+          placeholder="Tag Name"
+          type="text" 
+          name="tagname" 
+          style="font-size:16px"
+          [disabled]="tagnameDisable ? '' : null" 
+          [(ngModel)]="cloneSelectedNode.TagName"
+          [pattern]="testNamePattern"
+          id="tagname"
+          maxlength="40"
+          required >
+        </mat-form-field>
+        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
+            First letter must be letter or _. You can type letters and numbers.
+        </p>
+      </div>
+      <div class="nameinmodel">
+          <mat-form-field class="example-full-width input">          
+            <input 
+            matInput
+            placeholder="Name in model"
+            type="text" 
+            name="label" 
+            style="font-size:16px"
+            [(ngModel)]="cloneSelectedNode.label"
+            validateName
+            [dataNode]="getParentNode"
+            [pattern]="testNamePattern"
+            maxlength="40"
+            required >
+          </mat-form-field>
+          <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+              First letter must be letter or _. You can type letters and numbers.
+          </p>
+          <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+            This name already exist!
+          </p>
+        </div>
+    </mat-card>
+    <mat-card class="other-options">
+      <div class="select-property">
+        <mat-form-field class="input">          
+            <input 
+            matInput
+            placeholder="Engineering Units"
+            type="text" 
+            name="EU"  
+            required 
+            [value]="cloneSelectedNode.EU" 
+            [(ngModel)]="cloneSelectedNode.EU"
+            >
+          </mat-form-field>
+      </div>
+    </mat-card>
+    <mat-card class="infomation-type">
+        <div class="type" >
+            <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
+            <div class="checkbox">
+                <ng-container 
+                *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+                  <mat-checkbox
+                  color="primary"
+                  [(ngModel)]="item.selected"
+                  [ngModelOptions]="{standalone: true}"
+                  (change)="updateInfoTypesAoi($event, item)">
+                  <span class="infoName" >
+                    {{item.Name}}
+                  </span>
+                  <input 
+                  type="text" 
+                  placeholder="Enter attr"
+                  [(ngModel)]="item.Value" 
+                  [value]="item.Value" 
+                  (input)="inputNewValue(item, $event.target.value)"
+                  [ngModelOptions]="{standalone: true}"
+                  class="input-info-type" 
+                  *ngIf="item.HasValue == 1">
+                </mat-checkbox>
+              </ng-container>
+            </div>
+          </div>
+    </mat-card>
+    <mat-card class="select" *ngIf="!cloneSelectedNode.isAoi">
+      <div class="mat-select-center">
+        <mat-form-field class="routineProgramselect">
+          <mat-select 
+          id="matSelect1"
+          [disabled]="programNameDisabled"  
+          name="sProgram" 
+          placeholder="Programs" 
+          style="color:black" 
+          (selectionChange)="onSelectedProgram($event)"
+          [(ngModel)]="cloneSelectedNode.Program" 
+          required="isRequired ? '' : null">
+            <mat-option  *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">
+          Required!
+        </p>
+      </div>
+      <div class="mat-select-center">
+        <mat-form-field class="routineProgramselect">
+          <mat-select 
+          [disabled]="routineDisabled" 
+          placeholder="Routines" style="color:black" 
+          [(ngModel)]="routineDefault" 
+          name="routine" 
+          required="isRequired ? '' : null">
+            <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" class="paragraph-error err">
+          Required!
+        </p>
+      </div>
+      <div class="inputs">
+        <div>
+          <mat-form-field class="UpdateRate">          
+            <input 
+            matInput
+            placeholder="Rung"
+            type="number"
+            pattern="^\d*[0-9]\d*$"
+            name="rung" 
+            [value]="cloneSelectedNode.rung" 
+            [(ngModel)]="cloneSelectedNode.rung" 
+            (keydown)="removeMinus($event, 2)"
+            min="0"
+            id="rung" 
+            required="isRequired ? '' : null"
+            [disabled]="!isRequired" >
+          </mat-form-field>
+          <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+            Required!<br>Only positive or 0!
+          </p>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+
+  <div class="over" *ngIf="showPopUpAttr ">
+      <div class="pop">
+        <p>Information attributes</p>
+        <p *ngIf="typesOfCheckboxesAOI?.length == 0">No attributes!</p>
+          <mat-card class="" >
+            <div class="mat-checkboxes">
+              <ng-container 
+                *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+                  <mat-checkbox
+                  color="primary"
+                  [(ngModel)]="item.selected"
+                  [ngModelOptions]="{standalone: true}"
+                  (change)="updateInfoTypesAoi($event, item)"
+                  >
+                  <div class="groupSpan">
+                    <span class="popupNameCheckbox" >
+                      {{item.Name}}
+                    </span>
+                    <span>
+                      <input 
+                      type="text" 
+                      placeholder="Enter name of attribute" 
+                      class="popUpInfoName" 
+                      [(ngModel)]="item.Value" 
+                      [ngModelOptions]="{standalone: true}"
+                      [value]="item.Value" 
+                      (input)="inputNewValue(item, $event.target.value)"
+                      *ngIf="item.HasValue == 1">
+                    </span>
+                  </div>
+                </mat-checkbox>
+              </ng-container>
+            </div>
+            </mat-card>
+        <button mat-raised-button color="primary" class="first-btn" (click)="closeModal1()">close</button>
+      </div>
+    </div>
