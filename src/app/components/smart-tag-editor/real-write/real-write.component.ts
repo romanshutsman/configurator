@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-real-write',
   templateUrl: './real-write.component.html',
-  styleUrls: ['./real-write.component.scss']
+  styleUrls: ['./../real/real.component.scss']
 })
 export class RealWriteComponent extends BaseSmartTag implements OnInit {
   isRequriedValidation1: boolean;
@@ -37,6 +37,16 @@ export class RealWriteComponent extends BaseSmartTag implements OnInit {
  }
 
   ngOnInit() {
+    this.onChanges();
+  }
+  onChanges(): void {
+    this.nodeFrm.valueChanges
+      .subscribe((value) => {
+        this.cloneSelectedNode.routine = this.routineDefault;
+        this.cloneSelectedNode.ID = this.nodeiD;
+        this.cloneSelectedNode.Type = 4;
+        this.sendSmartTagData(this.nodeFrm);
+      });
   }
   updateInfoTypesAoi(e, item) {
     this.updateInfoTypes(e, item);

@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-dint-write',
   templateUrl: './dint-write.component.html',
-  styleUrls: ['./dint-write.component.scss']
+  styleUrls: ['./../dint/dint.component.scss', './dint-write.component.scss']
 })
 export class DintWriteComponent extends BaseSmartTag implements OnInit {
 
@@ -40,8 +40,17 @@ export class DintWriteComponent extends BaseSmartTag implements OnInit {
    }
 
   ngOnInit() {
+    this.onChanges();
   }
-
+  onChanges(): void {
+    this.nodeFrm.valueChanges
+      .subscribe((value) => {
+        this.cloneSelectedNode.routine = this.routineDefault;
+        this.cloneSelectedNode.ID = this.nodeiD;
+        this.cloneSelectedNode.Type = 5;
+        this.sendSmartTagData(this.nodeFrm);
+      });
+  }
   updateInfoTypesAoi(e, item) {
     this.updateInfoTypes(e, item);
     this.checkAndSend();
