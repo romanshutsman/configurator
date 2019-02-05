@@ -101,6 +101,7 @@ export class BaseSmartTag {
       hasChange: false,
       hasBuffer: true,
       updateRate: 0,
+      updateRateSeconds: 0,
       isMulp: false,
       InternalIndex: 0,
       children: [],
@@ -121,13 +122,13 @@ export class BaseSmartTag {
     this.calculateTime(this.selectedOption);
   }
   calculateTime(time) {
-    // if (time === this.times[0]) {
-    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio / 60;
-    // } else if (time === this.times[1]) {
-    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio;
-    // } else if (time === this.times[2]) {
-    //   this.cloneSelectedNode.updateRate = this.tempValueOfRadio * 1000;
-    // }
+    if (time === this.times[0]) {
+      this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate * 60;
+    } else if (time === this.times[1]) {
+      this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate;
+    } else if (time === this.times[2]) {
+      this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate * 1000; // this.tempValueOfRadio * 1000;
+    }
   }
   enableReuiredItems(form: NgForm) {
     this.formComp = form;
@@ -175,6 +176,7 @@ export class BaseSmartTag {
   }
 
   defaultValueOnAdd(form, radio) {
+    this.timeDefault = this.times[1];
     this.initOnAdd();
     this.enableReuiredItems(form);
     this.routineDefault = '';
@@ -204,10 +206,18 @@ export class BaseSmartTag {
     }
   }
   defaultValueOnEdit(form) {
+    this.timeDefault = this.times[1];
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
+        console.log( this.cloneSelectedNode);
         console.log(data);
+        let l =  this.cloneSelectedNode.label;
+        let li = this.cloneSelectedNode.labelInfo;
+        this.cloneSelectedNode = data;
+        this.cloneSelectedNode.label = l;
+        this.cloneSelectedNode.labelInfo = li;
+        console.log( this.cloneSelectedNode);
       });
     this.routineDefault = this.routines[0];
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];

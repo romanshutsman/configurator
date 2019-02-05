@@ -83,6 +83,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
       iStartD: item.iStartD,
       hasTrigger: item.hasTrigger,
       updateRate: item.updateRate,
+      updateRateSeconds: item.updateRateSeconds,
       isMulp: item.isMulp,
       InternalIndex: item.InternalIndex,
       children: item.children,

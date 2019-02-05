@@ -15,6 +15,7 @@ export interface NodeTree {
     UID: number;
     iStartD: number;
     updateRate: number;
+    updateRateSeconds : number;
     isMulp: boolean;
     InternalIndex: number;
     children: NodeTree[];
