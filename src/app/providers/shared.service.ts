@@ -117,6 +117,7 @@ export class SharedService extends DataHelper {
       iStartD: item.iStartD,
       hasTrigger: item.hasTrigger,
       updateRate: item.updateRate,
+      updateRateSeconds: item.updateRateSeconds,
       isMulp: item.isMulp,
       InternalIndex: item.InternalIndex,
       children: item.children,

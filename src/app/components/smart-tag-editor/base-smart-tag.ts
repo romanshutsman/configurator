@@ -64,8 +64,6 @@ export class BaseSmartTag {
   typesOfCheckboxesAOI = [];
   typesOfCheckboxes = [];
   showPopUpAttr = false;
-  hasTriggerNS = false;
-  hasTriggerRSD = false;
   hasChange = false;
   logIn = false;
   allPrograms;
@@ -114,7 +112,7 @@ export class BaseSmartTag {
       nameAoi: null,
       lInfoAtt: [],
       isInjected: false,
-      Del: null
+      Del: 0
     };
   }
   getOptionTime(e) {
@@ -210,14 +208,17 @@ export class BaseSmartTag {
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
-        console.log( this.cloneSelectedNode);
+        console.log(this.cloneSelectedNode);
         console.log(data);
-        let l =  this.cloneSelectedNode.label;
+        let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
+        let updateBy = this.cloneSelectedNode.updateRadio;
         this.cloneSelectedNode = data;
         this.cloneSelectedNode.label = l;
         this.cloneSelectedNode.labelInfo = li;
-        console.log( this.cloneSelectedNode);
+        this.cloneSelectedNode.updateRate = Math.abs(this.cloneSelectedNode.updateRate);
+        this.cloneSelectedNode.updateRadio = updateBy;
+        console.log(this.cloneSelectedNode);
       });
     this.routineDefault = this.routines[0];
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
@@ -256,25 +257,17 @@ export class BaseSmartTag {
     });
   }
 
-  onCheckRadio(e, form) {
-    if (e.value === this.arrayOfRadioBtns2[4]) {
-      this.isEnableTriggerInput(true, true, 0);
-    } else if (e.value === this.arrayOfRadioBtns2[0]) {
-      this.isEnableTriggerInput(false, false, 0);
-    } else if (e.value === this.arrayOfRadioBtns2[1]) {
-      this.isEnableTriggerInput(true, false, 0);
-    } else if (e.value === this.arrayOfRadioBtns2[2]) {
-      this.isEnableTriggerInput(false, false, this.cloneSelectedNode.updateRate);
-    } else if (e.value === this.arrayOfRadioBtns2[3]) {
-      this.isEnableTriggerInput(true, false, this.cloneSelectedNode.updateRate);
-    }
+  onUpdateByChanged(e, form) {
+    if (e.value != this.arrayOfRadioBtns2[1])
+      this.isEnableTriggerInput(false, 0);
     this.sendSmartTagData(form);
   }
-  isEnableTriggerInput(trig, inp, num) {
-    this.cloneSelectedNode.hasTrigger = trig;
+
+  isEnableTriggerInput(inp, num) {
     this.inputDisable = inp;
     this.cloneSelectedNode.updateRate = num;
   }
+
   initAoi(value) {
     if (value.component == 'model') {
       this.cloneSelectedNode.isAoi = false;

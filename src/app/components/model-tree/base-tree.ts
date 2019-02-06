@@ -87,6 +87,7 @@ export class BaseTree {
   onTreeInitialized(treeControl: RaUiNestedTreeControl) {
     this.treeControlRa = treeControl;
     this.treeControlRa.runForEachChild(this.treeModel, e => {
+      e.updateRate = Math.abs(e.updateRate);
       this.loadUpdate(e);
       e.labelInfo = this.addInfoNode(e);
     })

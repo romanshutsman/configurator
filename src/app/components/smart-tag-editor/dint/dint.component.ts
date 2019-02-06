@@ -68,7 +68,7 @@ export class DintComponent extends BaseSmartTag implements OnInit {
     }
   }
   onChangeSelect(e) {
-    this.onCheckRadio(e, this.nodeFrm);
+    this.onUpdateByChanged(e, this.nodeFrm);
   }
   removeMinus(e, num) {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];

@@ -41,7 +41,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.service.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
-          this.loadNode();
+          this.loadValue();
           this.initAoi(value);
           this.initAttributes();
           this.initCheckbox();
@@ -65,24 +65,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   }
 
-  loadNode() {
-    this.hasTriggerNS = this.cloneSelectedNode.hasTrigger;
-    if (this.cloneSelectedNode.updateRate > 0) {
-      if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
-      } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
-      }
-    } else if (this.cloneSelectedNode.updateRate == 0) {
-      if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
-      } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
-      }
-    } else {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
-    }
-  }
   removeMinus(e, num) {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
@@ -99,18 +81,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
 
   onChangeSelect(e) {
-    if (e.value === this.arrayOfRadioBtns[4]) {
-      this.isEnableTriggerInput(true, true, 0);
-    } else if (e.value === this.arrayOfRadioBtns[0]) {
-      this.isEnableTriggerInput(false, false, 0);
-    } else if (e.value === this.arrayOfRadioBtns[1]) {
-      this.isEnableTriggerInput(true, false, 0);
-    } else if (e.value === this.arrayOfRadioBtns[2]) {
-      this.isEnableTriggerInput(false, false, this.cloneSelectedNode.updateRate);
-    } else if (e.value === this.arrayOfRadioBtns[3]) {
-      this.isEnableTriggerInput(true, false, this.cloneSelectedNode.updateRate);
-    }
-    this.sendSmartTagData(this.nodeFrm);
+    this.onUpdateByChanged(e, this.nodeFrm);
   }
 
   getCurrentValue(e) {
