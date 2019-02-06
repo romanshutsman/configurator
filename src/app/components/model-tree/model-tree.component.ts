@@ -37,11 +37,11 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       if (value.component == 'model') {
         if (value.action === 'added') {
           value.body.label = value.body.label.replace(/ *\([^)]*\) */g, '');
-          value.body.label = value.body.label + ' ' + this.addInfoNode(value.body);
+          value.body.labelInfo = this.addInfoNode(value.body);
           this.onAddNewNode(value.body)
         } else if (value.action === 'edited') {
           this.selectedNode.label = this.selectedNode.label.replace(/ *\([^)]*\) */g, '');
-          this.selectedNode.label = this.selectedNode.label + ' ' + this.addInfoNode(this.selectedNode);
+          this.selectedNode.labelInfo = this.addInfoNode(this.selectedNode);
           this.selectedNode && this.treeControlRa.refreshUi.emit();
         }
       }
@@ -99,7 +99,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     if (event['value']) {
       const node = event['node'];
       this.nodeTree = node;
-      this.oldUnknowNode = this.cloneNode(node);
+      this.oldUnknowNode = this.service.cloneNode(node);
       this.service.SubjectControlTab.next('hide_form_model');
       this.itemSelected.emit(node);
       const typeOfNode = node['Type'];
@@ -184,7 +184,6 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
 
   onHover() {
-    console.log(this.checkedStatus);
     if (!this.checkedStatus) {
       this.showAOIMsg.emit(true);
     }
@@ -214,14 +213,10 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   insertAoi(item) {
     console.log(item)
     this.aoiName = Object.assign({ name: item });
-    console.log(this.service);
     if (this.service.programsAndRoutines)
       this.programsAndRoutines = Object.assign({}, { programs: this.service.programsAndRoutines.programs });
-    console.log(this.programsAndRoutines);
 
     this.manageMessageDialog([], false, false, '', true);
-
-    console.log(item)
 
   }
 

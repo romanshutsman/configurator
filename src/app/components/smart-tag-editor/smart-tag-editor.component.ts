@@ -35,7 +35,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
     console.log(value);
     if (value) {
       this.initSelectedTag(value);
-      this.cloneSelectedNode = this.cloneNode(value);
+      this.cloneSelectedNode = this.service.cloneNode(value);
       this.nodeiD = this.cloneSelectedNode.ID;
     }
   }
@@ -78,7 +78,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   @Input() set modifiedNode(value) {
     if (value) {
       if (value['action'] === 'edited') {
-        this.node = this.cloneNode(value['body']);
+        this.node = this.service.cloneNode(value['body']);
       }
     }
   }
@@ -100,46 +100,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
     
   }
 
-
-
-  cloneNode(item: NodeTree) {
-    return {
-      label: item.label,
-      labelInfo: item.label,
-      ParentID: item.ParentID,
-      ID: item.ID,
-      Type: item.Type,
-      SubType: item.SubType,
-      EU: item.EU,
-      Min: item.Min,
-      Max: item.Max,
-      Mul: item.Mul,
-      Exp: item.Exp,
-      Program: item.Program,
-      TagName: item.TagName,
-      UID: item.UID,
-      iStartD: item.iStartD,
-      hasTrigger: item.hasTrigger,
-      updateRate: item.updateRate,
-      isMulp: item.isMulp,
-      InternalIndex: item.InternalIndex,
-      children: item.children,
-      rung: item.rung,
-      routine: item.routine,
-      sProgramParent: item.sProgramParent,
-      sParentTagName: item.TagName,
-      updateRadio: item.updateRadio,
-      isAoi: item.isAoi,
-      nameAoi: item.nameAoi,
-      lInfoAtt: item.lInfoAtt,
-      isInjected: item.isInjected,
-      hasChange: item.hasChange,
-      hasBuffer: item.hasBuffer,
-      Del: item.Del
-    };
-  }
   initSelectedTag(value) {
-    this.node = this.cloneNode(value);
+    this.node = this.service.cloneNode(value);
     this.pathNode = '';
     this.detailsOfNode = Array.of(this.node);
     this.countOfCall = 0;

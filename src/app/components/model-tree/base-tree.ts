@@ -153,42 +153,6 @@ export class BaseTree {
     }
   }
 
-  cloneNode(item) {
-    return {
-      label: item.label,
-      labelInfo: item.label,
-      ParentID: item.ParentID,
-      ID: item.ID,
-      Type: item.Type,
-      SubType: item.SubType,
-      EU: item.EU,
-      Min: item.Min,
-      Max: item.Max,
-      Mul: item.Mul,
-      Exp: item.Exp,
-      Program: item.Program,
-      TagName: item.TagName,
-      UID: item.UID,
-      iStartD: item.iStartD,
-      hasTrigger: item.hasTrigger,
-      updateRate: item.updateRate,
-      isMulp: item.isMulp,
-      InternalIndex: item.InternalIndex,
-      children: item.children,
-      rung: item.rung,
-      routine: item.routine,
-      sProgramParent: item.sProgramParent,
-      sParentTagName: item.TagName,
-      updateRadio: item.updateRadio,
-      isAoi: item.isAoi,
-      nameAoi: item.nameAoi,
-      lInfoAtt: item.lInfoAtt,
-      isInjected: item.isInjected,
-      hasChange: item.hasChange,
-      hasBuffer: item.hasBuffer,
-      Del: item.Del
-    };
-  }
   onDblClick(comp) {
     if (this.selectedNode.Type === 0) {
       this.sendActionAndType('edit', 'node', comp);

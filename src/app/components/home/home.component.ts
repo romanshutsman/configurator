@@ -41,13 +41,11 @@ export class HomeComponent {
     this.getActiveControllerAndCheck();
   }
   getTree(e) {
-    console.log(e);
     this.treeModel = e;
     this.manageOfBtns(false, false, false);
   }
 
   getTreeOnPost(e) {
-    console.log('EMITTED')
     if (this.treeModelPost && this.treeModelPost[0].isAoi) {
       this.treeModelPost = Object.assign({}, e);
     } else {
@@ -57,7 +55,7 @@ export class HomeComponent {
 
   getNode(e) {
     this.selectedItem = e;
-    this.pathSelectedItem = Object.assign({}, {path: undefined});
+    this.pathSelectedItem = Object.assign({}, { path: undefined });
     this.manageOfBtns(false, false, false);
   }
   actionMenu(e) {
@@ -78,7 +76,6 @@ export class HomeComponent {
     }
   }
   selectedContent(e) {
-    console.log('SELECTED CONTENT', e)
     switch (e) {
       case 'model-tree':
         this.manageOfContent(true, false, false);
@@ -109,33 +106,17 @@ export class HomeComponent {
     }
   }
   onSubmitted(e) {
-    if(e.component == 'model') {
+    if (e.component == 'model') {
       this.manageOfContent(true, false, false);
     } else {
       this.manageOfContent(false, false, true);
     }
-    console.log(e);
     this.operationOnForm = e;
     this.bodyForm = e;
     this.manageOfBtns(false, false, false);
     if (e['action'] === 'edited') {
       const node = e['body'];
-      this.selectedItem.label = node.label;
-      this.selectedItem.updateRate = node.updateRate;
-      this.selectedItem.hasTrigger = node.hasTrigger;
-      this.selectedItem.nameAoi = node.nameAoi;
-      this.selectedItem.lInfoAtt = node.lInfoAtt;
-      this.selectedItem.isAoi = node.isAoi;
-      this.selectedItem.isInjected = node.isInjected;
-      this.selectedItem.sParentTagName = node.sParentTagName;
-      this.selectedItem.sProgramParent = node.sProgramParent;
-      this.selectedItem.rung = node.rung;
-      this.selectedItem.updateRadio = node.updateRadio;
-      this.selectedItem.Del = node.Del;
-      this.selectedItem.EU = node.EU;
-      this.selectedItem.hasBuffer = node.hasBuffer;
-      this.selectedItem.hasChange = node.hasChange;
-
+      this.selectedItem = Object.assign(this.selectedItem, node);
     }
     this.treeModelPost = this.treeModel;
   }
@@ -167,7 +148,7 @@ export class HomeComponent {
         this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, true, false, '', false);
       }
-      
+
     },
       error => {
         this.onBlocking = false;
@@ -176,7 +157,7 @@ export class HomeComponent {
         this.checkVerification(body);
         this.service.sendNotification('Can\'t connect to controller...', 'fail');
         this.disableBtnOfMenu = true;
-});
+      });
   }
   successConnect(data, body, item) {
     this.statusController({ 'status': true, 'project': item });
@@ -203,7 +184,6 @@ export class HomeComponent {
         this.connectingToChosenVersion(body, item, bodyTransfer);
         this.disableBtnOfMenu = false;
       } else if (data === false) {
-        // show message
         this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
         this.disableBtnOfMenu = true;
       } else {
@@ -222,7 +202,6 @@ export class HomeComponent {
   connectingToChosenVersion(body, item, bodyTransfer) {
     this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
-      console.log(data);
       if (data['Status'] != this.service.controllerMode.rsModeOffline) {
         this.onHideAoi = true;
       }
@@ -241,7 +220,7 @@ export class HomeComponent {
 
         }
       }
-      if(data['Status'] != this.service.controllerMode.rsModeOffline && data['IsOldVersion']) {
+      if (data['Status'] != this.service.controllerMode.rsModeOffline && data['IsOldVersion']) {
         this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
         this.isChangesAllowed = false;
       } else {
@@ -257,12 +236,12 @@ export class HomeComponent {
           this.errorConnect();
         }
       });
-    }
+  }
   onChangesNotAllowed() {
     this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
   }
 
-  initForm(){
+  initForm() {
     this.getProgram();
   }
 
@@ -298,28 +277,20 @@ export class HomeComponent {
     body['Program'] = e.Program;
     body['Routine'] = e.Routine;
     body['Rung'] = e.Rung;
-    if (e.verify) {
     this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
-    } else {
-      this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
-    }
   }
   showNewMsg(e) {
-    console.log(e);
     if (e) {
       this.manageMessageDialog([], false, true, 'Controller should be offline!', false);
     }
   }
   onReconnecting(e) {
-    console.log(e);
     if (e) {
       this.getActiveControllerAndCheck();
     }
   }
   onShowAOI(e) {
-    console.log(e)
     this.nameAoi = e.aoi;
-
     this.service.loadAOI(e.aoi).subscribe(value => {
       if (value) {
         const body = e;
@@ -330,7 +301,6 @@ export class HomeComponent {
       } else {
         e.emit = false;
         this.showAOITab = e;
-        console.log(this.showAOITab);
         this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
         this.manageOfContent(true, false, false);
       }
@@ -343,15 +313,15 @@ export class HomeComponent {
   }
   getPath(e) {
     this.pathSelectedItem = undefined;
-    this.pathSelectedItem = Object.assign({}, {path:e});
+    this.pathSelectedItem = Object.assign({}, { path: e });
   }
   getProgram() {
     this.service.getPrograms().subscribe(programs => {
-      this.service.programsAndRoutines = Object.assign({}, {programs: programs});
+      this.service.programsAndRoutines = Object.assign({}, { programs: programs });
       this.programsAndRoutines = this.service.programsAndRoutines;
-    }, 
-    err => {
-      this.service.sendNotification('Cant load Programs!', 'fail')
-})
+    },
+      err => {
+        this.service.sendNotification('Cant load Programs!', 'fail')
+      })
   }
 }
