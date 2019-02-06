@@ -70,7 +70,9 @@ import { StringComponent } from './components/smart-tag-editor/string/string.com
 import { AoiEditorComponent } from './components/aoi-editor/aoi-editor.component';
 import { CustomValidatorDirective } from './providers/custom-validator.directive';
 import { ValidateMinValueDirective } from './components/smart-tag-editor/real/validate-min-value.directive';
-import { ValidateMaxValueDirective } from './components/smart-tag-editor/real/validate-max-value.directive'
+import { ValidateMaxValueDirective } from './components/smart-tag-editor/real/validate-max-value.directive';
+import { RealWriteComponent } from './components/smart-tag-editor/real-write/real-write.component';
+import { DintWriteComponent } from './components/smart-tag-editor/dint-write/dint-write.component'
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { ValidateMaxValueDirective } from './components/smart-tag-editor/real/va
     AoiEditorComponent,
     CustomValidatorDirective,
     ValidateMinValueDirective,
-    ValidateMaxValueDirective
+    ValidateMaxValueDirective,
+    RealWriteComponent,
+    DintWriteComponent
   ],
   imports: [
     BrowserModule,

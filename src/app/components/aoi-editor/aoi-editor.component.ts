@@ -77,7 +77,7 @@ export class AoiEditorComponent extends BaseTree implements OnInit {
     if (event['value']) {
       const node = event['node'];
       this.nodeTree = node;
-      this.oldUnknowNode = this.cloneNode(node);
+      this.oldUnknowNode = this.service.cloneNode(node);
       this.service.SubjectControlTab.next('hide_form_aoi');
       this.itemSelected.emit(node);
       const typeOfNode = node['Type'];

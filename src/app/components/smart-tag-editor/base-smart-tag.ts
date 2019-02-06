@@ -255,6 +255,7 @@ export class BaseSmartTag {
       'operation': this.formAction
     });
   }
+
   onCheckRadio(e, form) {
     if (e.value === this.arrayOfRadioBtns2[4]) {
       this.isEnableTriggerInput(true, true, 0);
@@ -384,6 +385,8 @@ export class BaseSmartTag {
     this.initAttributes();
   }
   filterValueLabel() {
-    this.cloneSelectedNode.labelInfo = this.cloneSelectedNode.labelInfo.replace(/ *\([^)]*\) */g, '');
+    console.log(this.cloneSelectedNode.label);
+    this.cloneSelectedNode.label = this.cloneSelectedNode.label.replace(/ *\([^)]*\) */g, '');
+    console.log(this.cloneSelectedNode.label);
   }
 }

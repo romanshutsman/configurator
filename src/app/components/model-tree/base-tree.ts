@@ -45,6 +45,18 @@ export class BaseTree {
       condition: (node: ITreeNode): boolean => {
         return node.Type === 3;
       }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-add-examples',
+      condition: (node: ITreeNode): boolean => {
+        return node.Type === 4;
+      }
+    },
+    {
+      iconClass: 'ra-icon ra-icon-data-server',
+      condition: (node: ITreeNode): boolean => {
+        return node.Type === 5;
+      }
     }
   ];
   nodeTree;
@@ -141,43 +153,6 @@ export class BaseTree {
     }
   }
 
-  cloneNode(item) {
-    return {
-      label: item.label,
-      labelInfo: item.label,
-      ParentID: item.ParentID,
-      ID: item.ID,
-      Type: item.Type,
-      SubType: item.SubType,
-      EU: item.EU,
-      Min: item.Min,
-      Max: item.Max,
-      Mul: item.Mul,
-      Exp: item.Exp,
-      Program: item.Program,
-      TagName: item.TagName,
-      UID: item.UID,
-      iStartD: item.iStartD,
-      hasTrigger: item.hasTrigger,
-      updateRate: item.updateRate,
-      updateRateSeconds: item.updateRateSeconds,
-      isMulp: item.isMulp,
-      InternalIndex: item.InternalIndex,
-      children: item.children,
-      rung: item.rung,
-      routine: item.routine,
-      sProgramParent: item.sProgramParent,
-      sParentTagName: item.TagName,
-      updateRadio: item.updateRadio,
-      isAoi: item.isAoi,
-      nameAoi: item.nameAoi,
-      lInfoAtt: item.lInfoAtt,
-      isInjected: item.isInjected,
-      hasChange: item.hasChange,
-      hasBuffer: item.hasBuffer,
-      Del: item.Del
-    };
-  }
   onDblClick(comp) {
     if (this.selectedNode.Type === 0) {
       this.sendActionAndType('edit', 'node', comp);
@@ -189,6 +164,10 @@ export class BaseTree {
       this.sendActionAndType('edit', 'dint', comp);
     } else if (this.selectedNode.Type === 3) {
       this.sendActionAndType('edit', 'string', comp);
+    } else if (this.selectedNode.Type === 4) {
+      this.sendActionAndType('edit', 'real-write', comp);
+    } else if (this.selectedNode.Type === 5) {
+      this.sendActionAndType('edit', 'dint-write', comp);
     }
   }
   sendActionAndType(action, type, component) {

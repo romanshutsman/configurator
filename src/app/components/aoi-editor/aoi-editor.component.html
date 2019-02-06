@@ -30,8 +30,10 @@
     <context-menu #someSubMenu class="item-menu-cont" id="item-menu-cont">
       <ng-template  contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'aoi')"> <i class="ra-icon ra-icon-folder"></i> <p>Node</p> </ng-template>
       <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real', 'aoi')"> <i class="ra-icon ra-icon-gauge"></i> <p>Real</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real-write', 'model')"> <i class="ra-icon ra-icon-add-examples"></i><p>Real Write</p></ng-template>
       <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state', 'aoi')"><i class="ra-icon ra-icon-network-resources"></i> <p>State</p> </ng-template>
       <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint', 'aoi')"> <i class="ra-icon ra-icon-data-type"></i> <p>Dint</p> </ng-template>
+      <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint-write', 'model')"> <i class="ra-icon ra-icon-add-examples"></i><p>Dint Write</p></ng-template>
       <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string', 'aoi')"> <i class="ra-icon ra-icon-text-editor"></i> <p>String</p></ng-template>
     </context-menu>
   </context-menu>

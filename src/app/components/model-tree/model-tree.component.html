@@ -43,38 +43,31 @@
   </ng-template>
   <ng-template contextMenuItem [subMenu]="subMenuAOI" [visible]="showContext"><span (mouseenter)="onHover()" class="menu" [class.empty-menu]="checkedStatus">AOI</span></ng-template>
   <context-menu #someSubMenu class="item-menu-cont" id="item-menu-cont">
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'model')"> <i class="ra-icon ra-icon-folder"></i>
-      <p>Node</p>
-    </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real', 'model')"> <i class="ra-icon ra-icon-gauge"></i>
-      <p>Real</p>
-    </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state', 'model')"><i class="ra-icon ra-icon-network-resources"></i>
-      <p>State</p>
-    </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint', 'model')"> <i class="ra-icon ra-icon-data-type"></i>
-      <p>Dint</p>
-    </ng-template>
-    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string', 'model')"> <i class="ra-icon ra-icon-text-editor"></i>
-      <p>String</p>
-    </ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('node', 'model')"> <i class="ra-icon ra-icon-folder"></i><p>Node</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real', 'model')"> <i class="ra-icon ra-icon-gauge"></i><p>Real</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('real-write', 'model')"> <i class="ra-icon ra-icon-add-examples"></i><p>Real Write</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('state', 'model')"><i class="ra-icon ra-icon-network-resources"></i><p>State</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint', 'model')"> <i class="ra-icon ra-icon-data-type"></i><p>Dint</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('dint-write', 'model')"> <i class="ra-icon ra-icon-data-server"></i><p>Dint Write</p></ng-template>
+    <ng-template contextMenuItem [visible]="showContext" (execute)="contextMenuType('string', 'model')"> <i class="ra-icon ra-icon-text-editor"></i><p>String</p></ng-template>
   </context-menu>
   <context-menu #subMenuAOI>
     <ng-template contextMenuItem [subMenu]="subMenuAoiActions"  [visible]="checkedStatus" *ngFor="let item of listOfAOI" >
-      <i class="ra-icon ra-icon-dashboard"></i>
-      <p (mouseenter)="param = item">{{item}}</p>
+      <i class="ra-icon ra-icon-dashboard"></i><p (mouseenter)="param = item">{{item}}</p>
     </ng-template>
     <context-menu #subMenuAoiActions >
-        <ng-template contextMenuItem  (execute)="editAoi(param)">
-          <p>Edit</p>
-        </ng-template>
-        <ng-template contextMenuItem (execute)="insertAoi(param)">
-          <p>Insert</p>
-        </ng-template>
+        <ng-template contextMenuItem  (execute)="editAoi(param)"><p>Edit</p></ng-template>
+        <ng-template contextMenuItem (execute)="insertAoi(param)"><p>Insert</p></ng-template>
       </context-menu>
   </context-menu>
 </context-menu>
 
-<app-dialog class="dialog" (postController)="getChosenController($event)" [manageOfMessageBox]="onShowInfoMsg" [IsInsert]="true"
-  [getAllPrograms]="programsAndRoutines" (responseVerify)="prepareInsertAoi($event)" [showInsert]="true" >
-  <app-dialog>
+<app-dialog 
+  class="dialog" 
+  (postController)="getChosenController($event)" 
+  [manageOfMessageBox]="onShowInfoMsg" 
+  [IsInsert]="true"
+  [getAllPrograms]="programsAndRoutines" 
+  (responseVerify)="prepareInsertAoi($event)" 
+  [showInsert]="true" >
+<app-dialog> 
