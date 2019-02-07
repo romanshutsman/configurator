@@ -17,20 +17,14 @@ export class DintWriteComponent extends BaseSmartTag implements OnInit {
     if (value) {
       this.formAction = value;
       if (value.action === this.service.action.add) {
-        this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
-        this.initAoi(value);
-        this.initAttributes();
-        this.initCheckbox();
+        this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
         this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.loadValue();
-        this.initAoi(value);
-        this.initAttributes();
-        this.initCheckbox();
       }
-      this.filterValueLabel();
+      this.initData(value);
     }
   }
 
@@ -67,7 +61,7 @@ export class DintWriteComponent extends BaseSmartTag implements OnInit {
     this.checkAndSend();
   }
   removeMinus(e, num) {
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
   }
 }

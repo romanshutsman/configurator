@@ -34,19 +34,13 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
             this.nodeFrm.controls['label'].reset();
             this.nodeFrm.controls['sProgram'].reset();
           }
-          this.initAoi(value);
-          this.initAttributes();
-          this.initCheckbox();
           this.cloneSelectedNode.ParentID = this.node.ID;
         } else if (value.action === this.service.action.edit) {
           this.cloneSelectedNode = this.service.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
           this.loadValue();
-          this.initAoi(value);
-          this.initAttributes();
-          this.initCheckbox();
         }
-        this.filterValueLabel();
+        this.initData(value);
       }
 
     }

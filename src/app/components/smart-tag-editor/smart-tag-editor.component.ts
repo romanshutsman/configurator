@@ -1,12 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { NgForm, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { SharedService } from '../../providers/shared.service';
 import { NodeTree } from '../../providers/node.interface';
-import { filter } from 'rxjs/operators';
 import { BaseSmartTag } from './base-smart-tag';
 
-// actionContextMenuChanged
-// SubjectContextMenu
 @Component({
   selector: 'app-smart-tag-editor',
   templateUrl: './smart-tag-editor.component.html',
@@ -25,10 +22,10 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   actionOnContextMenu: string;
   cloneSelectedNode: NodeTree;
   nodeiD: number;
-  onEditOrAdd = false;
   nodeType: string;
   parentOfSelectedNode;
   countOfCall = 0;
+  transferPrograms;
   
 
   @Input() set SelectedSmartTag(value: NodeTree) {
@@ -56,23 +53,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       this.parentOfSelectedNode = undefined;
       console.log(this.detailsOfNode['0']);
       this.searchAbsolutePath(this.detailsOfNode['0']);
-      if (value.action === this.service.action.add) {
-        if (value.type === 'node') {
-          this.onEditOrAdd = true;
-          this.nodeType = value.type;
-        } else {
-          this.onEditOrAdd = false;
-          this.nodeType = value.type;
-        }
-      } else if (value.action === this.service.action.edit) {
-        if (value.type === 'node') {
-          this.onEditOrAdd = true;
-          this.nodeType = value.type;
-        } else {
-          this.onEditOrAdd = false;
-          this.nodeType = value.type;
-        }
-      }
+      this.nodeType = value.type;
     }
   }
   @Input() set modifiedNode(value) {
@@ -82,8 +63,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       }
     }
   }
-  @Output() pathSelectedNode = new EventEmitter();
-  transferPrograms;
+
   @Input() set getAllPrograms(value) {
     if(value) {
       this.transferPrograms = undefined;
@@ -91,6 +71,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
     }
   }
 
+  @Output() pathSelectedNode = new EventEmitter();
 
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);

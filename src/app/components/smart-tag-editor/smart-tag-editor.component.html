@@ -1,6 +1,6 @@
 <mat-card class="main">
   <app-node 
-    *ngIf="onEditOrAdd" 
+    *ngIf="nodeType === 'node'" 
     [cloneSelected]="cloneSelectedNode" 
     [getParentNode]="parentOfSelectedNode"
     [getPathNode]="pathNode" 

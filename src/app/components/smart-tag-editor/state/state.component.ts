@@ -24,23 +24,17 @@ export class StateComponent extends BaseSmartTag implements OnInit {
     if (value) {
       this.formAction = value;
       if (value.action === this.service.action.add) {
-        this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns2);
+        this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
         this.defaultValueType = this.ValueTypeStateDint[2];
         this.cloneSelectedNode.SubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
-        this.initAoi(value);
-        this.initAttributes();
-        this.initCheckbox();
         this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.SubType];
         this.loadValue();
-        this.initAoi(value);
-        this.initAttributes();
-        this.initCheckbox();
       }
-      this.filterValueLabel();
+      this.initData(value);
     }
   }
   constructor(public service: SharedService) {
@@ -65,14 +59,14 @@ export class StateComponent extends BaseSmartTag implements OnInit {
   }
   getCurrentValue(e) {
     if (e.target.value > 0) {
-      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     }
   }
   onChangeSelect(e) {
     this.onUpdateByChanged(e, this.nodeFrm);
   }
   removeMinus(e, num) {
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
   }
   updateInfoTypesAoi(e, item) {

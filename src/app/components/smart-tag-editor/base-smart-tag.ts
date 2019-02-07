@@ -1,7 +1,7 @@
 
 import { NodeTree, RealStateDintNode } from 'src/app/providers/node.interface';
-import { ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
-import { NgForm, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { Input } from '@angular/core';
+import { NgForm, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
 
 export class BaseSmartTag {
@@ -30,7 +30,6 @@ export class BaseSmartTag {
     'Rate',
     'Nothing'
   ];
-  arrayOfRadioBtns2 = this.arrayOfRadioBtns;
   times = [
     'min',
     'sec',
@@ -221,7 +220,7 @@ export class BaseSmartTag {
         console.log(this.cloneSelectedNode);
       });
     this.routineDefault = this.routines[0];
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns2[1];
+    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     this.disableGroupBtn(true);
     this.loadValue();
   }
@@ -258,7 +257,7 @@ export class BaseSmartTag {
   }
 
   onUpdateByChanged(e, form) {
-    if (e.value != this.arrayOfRadioBtns2[1])
+    if (e.value != this.arrayOfRadioBtns[1])
       this.isEnableTriggerInput(false, 0);
     this.sendSmartTagData(form);
   }
@@ -377,9 +376,10 @@ export class BaseSmartTag {
     }
     this.initAttributes();
   }
-  filterValueLabel() {
-    console.log(this.cloneSelectedNode.label);
-    this.cloneSelectedNode.label = this.cloneSelectedNode.label.replace(/ *\([^)]*\) */g, '');
-    console.log(this.cloneSelectedNode.label);
+
+  initData(value) {
+    this.initAoi(value);
+    this.initAttributes();
+    this.initCheckbox();
   }
 }

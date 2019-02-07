@@ -56,7 +56,6 @@
           placeholder="Engineering Units"
           type="text" 
           name="EU"  
-          required 
           [value]="cloneSelectedNode.EU" 
           [(ngModel)]="cloneSelectedNode.EU"
           >
@@ -116,7 +115,7 @@
         <div class="radio">
             <mat-form-field class="update">
               <mat-select style="color:black" [(value)]="cloneSelectedNode.updateRadio" (selectionChange)="onChangeSelect($event)">
-                <mat-option *ngFor="let item of arrayOfRadioBtns2" [value]="item">{{item}}</mat-option>
+                <mat-option *ngFor="let item of arrayOfRadioBtns" [value]="item">{{item}}</mat-option>
               </mat-select>
             </mat-form-field>
         </div>
