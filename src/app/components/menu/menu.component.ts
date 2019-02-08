@@ -9,21 +9,21 @@ import { SharedService } from './../../providers/shared.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  
+
   @Output() contentSelected = new EventEmitter();
   @Output() onReconnect = new EventEmitter();
   @Input() set actionOnClicked(value) {
     console.log(value);
     if (value) {
       if (value.action === 'added') {
-        if(value.component == 'model') {
+        if (value.component == 'model') {
           this.setPropertyMenu(true, false, true, false);
         } else {
           this.setPropertyMenu(false, false, true, true);
         }
       }
       if (value.action === 'edited') {
-        if(value.component == 'model') {
+        if (value.component == 'model') {
           this.setPropertyMenu(true, false, true, false);
         } else {
           this.setPropertyMenu(false, false, true, true);
@@ -44,8 +44,8 @@ export class MenuComponent implements OnInit {
   }
   @Input() set onShowedAOI(value) {
     console.log('HERE', value);
-    if(value) {
-      if(value.emit) {
+    if (value) {
+      if (value.emit) {
         this.setPropertyMenu(false, false, this.hideForm, true);
       } else {
         this.setPropertyMenu(true, false, this.hideForm, false);
@@ -71,7 +71,7 @@ export class MenuComponent implements OnInit {
         this.setPropertyMenu(false, true, false, false);
       } else if (value === 'hide_form_model') {
         this.setPropertyMenu(this.showTabTree, false, true, false);
-      } else if(value === 'hide_form_aoi') {
+      } else if (value === 'hide_form_aoi') {
         this.setPropertyMenu(this.showTabTree, false, this.hideForm, true);
       }
     });
@@ -87,6 +87,15 @@ export class MenuComponent implements OnInit {
       this.switchOff();
     }
   }
+
+  saveToHdrive() {
+    let data = {};
+    this.service.saveToHdrive(data).subscribe(val => {
+      if (val) console.log("saved");
+      else console.log("not saved");
+    })
+  }
+
   intervalStatus(data: boolean) {
     if (data) {
       this.intervalNode = setInterval(() => {
@@ -97,7 +106,7 @@ export class MenuComponent implements OnInit {
             this.service.sendNotification('Collecting data...', 'success', value);
           }
         },
-        error => clearInterval(this.intervalNode))
+          error => clearInterval(this.intervalNode))
       }, 2000)
     } else {
       if (this.totalValueSubsr)
@@ -112,7 +121,7 @@ export class MenuComponent implements OnInit {
       this.service.sendNotification('Collecting data', 'success');
       this.active = true;
       this.service.StartCollectData(this.version).subscribe((value) => {
-        if(!value) this.service.sendNotification('Can\'t write a file!', 'fail');
+        if (!value) this.service.sendNotification('Can\'t write a file!', 'fail');
       });
     } else {
       this.service.sendNotification('Can\'t write a file!', 'fail');
@@ -125,7 +134,7 @@ export class MenuComponent implements OnInit {
       this.service.sendNotification('Data saved!', 'success');
       this.active = false;
       this.service.StopCollectData(this.version).subscribe((value) => {
-        if(value) {
+        if (value) {
           this.service.sendNotification('Data saved!', 'success');
         } else {
           this.service.sendNotification('Something went wrong!', 'fail');
@@ -147,7 +156,7 @@ export class MenuComponent implements OnInit {
     } else if (tab === 'smart-tag-editor') {
       this.contentSelected.emit('smart-tag-editor');
       this.setPropertyMenu(false, true, this.hideForm, false);
-    } else if(tab === 'aoi') {
+    } else if (tab === 'aoi') {
       this.contentSelected.emit('aoi');
       this.setPropertyMenu(false, false, this.hideForm, true);
     }

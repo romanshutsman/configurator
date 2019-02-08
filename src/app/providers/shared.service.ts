@@ -98,6 +98,10 @@ export class SharedService extends DataHelper {
     return this.http.get<Programs[]>(this.API_URL + '/programs');
   }
 
+  saveToHdrive(body){
+    return this.http.post(this.API_URL + '/save-hdrive', body); 
+  }
+
   cloneNode(item) {
     return {
       label: item.label,

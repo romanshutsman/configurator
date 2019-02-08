@@ -6,6 +6,7 @@
       <button  color="primary" [matMenuTriggerFor]="model" [disabled]="disableBtnOnError" [class.disableBtn]="disableBtnOnError">Model</button>
       <mat-menu #model="matMenu" ng-reflect-position="above" [class.menu-top]="true">
         <button mat-menu-item [matMenuTriggerFor]="CollectData">CollectData</button>
+        <button mat-menu-item (click)="saveToHdrive()">Save to Hdrive</button>
       </mat-menu>
       <mat-menu #CollectData="matMenu">
         <button mat-menu-item [class.active]="active === true" [disabled]="active" (click)="collectData(true)">On</button>
