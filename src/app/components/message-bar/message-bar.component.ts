@@ -14,7 +14,6 @@ export class MessageBarComponent implements OnInit {
   constructor(private service: SharedService) {
     this.service.SubjectNotifications.subscribe((value) => {
       const point = value['total'];
-      console.log(point)
       if (value) {
         this.showMessage(value['msg'], value['type'], point);
       }

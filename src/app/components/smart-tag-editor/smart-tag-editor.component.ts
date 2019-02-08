@@ -29,8 +29,8 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   
 
   @Input() set SelectedSmartTag(value: NodeTree) {
-    console.log(value);
     if (value) {
+      console.log(value);
       this.initSelectedTag(value);
       this.cloneSelectedNode = this.service.cloneNode(value);
       this.nodeiD = this.cloneSelectedNode.ID;
@@ -38,20 +38,17 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
 
   @Input() set Tree(value) {
-    console.log(value);
     if (value) {
       this.tree = value;
     }
   }
   @Input() set actionMenu(value) {
-    console.log(value);
     if (value) {
       console.log(value);
       this.actionOnContextMenu = value;
       this.pathNode = '';
       this.countOfCall = 0;
       this.parentOfSelectedNode = undefined;
-      console.log(this.detailsOfNode['0']);
       this.searchAbsolutePath(this.detailsOfNode['0']);
       this.nodeType = value.type;
     }
@@ -102,7 +99,6 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
   writePath(path) {
     this.pathNode = path + '/' + this.pathNode;
-    console.log(this.pathNode);
     this.pathSelectedNode.emit(this.pathNode);
   }
   findTreeElement(nodeList: NodeTree[], id) {
@@ -120,12 +116,10 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
   getParent(node) {
     if (this.actionOnContextMenu['action'] === this.service.action.edit) {
-      console.log(this.parentOfSelectedNode);
       if (this.countOfCall === 1) {
         this.parentOfSelectedNode = {parent:node, selectedItem: this.cloneSelectedNode};
       }
     } else {
-      console.log(this.parentOfSelectedNode);
       this.parentOfSelectedNode = {parent:undefined, selectedItem: this.cloneSelectedNode};
     }
     this.countOfCall++;

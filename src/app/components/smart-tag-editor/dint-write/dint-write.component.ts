@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-dint-write',
   templateUrl: './dint-write.component.html',
-  styleUrls: ['./../dint/dint.component.scss', './dint-write.component.scss']
+  styleUrls: ['./../state/state.component.scss', './dint-write.component.scss']
 })
 export class DintWriteComponent extends BaseSmartTag implements OnInit {
 

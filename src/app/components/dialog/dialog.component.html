@@ -9,12 +9,14 @@
     <button mat-raised-button color="primary" class="first-btn" (click)="closeModal1()">close</button>
   </div>
 </div>
+
 <div class="over" *ngIf="showInfoMessage">
   <div class="pop connected">
     <p class="header">{{message}}</p>
     <button mat-raised-button color="primary" (click)="closeModal2()">close</button>
   </div>
 </div>
+
 <div class="over" *ngIf="showVerifyMessage">
   <div class="pop connected" *ngIf="showVerifyMessage && !showInsert && !IsInsert">
     <p class="">{{message}}</p>
@@ -24,6 +26,7 @@
       <button mat-raised-button color="primary" (click)="onResponseVerify(false)">No</button>
     </div>
   </div>
+  
   <div class="pop connected" *ngIf="showVerifyMessage &&  (showInsert || IsInsert)">
       <div>
           <form>
@@ -53,7 +56,7 @@
               </div>
               <div class="inputs">
                 <div>
-                  <mat-form-field class="UpdateRate">
+                  <mat-form-field class="rung">
                     <input matInput [formControl]="selectRung" [(ngModel)]="rung" placeholder="Rung" type="number" pattern="^\d*[0-9]\d*$"
                       name="rung" [value]="rung" (keydown)="removeMinus($event)" min="0" id="rung"
                       required="true">

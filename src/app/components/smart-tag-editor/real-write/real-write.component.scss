@@ -1,0 +1,18 @@
+.value-percent div:first-child {
+    margin-bottom: 0;
+}
+.value-percent{
+    justify-content: space-between;
+    position: relative;
+    top: -7px;
+}
+.minMaxError {
+    bottom: -7px;
+}
+.select-property {
+    position: relative;
+    top: -5px;
+    mat-form-field:nth-child(2) {
+        padding-top: 5px;
+    }
+}

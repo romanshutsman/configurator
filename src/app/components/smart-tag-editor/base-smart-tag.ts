@@ -78,41 +78,7 @@ export class BaseSmartTag {
   }
 
   initOnAdd() {
-    this.cloneSelectedNode = {
-      label: '',
-      labelInfo: '',
-      ParentID: 0,
-      ID: 0,
-      Type: 0,
-      SubType: 0,
-      EU: '',
-      Min: 0,
-      Max: 0,
-      Mul: 0,
-      Exp: false,
-      Program: '',
-      TagName: '',
-      UID: 0,
-      iStartD: 0,
-      hasTrigger: false,
-      hasChange: false,
-      hasBuffer: true,
-      updateRate: 0,
-      updateRateSeconds: 0,
-      isMulp: false,
-      InternalIndex: 0,
-      children: [],
-      routine: '',
-      rung: 0,
-      sProgramParent: '',
-      sParentTagName: '',
-      updateRadio: 'Parent',
-      isAoi: false,
-      nameAoi: null,
-      lInfoAtt: [],
-      isInjected: false,
-      Del: 0
-    };
+    this.cloneSelectedNode = this.service.initNode;
   }
   getOptionTime(e) {
     this.selectedOption = e.value;
@@ -124,7 +90,7 @@ export class BaseSmartTag {
     } else if (time === this.times[1]) {
       this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate;
     } else if (time === this.times[2]) {
-      this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate * 1000; // this.tempValueOfRadio * 1000;
+      this.cloneSelectedNode.updateRateSeconds = this.cloneSelectedNode.updateRate * 1000;
     }
   }
   enableReuiredItems(form: NgForm) {
@@ -207,7 +173,6 @@ export class BaseSmartTag {
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
-        console.log(this.cloneSelectedNode);
         console.log(data);
         let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
@@ -217,7 +182,6 @@ export class BaseSmartTag {
         this.cloneSelectedNode.labelInfo = li;
         this.cloneSelectedNode.updateRate = Math.abs(this.cloneSelectedNode.updateRate);
         this.cloneSelectedNode.updateRadio = updateBy;
-        console.log(this.cloneSelectedNode);
       });
     this.routineDefault = this.routines[0];
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
@@ -303,23 +267,6 @@ export class BaseSmartTag {
     }, err => {
       this.service.sendNotification('Cant load information types!', 'fail')
       this.typesOfCheckboxesAOI = undefined;
-      // this.typesOfCheckboxesAOI  = [
-      //   {
-      //     Name: 'Summary',
-      //     HasValue: 0,
-      //     Value: "5123" 
-      //   },
-      //   {
-      //     Name: 'OEE',
-      //     HasValue: 0,
-      //     Value: "5123"
-      //   },
-      //   {
-      //     Name: 'Sherlock',
-      //     HasValue: 1,
-      //     Value: "5123"
-      //   }
-      // ];
     })
   }
   updateInfoTypes(e, item) {

@@ -16,7 +16,9 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
+        <p 
+          class="paragraph-error ErrorTagNameInModelReal err" 
+          *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
             First letter must be letter or _. You can type letters and numbers.
         </p>
       </div>
@@ -35,10 +37,14 @@
             maxlength="40"
             required >
           </mat-form-field>
-          <p class="paragraph-error ErrorTagNameInModelReal err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+          <p 
+            class="paragraph-error ErrorTagNameInModelReal err"  
+            *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
               First letter must be letter or _. You can type letters and numbers.
           </p>
-          <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+          <p 
+            class="paragraph-error tagNameLabelError err" 
+            *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
             This name already exist!
           </p>
         </div>
@@ -100,7 +106,9 @@
             <mat-option  *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">
+        <p 
+          *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" 
+          class="paragraph-error err">
           Required!
         </p>
       </div>
@@ -115,13 +123,15 @@
             <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" class="paragraph-error err">
+        <p 
+          *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" 
+          class="paragraph-error err">
           Required!
         </p>
       </div>
       <div class="inputs">
         <div>
-          <mat-form-field class="UpdateRate">          
+          <mat-form-field class="rung">          
             <input 
             matInput
             placeholder="Rung"
@@ -136,7 +146,9 @@
             required="isRequired ? '' : null"
             [disabled]="!isRequired" >
           </mat-form-field>
-          <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+          <p 
+            class="paragraph-error rungError err" 
+            *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
             Required!<br>Only positive or 0!
           </p>
         </div>
@@ -159,9 +171,7 @@
                   (change)="updateInfoTypesAoi($event, item)"
                   >
                   <div class="groupSpan">
-                    <span class="popupNameCheckbox" >
-                      {{item.Name}}
-                    </span>
+                    <span class="popupNameCheckbox" >{{item.Name}}</span>
                     <span>
                       <input 
                       type="text" 

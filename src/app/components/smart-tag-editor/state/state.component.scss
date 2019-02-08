@@ -85,6 +85,7 @@
                     input {
                         width: 75px;
                         margin-right: 20px;
+                        height: 22px;
                     }
                     mat-select {
                         width: 50px;
@@ -242,22 +243,26 @@ mat-select.select {
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
     color: gray;
 }
-.ErrorTagNameInModelDint {
-    // bottom: 27px;
-}
 ::ng-deep .mat-checkbox-frame {
     border-color: black;
 }
 ::ng-deep .mat-checkbox-checked.mat-primary .mat-checkbox-background, .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
     background-color: black;
 }
+.rung {
+    max-width: 76px;
+}
 .UpdateRate {
     max-width: 76px;
+    top: -5px;
 }
 .updateRateError {
     bottom: -8px;
     font-weight: 400;
     max-width: 122px;
+}
+.radio .update {
+    top: -3px;
 }
 .dMulError {
     bottom: 0;
@@ -359,8 +364,6 @@ div.over {
             display: flex;
             flex-direction: column;
             mat-checkbox {
-                // width: 300px;
-                // flex-shrink: 0;
                 border-bottom: solid 1px #E4E4E4;
                 padding: 5px;
             }

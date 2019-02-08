@@ -7,7 +7,7 @@ import { NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-string',
   templateUrl: './string.component.html',
-  styleUrls: ['./string.component.scss']
+  styleUrls: ['./../state/state.component.scss','./string.component.scss']
 })
 export class StringComponent extends BaseSmartTag implements OnInit {
 

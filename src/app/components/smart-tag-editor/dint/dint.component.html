@@ -1,5 +1,6 @@
 <form #nodeForm="ngForm">
   <div class="readonly" *ngIf="cloneSelectedNode.isInjected"></div>
+  
   <mat-card class="first-block">
     <div class="tagname">
       <mat-form-field class="example-full-width input">          
@@ -16,7 +17,8 @@
         maxlength="40"
         required >
       </mat-form-field>
-      <p class="paragraph-error ErrorTagNameInModelDint err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
+      <p class="paragraph-error ErrorTagNameInModelDint err" 
+        *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
           First letter must be letter or _. You can type letters and numbers.
       </p>
     </div>
@@ -35,18 +37,27 @@
           maxlength="40"
           required >
         </mat-form-field>
-        <p class="paragraph-error ErrorTagNameInModelDint err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+        <p class="paragraph-error ErrorTagNameInModelDint err" 
+          *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
             First letter must be letter or _. You can type letters and numbers.
         </p>
-        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+        <p class="paragraph-error tagNameLabelError err" 
+          *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
           This name already exist!
         </p>
       </div>
   </mat-card>
+
+  
   <mat-card class="other-options">
     <div class="select-property">
       <mat-form-field >
-        <mat-select placeholder="Value type" style="color:black" name="ValueTypeDint" (selectionChange)="updateValueType($event)" [(ngModel)]="defaultValueType">
+        <mat-select 
+        placeholder="Value type" 
+        style="color:black" 
+        name="ValueTypeDint" 
+        (selectionChange)="updateValueType($event)" 
+        [(ngModel)]="defaultValueType">
           <mat-option *ngFor="let item of ValueTypeStateDint" [value]="item">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -75,40 +86,42 @@
           min="0"
           >
         </mat-form-field>
-        <p class="paragraph-error  err" *ngIf="nodeFrm.controls.mulval?.status === 'INVALID'">
-            This must be a integer or number with up to 2 decimal places!
+        <p class="paragraph-error  err" 
+          *ngIf="nodeFrm.controls.mulval?.status === 'INVALID'">
+          This must be a integer or number with up to 2 decimal places!
         </p>
 
       </div>
     </div>
   </mat-card>
+
   <mat-card class="infomation-type">
-        <div class="type" >
-          <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
-          <div class="checkbox">
-              <ng-container 
-              *ngFor="let item of typesOfCheckboxesAOI; let i = index">
-                <mat-checkbox
-                color="primary"
-                [(ngModel)]="item.selected"
-                [ngModelOptions]="{standalone: true}"
-                (change)="updateInfoTypesAoi($event, item)">
-                <span class="infoName" >
-                  {{item.Name}}
-                </span>
-                <input 
-                type="text" 
-                placeholder="Enter attr"
-                [(ngModel)]="item.Value" 
-                [value]="item.Value" 
-                (input)="inputNewValue(item, $event.target.value)"
-                [ngModelOptions]="{standalone: true}"
-                class="input-info-type" 
-                *ngIf="item.HasValue == 1">
-              </mat-checkbox>
-            </ng-container>
-          </div>
-        </div>
+    <div class="type" >
+      <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
+      <div class="checkbox">
+          <ng-container 
+          *ngFor="let item of typesOfCheckboxesAOI; let i = index">
+            <mat-checkbox
+            color="primary"
+            [(ngModel)]="item.selected"
+            [ngModelOptions]="{standalone: true}"
+            (change)="updateInfoTypesAoi($event, item)">
+
+              <span class="infoName" >{{item.Name}}</span>
+              <input 
+              type="text" 
+              placeholder="Enter attr"
+              [(ngModel)]="item.Value" 
+              [value]="item.Value" 
+              (input)="inputNewValue(item, $event.target.value)"
+              [ngModelOptions]="{standalone: true}"
+              class="input-info-type" 
+              *ngIf="item.HasValue == 1">
+
+          </mat-checkbox>
+        </ng-container>
+      </div>
+    </div>
     <div class="radio-block">
       <p class="update">Updated by</p>
       <div class="group">
@@ -136,21 +149,21 @@
               (change)="getCurrentValue($event)"
               (keydown)="removeMinus($event, 1)" >
             </mat-form-field>
-            <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
+            <p class="paragraph-error updateRateError err" 
+              *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
               Required! Only positive or 0!
             </p>
           </div>
           <div>
-            <mat-select [ngModelOptions]="{standalone: true}" (selectionChange)="getOptionTime($event)" placeholder="Type of time"
+            <mat-select 
+              [ngModelOptions]="{standalone: true}" 
+              (selectionChange)="getOptionTime($event)" 
+              placeholder="Type of time"
               [(ngModel)]="timeDefault">
               <mat-option *ngFor="let item of times" [value]="item">{{item}}</mat-option>
             </mat-select>
-
           </div>
         </div>
-        <!-- <div class="has-trigger-inline">
-          <mat-checkbox color="primary" >Has Trigger</mat-checkbox>
-        </div> -->
       </div>
       <div class="checkbox-block">
         <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasTrigger" [ngModelOptions]="{standalone: true}">Has Trigger</mat-checkbox>
@@ -159,22 +172,25 @@
       </div>
     </div>
   </mat-card>
+
   <mat-card class="select" *ngIf="!cloneSelectedNode.isAoi">
     <div class="mat-select-center">
       <mat-form-field class="routineProgramselect">
         <mat-select 
-        id="matSelect1"
-        [disabled]="programNameDisabled"  
-        name="sProgram" 
-        placeholder="Programs" 
-        style="color:black" 
-        (selectionChange)="onSelectedProgram($event)"
-        [(ngModel)]="cloneSelectedNode.Program" 
-        required="isRequired ? '' : null">
+          id="matSelect1"
+          [disabled]="programNameDisabled"  
+          name="sProgram" 
+          placeholder="Programs" 
+          style="color:black" 
+          (selectionChange)="onSelectedProgram($event)"
+          [(ngModel)]="cloneSelectedNode.Program" 
+          required="isRequired ? '' : null">
           <mat-option  *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" class="paragraph-error err">
+      <p 
+        *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched" 
+        class="paragraph-error err">
         Required!
       </p>
     </div>
@@ -182,20 +198,23 @@
       <mat-form-field class="routineProgramselect">
         <mat-select 
         [disabled]="routineDisabled" 
-        placeholder="Routines" style="color:black" 
+        placeholder="Routines" 
+        style="color:black" 
         [(ngModel)]="routineDefault" 
         name="routine" 
         required="isRequired ? '' : null">
           <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" class="paragraph-error err">
+      <p 
+        *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched" 
+        class="paragraph-error err">
         Required!
       </p>
     </div>
     <div class="inputs">
       <div>
-        <mat-form-field class="UpdateRate ">          
+        <mat-form-field class="rung ">          
           <input 
           matInput
           placeholder="Rung"
@@ -210,7 +229,8 @@
           required="isRequired ? '' : null"
           [disabled]="!isRequired" >
         </mat-form-field>
-        <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+        <p class="paragraph-error rungError err" 
+          *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
           Required!<br>Only positive or 0!
         </p>
       </div>
@@ -233,9 +253,7 @@
                 (change)="updateInfoTypesAoi($event, item)"
                 >
                 <div class="groupSpan">
-                  <span class="popupNameCheckbox" >
-                    {{item.Name}}
-                  </span>
+                  <span class="popupNameCheckbox" >{{item.Name}}</span>
                   <span>
                     <input 
                     type="text" 

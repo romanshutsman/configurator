@@ -16,7 +16,9 @@
           maxlength="40"
           required >
       </mat-form-field>
-      <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
+      <p 
+        class="paragraph-error tagNameLabelError err" 
+        *ngIf="nodeFrm.controls.tagname?.errors?.pattern && nodeFrm.controls.tagname?.touched">
         First letter must be letter or _. You can type letters and numbers.
       </p>
     </div>
@@ -36,10 +38,14 @@
             maxlength="40"
             required >
         </mat-form-field>
-        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
+        <p 
+          class="paragraph-error tagNameLabelError err" 
+          *ngIf="nodeFrm.controls.label?.errors?.pattern && nodeFrm.controls.label?.touched">
           First letter must be letter or _. You can type letters and numbers.
         </p>
-        <p class="paragraph-error tagNameLabelError err" *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
+        <p 
+          class="paragraph-error tagNameLabelError err" 
+          *ngIf="nodeFrm.controls.label?.errors?.sameName && nodeFrm.controls.label?.touched">
           This name already exist!
         </p>
       </div>
@@ -73,33 +79,6 @@
         </ng-container>
       </div>
     </div>
-    <!-- <div class="type" *ngIf="cloneSelectedNode.isAoi">
-      <p>Information attributes <span class="maximize"><i class="ra-icon ra-icon-maximize" (click)="showMore()"></i></span></p>
-      <div class="checkbox">
-          <ng-container 
-          *ngFor="let item of typesOfCheckboxesAOI; let i = index">
-            <mat-checkbox
-            color="primary"
-            [(ngModel)]="item.selected"
-            [ngModelOptions]="{standalone: true}"
-            (change)="updateInfoTypesAoi($event, item)">
-            <span class="infoName" >
-              {{item.Name}}
-            </span>
-            <input 
-            type="text" 
-            placeholder="Enter attr"
-            [(ngModel)]="item.Value" 
-            [value]="item.Value" 
-            (input)="inputNewValue(item, $event.target.value)"
-            [ngModelOptions]="{standalone: true}"
-            class="input-info-type" 
-            *ngIf="item.HasValue == 1">
-          </mat-checkbox>
-        </ng-container>
-      </div>
-    </div> -->
-
     <div class="radio-block">
       <p class="update">Updated by</p>
       <div class="group">
@@ -127,7 +106,9 @@
                 (change)="getCurrentValue($event)"
                 (keydown)="removeMinus($event, 1)" >
             </mat-form-field>
-            <p class="paragraph-error updateRateError err" *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
+            <p 
+              class="paragraph-error updateRateError err" 
+              *ngIf="nodeFrm.controls.updateRate?.status === 'INVALID'">
               Required!<br>Only positive or 0!
             </p>
           </div>
@@ -158,13 +139,13 @@
           style="color:black" 
           [(ngModel)]="cloneSelectedNode.Program" 
           required="isRequired ? '' : null"
-          (selectionChange)="onSelectedProgram($event)"
-          >
+          (selectionChange)="onSelectedProgram($event)">
             <mat-option   *ngFor="let item of programs" [value]="item.Name">{{item.Name}}</mat-option>
           </mat-select>
       </mat-form-field>
-      <p *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched"
-      class="paragraph-error err">
+      <p 
+        *ngIf="nodeFrm.controls.sProgram?.status === 'INVALID' && nodeFrm.controls.sProgram?.touched"
+        class="paragraph-error err">
         Required!
       </p>
     </div>
@@ -179,14 +160,15 @@
           <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <p *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched"
-      class="paragraph-error err">
+      <p 
+        *ngIf="nodeFrm.controls.routine?.status === 'INVALID' && nodeFrm.controls.routine?.touched"
+        class="paragraph-error err">
         Required!
       </p>
     </div>
     <div class="inputs">
       <div>
-          <mat-form-field class="UpdateRate">          
+          <mat-form-field class="rung">          
               <input 
               matInput
               placeholder="Rung"
@@ -201,7 +183,9 @@
               required="isRequired ? '' : null"
               [disabled]="!isRequired" >
             </mat-form-field>
-        <p class="paragraph-error rungError err" *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
+        <p 
+          class="paragraph-error rungError err" 
+          *ngIf="nodeFrm.controls.rung?.status === 'INVALID'">
           Required!<br>Only positive or 0!
         </p>
       </div>

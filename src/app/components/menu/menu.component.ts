@@ -13,7 +13,6 @@ export class MenuComponent implements OnInit {
   @Output() contentSelected = new EventEmitter();
   @Output() onReconnect = new EventEmitter();
   @Input() set actionOnClicked(value) {
-    console.log(value);
     if (value) {
       if (value.action === 'added') {
         if(value.component == 'model') {
@@ -43,7 +42,6 @@ export class MenuComponent implements OnInit {
     this.hideAoi = value;
   }
   @Input() set onShowedAOI(value) {
-    console.log('HERE', value);
     if(value) {
       if(value.emit) {
         this.setPropertyMenu(false, false, this.hideForm, true);
@@ -66,7 +64,6 @@ export class MenuComponent implements OnInit {
 
   constructor(private service: SharedService) {
     this.service.SubjectControlTab.subscribe((value) => {
-      console.log(value)
       if (value === 'show_form') {
         this.setPropertyMenu(false, true, false, false);
       } else if (value === 'hide_form_model') {
@@ -153,7 +150,6 @@ export class MenuComponent implements OnInit {
     }
   }
   setPropertyMenu(tabTree, tabOper, hideForm, aoi) {
-    console.log(aoi)
     this.showTabTree = tabTree;
     this.showTabOperation = tabOper;
     this.hideForm = hideForm;
