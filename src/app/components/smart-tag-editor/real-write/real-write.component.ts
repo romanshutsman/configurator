@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-real-write',
   templateUrl: './real-write.component.html',
-  styleUrls: ['./../real/real.component.scss']
+  styleUrls: ['./../state/state.component.scss', './real-write.component.scss']
 })
 export class RealWriteComponent extends BaseSmartTag implements OnInit {
   isRequriedValidation1: boolean;

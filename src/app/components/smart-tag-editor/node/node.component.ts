@@ -7,7 +7,7 @@ import { SharedService } from 'src/app/providers/shared.service';
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
-  styleUrls: ['./node.component.scss']
+  styleUrls: ['./../state/state.component.scss', './node.component.scss']
 })
 export class NodeComponent extends BaseSmartTag implements OnInit {
 
@@ -56,7 +56,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   ngOnInit() {
     this.onChanges();
-
   }
 
   removeMinus(e, num) {

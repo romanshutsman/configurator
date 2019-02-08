@@ -7,7 +7,7 @@ import { NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-dint',
   templateUrl: './dint.component.html',
-  styleUrls: ['./dint.component.scss']
+  styleUrls: ['./../state/state.component.scss','./dint.component.scss']
 })
 export class DintComponent extends BaseSmartTag implements OnInit {
 

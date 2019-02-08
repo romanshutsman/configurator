@@ -8,7 +8,7 @@ import { NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-real',
   templateUrl: './real.component.html',
-  styleUrls: ['./real.component.scss']
+  styleUrls: ['./../state/state.component.scss','./real.component.scss']
 })
 export class RealComponent extends BaseSmartTag implements OnInit {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
@@ -58,12 +58,6 @@ export class RealComponent extends BaseSmartTag implements OnInit {
   }
   updateValueType(e) {
     this.cloneSelectedNode.SubType = this.ValueTypeReal.indexOf(e.value);
-  }
-  testPattern(e, check) {
-    this.nodeFrm.controls.minval.updateValueAndValidity();
-    this.nodeFrm.controls.maxval.updateValueAndValidity();
-    // const test = this.patternValue.test(e.target.value);
-    // check === 1 ? this.inputInvalidMin = test : this.inputInvalidMax = test;
   }
   getCurrentValue(e) {
     if (e.target.value > 0) {
