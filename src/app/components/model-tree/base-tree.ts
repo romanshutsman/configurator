@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, Output, EventEmitter, Input, ElementRef } from '@angular/core';
-import { TreeComponent, RaUiNestedTreeControl, ITreeNodeState, ITreeNode, ITreeConfig } from '@ra-web-tech-ui-toolkit-navigation';
+import { Output, EventEmitter } from '@angular/core';
+import { RaUiNestedTreeControl, ITreeNode, ITreeConfig } from '@ra-web-tech-ui-toolkit-navigation';
 import { SharedService } from './../../providers/shared.service';
 import { Nullable } from '@ra-web-tech-ui-toolkit-common-utils';
 import { NodeTree } from './../../providers/node.interface';

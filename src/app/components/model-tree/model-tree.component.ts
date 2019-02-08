@@ -59,6 +59,9 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   };
   visibleBlock = false;
   @Input() set onReconnectLoading(value) {
+    //if loading clear treeModel
+    if (value)
+      this.treeModel = undefined;
     this.visibleBlock = value;
   }
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {

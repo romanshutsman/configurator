@@ -31,7 +31,7 @@ export class DataHelper {
         lInfoAtt: [],
         isInjected: false,
         hasChange: false,
-        hasBuffer: false,
+        hasBuffer: true,
         Del: 0
     }
     nodeValueType = {
@@ -67,7 +67,7 @@ export class DataHelper {
         lInfoAtt: [],
         isInjected: false,
         hasChange: false,
-        hasBuffer: false,
+        hasBuffer: true,
         Del: 0
     }
     ControllerModeEnum = {

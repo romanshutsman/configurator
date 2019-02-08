@@ -136,10 +136,10 @@ export class HomeComponent {
       this.onBlocking = false;
       this.listOfControllers = data;
       if (data.length === 0) {
-        const body = { 'Version': '' };
         this.manageMessageDialog([], false, true, 'No active controllers!', false);
-        this.checkVerification(body);
         this.disableBtnOfMenu = true;
+        this.onLoading = false;
+
       } else if (data.length === 1) {
         this.disableBtnOfMenu = false;
         this.manageMessageDialog(data, false, false, '', false);
