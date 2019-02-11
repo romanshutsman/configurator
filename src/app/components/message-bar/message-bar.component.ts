@@ -32,8 +32,10 @@ export class MessageBarComponent implements OnInit {
       this.total = total;
       this.statusBar = `Collecting data, Recorded: ${total} `;
     }
-    if (msg === 'Data saved!') {
+    if (msg === 'Data saved!' && this.total) {
       this.statusBar = `Data saved! Recorded: ${this.total} `;
     }
+    else if (msg === 'Data saved!')
+      this.statusBar = 'Data saved!';
   }
 }

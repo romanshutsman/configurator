@@ -88,9 +88,13 @@ export class MenuComponent implements OnInit {
   saveToHdrive() {
     let data = {};
     this.service.saveToHdrive(data).subscribe(val => {
-      if (val) console.log("saved");
-      else console.log("not saved");
-    })
+      if (val == null) return;
+      if (val) {
+        this.service.sendNotification('Data saved!', 'success');
+      } else {
+        this.service.sendNotification('Something went wrong!', 'fail');
+      }
+    });
   }
 
   intervalStatus(data: boolean) {

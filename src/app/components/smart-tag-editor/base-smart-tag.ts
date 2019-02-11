@@ -173,7 +173,6 @@ export class BaseSmartTag {
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
-        console.log(data);
         let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
         let updateBy = this.cloneSelectedNode.updateRadio;
@@ -182,6 +181,7 @@ export class BaseSmartTag {
         this.cloneSelectedNode.labelInfo = li;
         this.cloneSelectedNode.updateRate = Math.abs(this.cloneSelectedNode.updateRate);
         this.cloneSelectedNode.updateRadio = updateBy;
+        this.initAttributes();
       });
     this.routineDefault = this.routines[0];
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
