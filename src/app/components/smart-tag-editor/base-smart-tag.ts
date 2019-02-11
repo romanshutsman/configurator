@@ -66,6 +66,8 @@ export class BaseSmartTag {
   hasChange = false;
   logIn = false;
   allPrograms;
+  editorComponent: string;
+  isAdding: boolean = false;
 
   @Input() set getProgram(value) {
     if (value) {

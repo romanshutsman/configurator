@@ -215,6 +215,16 @@
           </p>
         </div>
       </div>
+      <div>
+        <mat-checkbox 
+        *ngIf="editorComponent == 'model' && isAdding" 
+        class="create-tag-checkbox" 
+        color="primary" 
+        [(ngModel)]="cloneSelectedNode.isCreation" 
+        name="creation" > 
+          <span class="create-tag-at-ctrl">Create tag at<br> controller scope</span>
+        </mat-checkbox>
+      </div>
     </mat-card>
   </form>
 

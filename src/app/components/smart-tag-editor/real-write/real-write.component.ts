@@ -14,11 +14,14 @@ export class RealWriteComponent extends BaseSmartTag implements OnInit {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   @Input() set actionMenu(value) {
     if (value) {
+      this.editorComponent = value['component'];
       this.formAction = value;
       if (value.action === this.service.action.add) {
+        this.isAdding = true;
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
         this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
+        this.isAdding = false;
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.loadValue();

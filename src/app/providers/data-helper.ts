@@ -32,7 +32,8 @@ export class DataHelper {
         isInjected: false,
         hasChange: false,
         hasBuffer: true,
-        Del: 0
+        Del: 0,
+        isCreation: false
     }
     nodeValueType = {
         label: '',
@@ -68,7 +69,8 @@ export class DataHelper {
         isInjected: false,
         hasChange: false,
         hasBuffer: true,
-        Del: 0
+        Del: 0,
+        isCreation: false
     }
     ControllerModeEnum = {
         rsModeRemProgram : 0,

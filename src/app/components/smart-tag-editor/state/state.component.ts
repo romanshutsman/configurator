@@ -23,12 +23,15 @@ export class StateComponent extends BaseSmartTag implements OnInit {
   @Input() set actionMenu(value) {
     if (value) {
       this.formAction = value;
+      this.editorComponent = value['component'];
       if (value.action === this.service.action.add) {
+        this.isAdding = true;
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
         this.defaultValueType = this.ValueTypeStateDint[2];
         this.cloneSelectedNode.SubType = this.ValueTypeStateDint.indexOf(this.defaultValueType);
         this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
+        this.isAdding = false;
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.SubType];

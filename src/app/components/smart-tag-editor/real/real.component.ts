@@ -22,13 +22,16 @@ export class RealComponent extends BaseSmartTag implements OnInit {
 
   @Input() set actionMenu(value) {
     if (value) {
+      this.editorComponent = value['component'];
       this.formAction = value;
       if (value.action === this.service.action.add) {
+        this.isAdding = true;
         this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
         this.defaultValueType = this.ValueTypeReal[0];
         this.cloneSelectedNode.SubType = this.ValueTypeReal.indexOf(this.defaultValueType);
         this.cloneSelectedNode.ParentID = this.node.ID;
       } else if (value.action === this.service.action.edit) {
+        this.isAdding = false;
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeReal[this.cloneSelectedNode.SubType];

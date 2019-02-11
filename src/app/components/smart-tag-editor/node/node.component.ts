@@ -24,10 +24,12 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   @Input() set actionMenu(value) {
     if (value) {
+      this.editorComponent = value['component'];
       console.log(value);
       this.formAction = value;
       if (value.type == 'node') {
         if (value.action === this.service.action.add) {
+          this.isAdding = true;
           this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
           if (this.nodeFrm.controls['tagname'] && this.nodeFrm.controls['label'] && this.nodeFrm.controls['sProgram']) {
             this.nodeFrm.controls['tagname'].reset();
@@ -36,6 +38,7 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           }
           this.cloneSelectedNode.ParentID = this.node.ID;
         } else if (value.action === this.service.action.edit) {
+          this.isAdding = false;
           this.cloneSelectedNode = this.service.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
           this.loadValue();

@@ -136,7 +136,8 @@ export class SharedService extends DataHelper {
       isInjected: item.isInjected,
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
-      Del: item.Del
+      Del: item.Del,
+      isCreation: item.isCreation
     };
   }
 
