@@ -203,7 +203,7 @@ export class BaseTree {
   onAddNewNode(body) {
     const allNode = [];
     this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
-    body.ID = allNode.length;
+    body.ID = allNode.length + 1;
 
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [body]);
     this.transferTreePost.emit(this.treeModel);
