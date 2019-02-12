@@ -68,7 +68,8 @@ export class BaseTree {
     'Rate',
     'Nothing'
   ];
-
+  listOfNode = [];
+  
   @Output() itemSelected = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   @Output() transferTree = new EventEmitter();
@@ -84,9 +85,14 @@ export class BaseTree {
     // this.treeModel = data;
     // console.log(this.treeModel);
   }
-  onTreeInitialized(treeControl: RaUiNestedTreeControl) {
+  onTreeInitialized(treeControl: RaUiNestedTreeControl, component) {
     this.treeControlRa = treeControl;
     this.treeControlRa.runForEachChild(this.treeModel, e => {
+      if(component == 'model') {
+        if(e.Type == 0) {
+          this.listOfNode.push(e);
+        }
+      }
       e.updateRate = Math.abs(e.updateRate);
       this.loadUpdate(e);
       e.labelInfo = this.addInfoNode(e);
