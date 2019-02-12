@@ -199,9 +199,9 @@
           </div>
         </div>
         <div class="checkbox-block">
-          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasTrigger" [ngModelOptions]="{standalone: true}">Has Trigger</mat-checkbox>
-          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasChange" [ngModelOptions]="{standalone: true}">Has Change</mat-checkbox>
-          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasBuffer" [ngModelOptions]="{standalone: true}">Logging</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasTrigger" name="hasTrigger">Has Trigger</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasChange" name="hasChange">Has Change</mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="cloneSelectedNode.hasBuffer" name="logging">Logging</mat-checkbox>
         </div>
       </div>
     </mat-card>
