@@ -44,7 +44,7 @@
   </context-menu>
   <context-menu #subMenuAOI>
     <ng-template contextMenuItem [subMenu]="subMenuAoiActions"  [visible]="checkedStatus" *ngFor="let item of listOfAOI" >
-      <i class="ra-icon ra-icon-dashboard"></i><p (mouseenter)="param = item">{{item}}</p>
+      <i (mouseenter)="param = item" class="ra-icon ra-icon-dashboard"></i><p (mouseenter)="param = item">{{item}}</p>
     </ng-template>
     <context-menu #subMenuAoiActions >
         <ng-template contextMenuItem  (execute)="editAoi(param)"><p>Edit</p></ng-template>

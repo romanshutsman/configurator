@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/providers/shared.service';
 
 export class BaseSmartTag {
   parentOfNode: NodeTree;
+  oldProgram;
   @Input() set cloneSelected(value: RealStateDintNode) {
     if (value) {
       this.cloneSelectedNode = value;
@@ -175,6 +176,7 @@ export class BaseSmartTag {
     if(form.controls['mulval']) form.controls['mulval'].setValue(0)  
   }
   onSelectedProgram(e) {
+    this.oldProgram = String(this.cloneSelectedNode.Program);
     const found = this.programs.filter(i => i.Name == e.value);
     if (found.length > 0) {
       this.routines = found[0].Routines;
@@ -341,5 +343,18 @@ export class BaseSmartTag {
     this.initAoi(value);
     this.initAttributes();
     this.initCheckbox();
+  }
+  changeCreation(form: NgForm) {
+    if(this.cloneSelectedNode.isCreation) {
+      this.cloneSelectedNode.Program = ''
+      this.programNameDisabled = true;
+      form.controls['sProgram'].clearValidators();
+      form.controls['sProgram'].updateValueAndValidity();
+    } else {
+      this.programNameDisabled = false;
+      this.cloneSelectedNode.Program = this.oldProgram;
+      form.controls['sProgram'].setValidators([Validators.required]);
+      form.controls['sProgram'].updateValueAndValidity();
+    }
   }
 }

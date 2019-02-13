@@ -130,4 +130,7 @@ export class RealComponent extends BaseSmartTag implements OnInit {
       }
     }
   }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
+  }
 }

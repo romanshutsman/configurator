@@ -104,4 +104,7 @@ export class RealWriteComponent extends BaseSmartTag implements OnInit {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
   }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
+  }
 }

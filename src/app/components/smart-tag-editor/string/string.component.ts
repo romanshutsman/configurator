@@ -76,4 +76,7 @@ export class StringComponent extends BaseSmartTag implements OnInit {
       this.sendSmartTagData(this.nodeFrm);
     }
   }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
+  }
 }

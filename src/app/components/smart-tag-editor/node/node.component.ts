@@ -10,7 +10,7 @@ import { SharedService } from 'src/app/providers/shared.service';
   styleUrls: ['./../state/state.component.scss', './node.component.scss']
 })
 export class NodeComponent extends BaseSmartTag implements OnInit {
-
+  
   typesOfCheckboxes = [];
   @ViewChild('nodeForm') public nodeFrm: NgForm;
 
@@ -63,10 +63,10 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
 
   onChanges(): void {
     this.nodeFrm.valueChanges
-      .subscribe((value) => {
-        this.cloneSelectedNode.routine = this.routineDefault;
-        this.cloneSelectedNode.ID = this.nodeiD;
-        this.checkAndSend();
+    .subscribe((value) => {
+      this.cloneSelectedNode.routine = this.routineDefault;
+      this.cloneSelectedNode.ID = this.nodeiD;
+      this.checkAndSend();
       });
   }
 
@@ -106,5 +106,8 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         this.sendSmartTagData(this.nodeFrm);
       }
     }
+  }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
   }
 }
