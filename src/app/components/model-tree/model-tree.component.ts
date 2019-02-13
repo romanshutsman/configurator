@@ -206,7 +206,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     if (e.Name && e.Program) {
       this.service.insertAOI(body).subscribe(i => {
         let tree = this.fixTreeLabels(JSON.stringify(i));
-        this.onAddNewNode(tree[0]);
+         this.onAddNewNode(tree[0].children);
       })
     }
   }

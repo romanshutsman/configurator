@@ -61,14 +61,14 @@ export class ControlBarComponent implements OnInit {
     if (this.changesAllowed) {
       this.showSpinner = true;
       this.disableAllBtn();
-        this.service.addNode(this.dataForm).subscribe((value) => {
-          this.responseOnAdd(value);
-          //this.saveAoi();
-        },
-          err => {
-            this.disableBtnAddEdit = false;
-            this.onFailed('Addition');
-          });
+      this.service.addNode(this.dataForm).subscribe((value) => {
+        this.responseOnAdd(value);
+        //this.saveAoi();
+      },
+        err => {
+          this.disableBtnAddEdit = false;
+          this.onFailed('Addition');
+        });
     } else {
       this.showMsgChangesNotAllowed.emit();
     }
@@ -80,7 +80,8 @@ export class ControlBarComponent implements OnInit {
       this.submitForm.emit({
         'action': 'added',
         'body': this.dataForm,
-        'component': this.operation.operation.component
+        'component': this.operation.operation.component,
+        'id': value
       });
       this.service.sendNotification('Node has been added!', 'success');
       this.disableAllBtn();
@@ -108,11 +109,11 @@ export class ControlBarComponent implements OnInit {
     this.disableBtnAddEdit = false;
     if (value) {
       this.disableAllBtn();
-        this.submitForm.emit({
-          'action': 'edited',
-          'body': this.dataForm,
-          'component': this.operation.operation.component
-        });
+      this.submitForm.emit({
+        'action': 'edited',
+        'body': this.dataForm,
+        'component': this.operation.operation.component
+      });
     } else {
       this.onFailed('Edition');
     }

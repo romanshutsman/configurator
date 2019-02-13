@@ -3,6 +3,7 @@ import { NodeTree, RealStateDintNode } from 'src/app/providers/node.interface';
 import { Input } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
+import {Subscription} from 'rxjs'
 
 export class BaseSmartTag {
   parentOfNode: NodeTree;
@@ -68,6 +69,8 @@ export class BaseSmartTag {
   allPrograms;
   editorComponent: string;
   isAdding: boolean = false;
+  nodeType: string;
+  subscription: Subscription
 
   @Input() set getProgram(value) {
     if (value) {
@@ -80,8 +83,17 @@ export class BaseSmartTag {
   }
 
   initOnAdd() {
-    this.cloneSelectedNode = this.service.initNode;
+    let type = this.cloneSelectedNode.Type;
+    this.cloneSelectedNode = Object.assign({}, this.service.initNode);
+    this.cloneSelectedNode.children = [];
+    this.cloneSelectedNode.lInfoAtt = [];
+    this.cloneSelectedNode.Type = type;
+
+    this.typesOfCheckboxesAOI.forEach(e => {
+      e.selected = false;
+    });
   }
+
   getOptionTime(e) {
     this.selectedOption = e.value;
     this.calculateTime(this.selectedOption);
@@ -158,9 +170,7 @@ export class BaseSmartTag {
             this.routineDefault = found[0].Routines[0];
           }
         });
-    this.cloneSelectedNode.updateRadio = radio[2];
-    this.cloneSelectedNode.sProgramParent = this.node.Program;
-    this.cloneSelectedNode.sParentTagName = this.node.TagName;
+    this.cloneSelectedNode.updateRadio = radio[0];
     this.disableGroupBtn(false);
   }
   onSelectedProgram(e) {
@@ -175,10 +185,12 @@ export class BaseSmartTag {
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
+        console.log(this.cloneSelectedNode);
+        console.log(data);
         let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
         let updateBy = this.cloneSelectedNode.updateRadio;
-        this.cloneSelectedNode = data;
+        this.cloneSelectedNode = Object.assign({}, data);
         this.cloneSelectedNode.label = l;
         this.cloneSelectedNode.labelInfo = li;
         this.cloneSelectedNode.updateRate = Math.abs(this.cloneSelectedNode.updateRate);
@@ -330,5 +342,18 @@ export class BaseSmartTag {
     this.initAoi(value);
     this.initAttributes();
     this.initCheckbox();
+  }
+
+  getTypeId(type: string): number {
+    switch (type) {
+      case 'node': return 0;
+      case 'real': return 1;
+      case 'state': return 2;
+      case 'dint': return 2;
+      case 'string': return 3;
+      case 'real-write': return 4;
+      case 'dint-write': return 5;
+      default: return 0
+    }
   }
 }

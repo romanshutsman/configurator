@@ -24,6 +24,7 @@
       <div class="tabcontent" [class.activeTab]="showTabTree">
         <app-model-tree 
         [dataForm]="operationOnForm" 
+        [newElementId] = "elementId"
         (actionContextMenuChanged)="actionMenu($event)"
         (itemSelected)="getNode($event)" 
         [CheckStatusOfController]="checkStatus"
@@ -46,6 +47,7 @@
       </div>
       <div class="tabcontent" [class.activeTab]="showTabAOI">
         <app-aoi-editor 
+        [newElementId] = "elementId"
         [loadedAoi]="responseAoi"
         [dataForm]="operationOnForm" 
         (actionContextMenuChanged)="actionMenu($event)"

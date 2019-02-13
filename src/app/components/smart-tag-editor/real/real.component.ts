@@ -1,8 +1,9 @@
 import { RealStateDintNode } from 'src/app/providers/node.interface';
 import { SharedService } from './../../../providers/shared.service';
 import { BaseSmartTag } from './../base-smart-tag';
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -10,15 +11,15 @@ import { NgForm, Validators } from '@angular/forms';
   templateUrl: './real.component.html',
   styleUrls: ['./../state/state.component.scss','./real.component.scss']
 })
-export class RealComponent extends BaseSmartTag implements OnInit {
+export class RealComponent extends BaseSmartTag implements OnInit, OnDestroy {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   inputInvalidMin = true;
   inputInvalidMax = true;
-  cloneSelectedNode: RealStateDintNode = this.service.initNodeValueType;
   node: RealStateDintNode = this.service.initNodeValueType;
   defaultValueType;
   isRequriedValidation1: boolean;
   isRequriedValidation2: boolean;
+ 
 
   @Input() set actionMenu(value) {
     if (value) {
@@ -49,8 +50,13 @@ export class RealComponent extends BaseSmartTag implements OnInit {
     this.onChanges();
   }
 
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+  }
+
   onChanges(): void {
-    this.nodeFrm.valueChanges
+    this.subscription = this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.valueType = value['ValueTypeDint'];
         this.cloneSelectedNode.routine = this.routineDefault;

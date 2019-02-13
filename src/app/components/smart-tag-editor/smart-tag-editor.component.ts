@@ -20,13 +20,11 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   node: NodeTree;
   detailsOfNode: any;
   actionOnContextMenu: string;
-  cloneSelectedNode: NodeTree;
   nodeiD: number;
-  nodeType: string;
   parentOfSelectedNode;
   countOfCall = 0;
   transferPrograms;
-  
+
 
   @Input() set SelectedSmartTag(value: NodeTree) {
     if (value) {
@@ -50,9 +48,13 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
       this.countOfCall = 0;
       this.parentOfSelectedNode = undefined;
       this.searchAbsolutePath(this.detailsOfNode['0']);
+      this.cloneSelectedNode.Type = this.getTypeId(value.type);
       this.nodeType = value.type;
     }
   }
+
+
+
   @Input() set modifiedNode(value) {
     if (value) {
       if (value['action'] === 'edited') {
@@ -62,7 +64,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
 
   @Input() set getAllPrograms(value) {
-    if(value) {
+    if (value) {
       this.transferPrograms = undefined;
       this.transferPrograms = Object.assign({}, value)
     }
@@ -75,7 +77,7 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   initSelectedTag(value) {
@@ -117,10 +119,10 @@ export class SmartTagEditorComponent extends BaseSmartTag implements OnInit {
   getParent(node) {
     if (this.actionOnContextMenu['action'] === this.service.action.edit) {
       if (this.countOfCall === 1) {
-        this.parentOfSelectedNode = {parent:node, selectedItem: this.cloneSelectedNode};
+        this.parentOfSelectedNode = { parent: node, selectedItem: this.cloneSelectedNode };
       }
     } else {
-      this.parentOfSelectedNode = {parent:undefined, selectedItem: this.cloneSelectedNode};
+      this.parentOfSelectedNode = { parent: undefined, selectedItem: this.cloneSelectedNode };
     }
     this.countOfCall++;
   }

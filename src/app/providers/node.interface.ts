@@ -33,6 +33,7 @@ export interface NodeTree {
     hasBuffer: boolean;
     Del: number;
     isCreation: boolean;
+    valueType: string;
 }
 
 export interface RealStateDintNode extends NodeTree {

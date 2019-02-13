@@ -15,13 +15,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
 
 
-  @Input() set cloneSelected(value) {
-    if (value) {
-      this.cloneSelectedNode = value;
-      this.nodeiD = this.cloneSelectedNode.ID;
-    }
-  }
-
   @Input() set actionMenu(value) {
     if (value) {
       this.editorComponent = value['component'];
@@ -31,11 +24,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         if (value.action === this.service.action.add) {
           this.isAdding = true;
           this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
-          if (this.nodeFrm.controls['tagname'] && this.nodeFrm.controls['label'] && this.nodeFrm.controls['sProgram']) {
-            this.nodeFrm.controls['tagname'].reset();
-            this.nodeFrm.controls['label'].reset();
-            this.nodeFrm.controls['sProgram'].reset();
-          }
           this.cloneSelectedNode.ParentID = this.node.ID;
         } else if (value.action === this.service.action.edit) {
           this.isAdding = false;
@@ -50,13 +38,15 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   }
 
 
-
-
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service);
     this.initOnAdd();
   }
 
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+  }
   ngOnInit() {
     this.onChanges();
   }
@@ -67,10 +57,12 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
   }
 
   onChanges(): void {
+    this.subscription =
     this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.routine = this.routineDefault;
         this.cloneSelectedNode.ID = this.nodeiD;
+        this.cloneSelectedNode.Type = 0;
         this.checkAndSend();
       });
   }

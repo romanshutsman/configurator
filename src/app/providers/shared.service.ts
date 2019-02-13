@@ -17,7 +17,7 @@ export class SharedService extends DataHelper {
   SubjectControlTab = new BehaviorSubject<any>(false);
   SubjectOperationOnForm = new BehaviorSubject<any>(false);
   initNode: NodeTree = this.node;
-  initNodeValueType: RealStateDintNode = this.nodeValueType;
+  initNodeValueType: RealStateDintNode = this.node;
   dataTREE = this.Tree;
   controllerMode = this.ControllerModeEnum;
   programsAndRoutines: any;
@@ -102,7 +102,7 @@ export class SharedService extends DataHelper {
     return this.http.post(this.API_URL + '/save-hdrive', body); 
   }
 
-  cloneNode(item) {
+  cloneNode(item) : NodeTree {
     return {
       label: item.label,
       labelInfo: item.label,
@@ -137,7 +137,8 @@ export class SharedService extends DataHelper {
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
       Del: item.Del,
-      isCreation: item.isCreation
+      isCreation: item.isCreation,
+      valueType: item.valueType
     };
   }
 

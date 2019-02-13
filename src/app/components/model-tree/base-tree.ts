@@ -1,4 +1,4 @@
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter, Input } from '@angular/core';
 import { RaUiNestedTreeControl, ITreeNode, ITreeConfig } from '@ra-web-tech-ui-toolkit-navigation';
 import { SharedService } from './../../providers/shared.service';
 import { Nullable } from '@ra-web-tech-ui-toolkit-common-utils';
@@ -69,6 +69,7 @@ export class BaseTree {
     'Nothing'
   ];
 
+  @Input() newElementId : number;
   @Output() itemSelected = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   @Output() transferTree = new EventEmitter();
@@ -203,9 +204,11 @@ export class BaseTree {
   onAddNewNode(body) {
     const allNode = [];
     this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
-    body.ID = allNode.length + 1;
+    body.ID = this.newElementId? this.newElementId : allNode.length;
 
-    this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [body]);
+    let insertion = body.length > 1? body: [body];
+
+    this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, insertion);
     this.transferTreePost.emit(this.treeModel);
   }
 }

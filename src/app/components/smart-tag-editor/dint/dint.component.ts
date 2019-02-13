@@ -7,7 +7,7 @@ import { NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-dint',
   templateUrl: './dint.component.html',
-  styleUrls: ['./../state/state.component.scss','./dint.component.scss']
+  styleUrls: ['./../state/state.component.scss', './dint.component.scss']
 })
 export class DintComponent extends BaseSmartTag implements OnInit {
 
@@ -46,8 +46,14 @@ export class DintComponent extends BaseSmartTag implements OnInit {
   ngOnInit() {
     this.onChanges();
   }
+
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+  }
+
   onChanges(): void {
-    this.nodeFrm.valueChanges
+    this.subscription = this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.valueType = value['ValueTypeDint'];
         this.cloneSelectedNode.routine = this.routineDefault;

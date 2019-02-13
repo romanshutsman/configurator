@@ -36,6 +36,7 @@ export class HomeComponent {
   pathSelectedItem;
   programsAndRoutines;
   isChangesAllowed = true;
+  elementId: number;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -118,6 +119,7 @@ export class HomeComponent {
       const node = e['body'];
       this.selectedItem = Object.assign(this.selectedItem, node);
     }
+    this.elementId = e['id'];
     this.treeModelPost = this.treeModel;
   }
   statusController(e) {
@@ -132,6 +134,7 @@ export class HomeComponent {
   getActiveControllerAndCheck() {
     this.onLoading = true;
     this.onBlocking = true;
+    this.onDisableBtn = false;
     this.service.getActiveControllers().subscribe((data: any) => {
       this.onBlocking = false;
       this.listOfControllers = data;
@@ -202,6 +205,10 @@ export class HomeComponent {
   connectingToChosenVersion(body, item, bodyTransfer) {
     this.service.connectToController(body).subscribe(data => {
       this.onLoading = false;
+      if (!data){
+        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
+        return;
+      }
       if (data['Status'] != this.service.controllerMode.rsModeOffline) {
         this.onHideAoi = true;
       }

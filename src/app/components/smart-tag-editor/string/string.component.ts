@@ -14,15 +14,7 @@ export class StringComponent extends BaseSmartTag implements OnInit {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   cloneSelectedNode: NodeTree = this.service.initNode;
   node: NodeTree = this.service.initNode;
-  @Input() set cloneSelected(value) {
-    if (value) {
-      this.cloneSelectedNode = value;
-      this.nodeiD = this.cloneSelectedNode.ID;
-    } else {
-      this.cloneSelectedNode.TagName = '';
-
-    }
-  }
+  
 
   @Input() set actionMenu(value) {
     if (value) {
@@ -47,8 +39,14 @@ export class StringComponent extends BaseSmartTag implements OnInit {
   ngOnInit() {
     this.onChanges();
   }
+
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+  }
+
   onChanges(): void {
-    this.nodeFrm.valueChanges
+    this.subscription = this.nodeFrm.valueChanges
       .subscribe((value) => {
         this.cloneSelectedNode.routine = this.routineDefault;
         this.cloneSelectedNode.ID = this.nodeiD;
