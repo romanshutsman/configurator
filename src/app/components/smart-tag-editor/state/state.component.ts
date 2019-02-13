@@ -94,4 +94,7 @@ export class StateComponent extends BaseSmartTag implements OnInit {
       this.sendSmartTagData(this.nodeFrm);
     }
   }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
+  }
 }

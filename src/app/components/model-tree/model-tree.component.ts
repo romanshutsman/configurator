@@ -64,6 +64,18 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       this.treeModel = undefined;
     this.visibleBlock = value;
   }
+  unKnownNodes = [
+    {label: 'R21', Type: 2, children: []},
+    {label: 'D22', Type: 3, children: []},
+    {label: 'D22', Type: 4, children: []},
+    {label: 'D22', Type: 5, children: []},
+    {label: 'D22', Type: 5, children: []},
+    {label: 'D22', Type: 2, children: []},
+    
+  ];
+  listOfNode = [];
+  unknownNodeSelected: Nullable<ITreeNode>;
+
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service)
     this.service.SubjectLoadTree.subscribe((value) => {
@@ -115,73 +127,18 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     }
     this.selectedNode = event.value ? event.node : undefined;
   }
+  onTreeUnknownNodeSelected(event: ITreeNodeState) {
+    this.unknownNodeSelected = event.value ? event.node : undefined;
+  }
 
   contextMenuType(type, component) {
     this.sendActionAndType('add', type, component);
   }
 
-  setWidth() {
-    if (this.nodeTree) {
-      if (this.nodeTree.InternalIndex == 32) {
-        return '80%'
-      } else {
-        return '100%'
-      }
-    }
-  }
-  getInfo(e) {
-    this.offsetTopEdit = e.target.offsetTop + 'px';
 
-  }
-  changeParentID(form: NgForm) {
-    console.log(form.controls.parentID.value);
-    console.log(this.oldUnknowNode);
-    // this. = form.controls.parentID.value;
-    // this.onAddNewNode(this.oldUnknowNode);
 
-    // this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, [this.selectedNode]);
-    console.log(this.treeModel[0]);
-    const node = this.treeModel[0];
-    // this.searchAllParentID(node);
-  }
 
-  searchAllParentID(node) {
-    this.writeFoundID(node.ParentID);
-    if (node.ParentID < 0) return;
-    this.found = undefined;
-    // const parent = this.findTreeNode(this.treeModel, node.ParentID);
-    this.treeModel.forEach(item => {
-      if (item.ParentID) {
-        this.writeFoundID(item.ParentID);
-      } else {
-        if (item.children.length) {
-          item.children.forEach(elem => {
-            if (elem.ParentID) {
-              this.writeFoundID(item.ParentID);
-            } else {
-              this.searchAllParentID(elem);
-            }
-          })
-        }
-      }
-    })
-  }
-  writeFoundID(id) {
-    this.ParentIDOfNodes.push(id);
-  }
-  // findTreeNode(nodeList: NodeTree[], id) {
-  //   nodeList.forEach(item => {
-  //     if (item.ParentID) {
-  //       this.found = item;
-  //       return;
-  //     } else {
-  //       if (item.children.length) {
-  //         this.findTreeNode(item.children, id);
-  //       }
-  //     }
-  //   });
-  //   if (this.found) return this.found;
-  // }
+
 
 
   onHover() {
@@ -253,5 +210,17 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     };
   }
 
+  addUnknownNode(node) {
+    const NewNode = Object.assign({}, this.unknownNodeSelected);
+    NewNode.ParentID = node.ID;
+    const allNode = [];
+    this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
+    NewNode.ID = allNode.length + 1;
+    this.treeControlRa.addChildren(node, [NewNode]);
+    this.treeControlRa.refreshUi.emit()
 
+    this.unKnownNodes = this.unKnownNodes.filter(i=>this.unknownNodeSelected!=i);
+    this.unknownNodeSelected && this.treeControlRa.refreshUi.emit();
+
+  }
 }

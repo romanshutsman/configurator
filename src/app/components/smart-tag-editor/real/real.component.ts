@@ -136,4 +136,7 @@ export class RealComponent extends BaseSmartTag implements OnInit, OnDestroy {
       }
     }
   }
+  onChangeCreation(e) {
+    this.changeCreation(this.nodeFrm);
+  }
 }

@@ -36,7 +36,7 @@ html, body {
 
   .ngx-contextmenu .dropdown-menu {
     width: 200px;
-    padding: 2px;
+    padding: 0;
     margin: 0;
     // border: 1px solid #bbb;
     background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100px, #e5e5e5 100%);
@@ -102,4 +102,7 @@ html, body {
   .ngx-contextmenu ul li a :not(span) {
     padding: 6px 8px;
     align-items: center;
+  }
+  .ngx-contextmenu ul li a p {
+    width: 100%;
   }

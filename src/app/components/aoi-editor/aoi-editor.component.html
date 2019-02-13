@@ -7,7 +7,7 @@
       [(tree)]="treeModel" 
       [config]="config"
       (treeNodeSelected)="onTreeNodeSelected($event)"
-      (treeInitialized)="onTreeInitialized($event)">
+      (treeInitialized)="onTreeInitialized($event, 'aoi')">
         <ng-template #node let-data="model">
           <div class="ra-tree-template"> 
             <p>{{data.label}}</p>

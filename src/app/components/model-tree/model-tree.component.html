@@ -7,8 +7,8 @@
     <!-- to scroll -->
     <!-- [ngStyle]="{'width': nodeTree?.InternalIndex == 32 ? '80%':'100%' }" -->
     <ra-ui-tree class="model" [contextMenu]="basicMenu" [contextMenuSubject]="selectedNode" [(tree)]="treeModel" (dblclick)="onDblClick('model')"
-      (click)="getInfo($event)" (mouseover)="showTooltip($event)" (mouseout)="hideTooltip($event)" [config]="config"
-      (treeNodeSelected)="onTreeNodeSelected($event)" (treeInitialized)="onTreeInitialized($event)">
+      (mouseover)="showTooltip($event)" (mouseout)="hideTooltip($event)" [config]="config"
+      (treeNodeSelected)="onTreeNodeSelected($event)" (treeInitialized)="onTreeInitialized($event, 'model')" >
       <ng-template #node let-data="model">
         <div class="ra-tree-template"> 
           <p>{{data.label}}</p>
@@ -16,27 +16,18 @@
         </div>
       </ng-template>
     </ra-ui-tree>
-    <!-- <div class="tooltip" [ngStyle]="{'top': offsetTopTooltip, 'left':  offsetLeftTooltip}">Attributes is missing!</div> -->
+    <!-- <div class="unknown-nodes">
+      <p class="unknown-nodes-p">Unknown Nodes:</p>
+      <ra-ui-tree class="model" [contextMenu]="UnknownMenu" [contextMenuSubject]="selectedNode" [(tree)]="unKnownNodes" [config]="config"
+        (treeNodeSelected)="onTreeUnknownNodeSelected($event)" (treeInitialized)="onTreeInitialized($event,'unknown')" >
+        <ng-template #node let-data="model">
+          <div class="ra-tree-template"> 
+            <p>{{data.label}}</p>
+          </div>
+        </ng-template>
+      </ra-ui-tree>
+    </div> -->
   </div>
-  <!-- <div class="wrap-edit" *ngIf="this.nodeTree?.InternalIndex == 32">
-    <div 
-    class="editing"
-
-    [ngStyle]="{'top': offsetTopEdit }">
-    <form  #parentIDForm="ngForm">
-      <mat-form-field class="example-full-width">
-        <input 
-        matInput 
-        placeholder="Change Parent ID" 
-        name="parentID" 
-        value="0" 
-        [(ngModel)]="oldUnknowNode.ParentID"
-        type="number" required>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="changeParentID(parentIDForm)" >Change</button>
-    </form>
-    </div>
-  </div> -->
 </div>
 <context-menu #basicMenu>
   <ng-template contextMenuItem [subMenu]="someSubMenu" [visible]="showContext"> <span class="menu">Add</span>
@@ -53,12 +44,19 @@
   </context-menu>
   <context-menu #subMenuAOI>
     <ng-template contextMenuItem [subMenu]="subMenuAoiActions"  [visible]="checkedStatus" *ngFor="let item of listOfAOI" >
-      <i class="ra-icon ra-icon-dashboard"></i><p (mouseenter)="param = item">{{item}}</p>
+      <i (mouseenter)="param = item" class="ra-icon ra-icon-dashboard"></i><p (mouseenter)="param = item">{{item}}</p>
     </ng-template>
     <context-menu #subMenuAoiActions >
         <ng-template contextMenuItem  (execute)="editAoi(param)"><p>Edit</p></ng-template>
         <ng-template contextMenuItem (execute)="insertAoi(param)"><p>Insert</p></ng-template>
       </context-menu>
+  </context-menu>
+</context-menu>
+<context-menu #UnknownMenu>
+  <ng-template contextMenuItem [subMenu]="subMenuUnknown" ><span class="menu" >Add to Parent</span></ng-template>
+
+  <context-menu #subMenuUnknown>
+    <ng-template contextMenuItem  (execute)="addUnknownNode(node)" *ngFor="let node of listOfNode"><p>{{node.label}}</p></ng-template>
   </context-menu>
 </context-menu>
 

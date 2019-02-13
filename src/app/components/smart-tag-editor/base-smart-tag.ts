@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs'
 
 export class BaseSmartTag {
   parentOfNode: NodeTree;
+  oldProgram;
   @Input() set cloneSelected(value: RealStateDintNode) {
     if (value) {
       this.cloneSelectedNode = value;
@@ -152,7 +153,8 @@ export class BaseSmartTag {
     }
   }
 
-  defaultValueOnAdd(form, radio) {
+  defaultValueOnAdd(form: NgForm, radio) {
+    this.resetForm(form);
     this.timeDefault = this.times[1];
     this.initOnAdd();
     this.enableReuiredItems(form);
@@ -173,7 +175,18 @@ export class BaseSmartTag {
     this.cloneSelectedNode.updateRadio = radio[0];
     this.disableGroupBtn(false);
   }
+  resetForm(form: NgForm) {
+    form.resetForm();
+    form.form.updateValueAndValidity();
+    form.form.markAsUntouched();
+    form.form.markAsPristine();
+    if(form.controls['rung']) form.controls['rung'].setValue(0)
+    if(form.controls['updateRate']) form.controls['updateRate'].setValue(0)
+    if(form.controls['delta']) form.controls['delta'].setValue(0)
+    if(form.controls['mulval']) form.controls['mulval'].setValue(0)  
+  }
   onSelectedProgram(e) {
+    this.oldProgram = String(this.cloneSelectedNode.Program);
     const found = this.programs.filter(i => i.Name == e.value);
     if (found.length > 0) {
       this.routines = found[0].Routines;
@@ -354,6 +367,19 @@ export class BaseSmartTag {
       case 'real-write': return 4;
       case 'dint-write': return 5;
       default: return 0
+    }
+  }
+  changeCreation(form: NgForm) {
+    if(this.cloneSelectedNode.isCreation) {
+      this.cloneSelectedNode.Program = ''
+      this.programNameDisabled = true;
+      form.controls['sProgram'].clearValidators();
+      form.controls['sProgram'].updateValueAndValidity();
+    } else {
+      this.programNameDisabled = false;
+      this.cloneSelectedNode.Program = this.oldProgram;
+      form.controls['sProgram'].setValidators([Validators.required]);
+      form.controls['sProgram'].updateValueAndValidity();
     }
   }
 }

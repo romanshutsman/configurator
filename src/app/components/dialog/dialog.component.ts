@@ -44,7 +44,7 @@ export class DialogComponent implements OnInit {
   selectProgram = new FormControl(null, [Validators.required]);
   selectRoutines = new FormControl(null, [Validators.required]);
   enteredName = new FormControl(null, [Validators.required]);
-  selectRung = new FormControl(null, [Validators.required, Validators.pattern('^\d*[0-9]\d*$')]);
+  selectRung = new FormControl(null, [Validators.required]);
   @Input() showInsert = false;
   selectedProgram;
   selectedRoutine;
