@@ -140,7 +140,8 @@ export class BaseSmartTag {
     }
   }
 
-  defaultValueOnAdd(form, radio) {
+  defaultValueOnAdd(form: NgForm, radio) {
+    this.resetForm(form);
     this.timeDefault = this.times[1];
     this.initOnAdd();
     this.enableReuiredItems(form);
@@ -162,6 +163,16 @@ export class BaseSmartTag {
     this.cloneSelectedNode.sProgramParent = this.node.Program;
     this.cloneSelectedNode.sParentTagName = this.node.TagName;
     this.disableGroupBtn(false);
+  }
+  resetForm(form: NgForm) {
+    form.resetForm();
+    form.form.updateValueAndValidity();
+    form.form.markAsUntouched();
+    form.form.markAsPristine();
+    if(form.controls['rung']) form.controls['rung'].setValue(0)
+    if(form.controls['updateRate']) form.controls['updateRate'].setValue(0)
+    if(form.controls['delta']) form.controls['delta'].setValue(0)
+    if(form.controls['mulval']) form.controls['mulval'].setValue(0)  
   }
   onSelectedProgram(e) {
     const found = this.programs.filter(i => i.Name == e.value);

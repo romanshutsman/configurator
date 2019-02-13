@@ -31,11 +31,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         if (value.action === this.service.action.add) {
           this.isAdding = true;
           this.defaultValueOnAdd(this.nodeFrm, this.arrayOfRadioBtns);
-          if (this.nodeFrm.controls['tagname'] && this.nodeFrm.controls['label'] && this.nodeFrm.controls['sProgram']) {
-            this.nodeFrm.controls['tagname'].reset();
-            this.nodeFrm.controls['label'].reset();
-            this.nodeFrm.controls['sProgram'].reset();
-          }
           this.cloneSelectedNode.ParentID = this.node.ID;
         } else if (value.action === this.service.action.edit) {
           this.isAdding = false;
