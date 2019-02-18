@@ -1,4 +1,4 @@
-import { RealStateDintNode } from 'src/app/providers/node.interface';
+import { NodeTree } from 'src/app/providers/node.interface';
 import { SharedService } from './../../../providers/shared.service';
 import { BaseSmartTag } from './../base-smart-tag';
 import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
@@ -15,7 +15,7 @@ export class RealComponent extends BaseSmartTag implements OnInit, OnDestroy {
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   inputInvalidMin = true;
   inputInvalidMax = true;
-  node: RealStateDintNode = this.service.initNodeValueType;
+  node: NodeTree = this.service.initNodeValueType;
   defaultValueType;
   isRequriedValidation1: boolean;
   isRequriedValidation2: boolean;
@@ -36,7 +36,7 @@ export class RealComponent extends BaseSmartTag implements OnInit, OnDestroy {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeReal[this.cloneSelectedNode.SubType];
-        this.loadValue();
+        this.setUpdateBy();
       }
       this.initData(value);
     }
@@ -135,8 +135,5 @@ export class RealComponent extends BaseSmartTag implements OnInit, OnDestroy {
         }  
       }
     }
-  }
-  onChangeCreation(e) {
-    this.changeCreation(this.nodeFrm);
   }
 }

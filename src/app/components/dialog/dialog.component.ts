@@ -14,7 +14,7 @@ export class DialogComponent implements OnInit {
   list: any = [];
   controller: string;
   message: any;
-  insertForm: Array<Programs> ;
+  insertForm: Array<Programs>;
   routines = [];
   rung = 0;
   @Input() IsInsert: boolean = false
@@ -26,9 +26,11 @@ export class DialogComponent implements OnInit {
   @Input() set manageOfMessageBox(value: any) {
     if (value) {
       this.list = value.list;
-      this.showInfoList = value.showInfoList;
+      if (value.list && value.list.length > 0)
+        this.showInfoList = true;
       this.message = value.message;
-      this.showInfoMessage = value.showInfoMessage;
+      if (value.message)
+        this.showInfoMessage = true;
       this.showVerifyMessage = value.showVerifyMessage;
       if (value.message == 'Can\'t connect to controller!') {
         this.controller = '';
@@ -55,23 +57,18 @@ export class DialogComponent implements OnInit {
   }
 
   chooseController(item) {
-    this.controller = item.Version;
-    this.cdRef.detectChanges();
+    this.controller = item.Name;
     this.postController.emit(item);
-    setTimeout(() => {
-      this.showInfoList = false;
-      this.cdRef.detectChanges();
-    }, 3000);
+    this.showInfoList = false;
+    this.controller = undefined;
   }
 
   closeModal1() {
     this.showInfoList = false;
-    this.cdRef.detectChanges();
   }
 
   closeModal2() {
     this.showInfoMessage = false;
-    this.cdRef.detectChanges();
   }
   onResponseVerify(e) {
     this.responseVerify.emit({
@@ -83,7 +80,6 @@ export class DialogComponent implements OnInit {
     });
     this.showVerifyMessage = false;
     this.showInsert = false;
-    this.cdRef.detectChanges();
   }
   removeMinus(e) {
     const code1 = 'NumpadSubtract';
@@ -109,6 +105,5 @@ export class DialogComponent implements OnInit {
     this.selectedRoutine = undefined;
     this.selectProgram.markAsUntouched();
     this.selectRoutines.markAsUntouched();
-    this.cdRef.detectChanges();
   }
 }

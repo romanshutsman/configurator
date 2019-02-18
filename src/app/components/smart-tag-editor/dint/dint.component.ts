@@ -1,4 +1,4 @@
-import { RealStateDintNode } from './../../../providers/node.interface';
+import { NodeTree } from './../../../providers/node.interface';
 import { SharedService } from './../../../providers/shared.service';
 import { BaseSmartTag } from './../base-smart-tag';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
@@ -13,10 +13,8 @@ export class DintComponent extends BaseSmartTag implements OnInit {
 
   @ViewChild('nodeForm') public nodeFrm: NgForm;
   tagnameDisable = false;
-  programNameDisabled = false;
-  routineDisabled = false;
-  cloneSelectedNode: RealStateDintNode = this.service.initNodeValueType;
-  node: RealStateDintNode = this.service.initNodeValueType;
+  cloneSelectedNode: NodeTree = this.service.initNodeValueType;
+  node: NodeTree = this.service.initNodeValueType;
   defaultValueType;
 
   @Input() set actionMenu(value) {
@@ -34,7 +32,7 @@ export class DintComponent extends BaseSmartTag implements OnInit {
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
         this.defaultValueType = this.ValueTypeStateDint[this.cloneSelectedNode.SubType];
-        this.loadValue();
+        this.setUpdateBy();
       }
       this.initData(value);
     }
@@ -92,8 +90,5 @@ export class DintComponent extends BaseSmartTag implements OnInit {
     if (this.formAction) {
       this.sendSmartTagData(this.nodeFrm);
     }
-  }
-  onChangeCreation(e) {
-    this.changeCreation(this.nodeFrm);
   }
 }

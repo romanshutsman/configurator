@@ -65,6 +65,13 @@ export class AoiEditorComponent extends BaseTree implements OnInit {
     const data = [];
     data.push(object);
     this.treeModel = data;
+
+    this.treeControlRa.runForEachChild(this.treeModel, e => {
+      e.updateRate = Math.abs(e.updateRate);
+      this.setUpdateBy(e);
+      e.labelInfo = this.addInfoNode(e);
+    })
+
     this.transferTree.emit(this.treeModel);
     setTimeout(() => {
       this.transferTree.emit(this.treeModel);

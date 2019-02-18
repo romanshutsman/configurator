@@ -95,12 +95,23 @@ export class BaseTree {
         }
       }
       e.updateRate = Math.abs(e.updateRate);
-      this.loadUpdate(e);
+      this.setUpdateBy(e);
       e.labelInfo = this.addInfoNode(e);
     })
     this.treeControlRa.refreshUi.emit();
 
   }
+
+  setUpdateBy(e) {
+    if (e.updateRate > 0) {
+      e.updateRadio = this.arrayOfRadioBtns[1];
+    } else if (e.updateRate == 0) {
+      e.updateRadio = this.arrayOfRadioBtns[0];
+    } else if (Math.abs(e.updateRate) == 0.001024) {
+      e.updateRadio = this.arrayOfRadioBtns[2];
+    }
+  }
+
   addInfoNode(node) {
     let arrayOfAttr = [];
     if(node.updateRadio=='Parent') {
@@ -142,23 +153,6 @@ export class BaseTree {
     }
     return '';
 
-  }
-  loadUpdate(node) {
-    if (node.updateRate > 0) {
-      if (node.hasTrigger) {
-        node.updateRadio = this.arrayOfRadioBtns[1];
-      } else {
-        node.updateRadio = this.arrayOfRadioBtns[1];
-      }
-    } else if (node.updateRate == 0) {
-      if (node.hasTrigger) {
-        node.updateRadio = this.arrayOfRadioBtns[0];
-      } else {
-        node.updateRadio = this.arrayOfRadioBtns[0];
-      }
-    } else {
-      node.updateRadio = this.arrayOfRadioBtns[2];
-    }
   }
 
   onDblClick(comp) {

@@ -29,7 +29,6 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
           this.isAdding = false;
           this.cloneSelectedNode = this.service.cloneNode(this.node);
           this.defaultValueOnEdit(this.nodeFrm);
-          this.loadValue();
         }
         this.initData(value);
       }
@@ -103,8 +102,5 @@ export class NodeComponent extends BaseSmartTag implements OnInit {
         this.sendSmartTagData(this.nodeFrm);
       }
     }
-  }
-  onChangeCreation(e) {
-    this.changeCreation(this.nodeFrm);
   }
 }

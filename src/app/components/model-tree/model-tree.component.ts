@@ -34,14 +34,12 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   aoiName: any;
   @Input() set dataForm(value) {
     if (value) {
-      if (value.component == 'model') {
-        if (value.action === 'added') {
-          value.body.labelInfo = this.addInfoNode(value.body);
-          this.onAddNewNode(value.body)
-        } else if (value.action === 'edited') {
-          this.selectedNode.labelInfo = this.addInfoNode(this.selectedNode);
-          this.selectedNode && this.treeControlRa.refreshUi.emit();
-        }
+      if (value.action === 'added') {
+        value.body.labelInfo = this.addInfoNode(value.body);
+        this.onAddNewNode(value.body)
+      } else if (value.action === 'edited' && value.component == 'model') {
+        this.selectedNode.labelInfo = this.addInfoNode(this.selectedNode);
+        this.selectedNode && this.treeControlRa.refreshUi.emit();
       }
     }
   }
@@ -65,13 +63,13 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.visibleBlock = value;
   }
   unKnownNodes = [
-    {label: 'R21', Type: 2, children: []},
-    {label: 'D22', Type: 3, children: []},
-    {label: 'D22', Type: 4, children: []},
-    {label: 'D22', Type: 5, children: []},
-    {label: 'D22', Type: 5, children: []},
-    {label: 'D22', Type: 2, children: []},
-    
+    { label: 'R21', Type: 2, children: [] },
+    { label: 'D22', Type: 3, children: [] },
+    { label: 'D22', Type: 4, children: [] },
+    { label: 'D22', Type: 5, children: [] },
+    { label: 'D22', Type: 5, children: [] },
+    { label: 'D22', Type: 2, children: [] },
+
   ];
   listOfNode = [];
   unknownNodeSelected: Nullable<ITreeNode>;
@@ -135,12 +133,6 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.sendActionAndType('add', type, component);
   }
 
-
-
-
-
-
-
   onHover() {
     if (!this.checkedStatus) {
       this.showAOIMsg.emit(true);
@@ -162,8 +154,9 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
     if (e.Name && e.Program) {
       this.service.insertAOI(body).subscribe(i => {
+        if (!i) return;
         let tree = this.fixTreeLabels(JSON.stringify(i));
-         this.onAddNewNode(tree[0].children);
+        this.onAddNewNode(tree[0].children);
       })
     }
   }
@@ -219,7 +212,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     this.treeControlRa.addChildren(node, [NewNode]);
     this.treeControlRa.refreshUi.emit()
 
-    this.unKnownNodes = this.unKnownNodes.filter(i=>this.unknownNodeSelected!=i);
+    this.unKnownNodes = this.unKnownNodes.filter(i => this.unknownNodeSelected != i);
     this.unknownNodeSelected && this.treeControlRa.refreshUi.emit();
 
   }

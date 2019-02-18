@@ -33,7 +33,7 @@ export class DataHelper {
         hasChange: false,
         hasBuffer: true,
         Del: 0,
-        isCreation: false,
+        isControllerScope: false,
         valueType: '',
     }
     

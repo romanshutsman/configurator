@@ -1,7 +1,7 @@
 <div class="over" *ngIf="showInfoList">
   <div class="pop connected">
     <mat-radio-group class="example-radio-group" class="group">
-      <mat-radio-button class="example-radio-button" [checked]="item.Version == controller" *ngFor="let item of list"
+      <mat-radio-button class="example-radio-button" [checked]="item.Name == controller" *ngFor="let item of list"
         [value]="item" (click)="chooseController(item); ">
         {{item.Name}} ({{item.Version}})
       </mat-radio-button>

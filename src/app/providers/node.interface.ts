@@ -32,13 +32,10 @@ export interface NodeTree {
     hasChange: boolean;
     hasBuffer: boolean;
     Del: number;
-    isCreation: boolean;
+    isControllerScope: boolean;
     valueType: string;
 }
 
-export interface RealStateDintNode extends NodeTree {
-    valueType: string;
-}
 export interface InfoAttributesModel {
     name: string;
     value: string;

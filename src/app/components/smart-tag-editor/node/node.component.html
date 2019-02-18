@@ -194,8 +194,7 @@
       *ngIf="editorComponent == 'model' && isAdding" 
       class="create-tag-checkbox" 
       color="primary" 
-      (change)="onChangeCreation($event)"
-      [(ngModel)]="cloneSelectedNode.isCreation" 
+      [(ngModel)]="cloneSelectedNode.isControllerScope" 
       name="creation"> 
         <span class="create-tag-at-ctrl">Create tag at<br> controller scope</span>
       </mat-checkbox>

@@ -1,14 +1,14 @@
 
-import { NodeTree, RealStateDintNode } from 'src/app/providers/node.interface';
+import { NodeTree } from 'src/app/providers/node.interface';
 import { Input } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
-import {Subscription} from 'rxjs'
+import { Subscription } from 'rxjs'
 
 export class BaseSmartTag {
   parentOfNode: NodeTree;
   oldProgram;
-  @Input() set cloneSelected(value: RealStateDintNode) {
+  @Input() set cloneSelected(value: NodeTree) {
     if (value) {
       this.cloneSelectedNode = value;
       this.nodeiD = this.cloneSelectedNode.ID;
@@ -135,20 +135,12 @@ export class BaseSmartTag {
       this.formComp.controls[control].updateValueAndValidity();
     }
   }
-  loadValue() {
+  setUpdateBy() {
     if (this.cloneSelectedNode.updateRate > 0) {
-      if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
-      } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
-      }
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     } else if (this.cloneSelectedNode.updateRate == 0) {
-      if (this.cloneSelectedNode.hasTrigger) {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
-      } else {
-        this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
-      }
-    } else {
+      this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[0];
+    } else if (Math.abs(this.cloneSelectedNode.updateRate) == 0.001024) {
       this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[2];
     }
   }
@@ -180,10 +172,10 @@ export class BaseSmartTag {
     form.form.updateValueAndValidity();
     form.form.markAsUntouched();
     form.form.markAsPristine();
-    if(form.controls['rung']) form.controls['rung'].setValue(0)
-    if(form.controls['updateRate']) form.controls['updateRate'].setValue(0)
-    if(form.controls['delta']) form.controls['delta'].setValue(0)
-    if(form.controls['mulval']) form.controls['mulval'].setValue(0)  
+    if (form.controls['rung']) form.controls['rung'].setValue(0)
+    if (form.controls['updateRate']) form.controls['updateRate'].setValue(0)
+    if (form.controls['delta']) form.controls['delta'].setValue(0)
+    if (form.controls['mulval']) form.controls['mulval'].setValue(0)
   }
   onSelectedProgram(e) {
     this.oldProgram = String(this.cloneSelectedNode.Program);
@@ -198,22 +190,17 @@ export class BaseSmartTag {
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
       .subscribe((data: any) => {
-        console.log(this.cloneSelectedNode);
-        console.log(data);
         let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
-        let updateBy = this.cloneSelectedNode.updateRadio;
         this.cloneSelectedNode = Object.assign({}, data);
         this.cloneSelectedNode.label = l;
         this.cloneSelectedNode.labelInfo = li;
+        this.setUpdateBy();
         this.cloneSelectedNode.updateRate = Math.abs(this.cloneSelectedNode.updateRate);
-        this.cloneSelectedNode.updateRadio = updateBy;
         this.initAttributes();
       });
     this.routineDefault = this.routines[0];
-    this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     this.disableGroupBtn(true);
-    this.loadValue();
   }
 
   disableGroupBtn(bool) {
@@ -369,17 +356,5 @@ export class BaseSmartTag {
       default: return 0
     }
   }
-  changeCreation(form: NgForm) {
-    if(this.cloneSelectedNode.isCreation) {
-      this.cloneSelectedNode.Program = ''
-      this.programNameDisabled = true;
-      form.controls['sProgram'].clearValidators();
-      form.controls['sProgram'].updateValueAndValidity();
-    } else {
-      this.programNameDisabled = false;
-      this.cloneSelectedNode.Program = this.oldProgram;
-      form.controls['sProgram'].setValidators([Validators.required]);
-      form.controls['sProgram'].updateValueAndValidity();
-    }
-  }
+
 }

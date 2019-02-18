@@ -25,7 +25,7 @@ export class DintWriteComponent extends BaseSmartTag implements OnInit {
         this.isAdding = false;
         this.cloneSelectedNode = this.node;
         this.defaultValueOnEdit(this.nodeFrm);
-        this.loadValue();
+        this.setUpdateBy();
       }
       this.initData(value);
     }
@@ -72,8 +72,5 @@ export class DintWriteComponent extends BaseSmartTag implements OnInit {
   removeMinus(e, num) {
     this.cloneSelectedNode.updateRadio = this.arrayOfRadioBtns[1];
     return this.deleteMinus(e, num);
-  }
-  onChangeCreation(e) {
-    this.changeCreation(this.nodeFrm);
   }
 }

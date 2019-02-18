@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { NodeTree, RealStateDintNode } from './node.interface';
+import { NodeTree } from './node.interface';
 import { Programs } from './common.interface';
 import { DataHelper } from './data-helper';
 
@@ -17,7 +17,7 @@ export class SharedService extends DataHelper {
   SubjectControlTab = new BehaviorSubject<any>(false);
   SubjectOperationOnForm = new BehaviorSubject<any>(false);
   initNode: NodeTree = this.node;
-  initNodeValueType: RealStateDintNode = this.node;
+  initNodeValueType: NodeTree = this.node;
   dataTREE = this.Tree;
   controllerMode = this.ControllerModeEnum;
   programsAndRoutines: any;
@@ -105,7 +105,7 @@ export class SharedService extends DataHelper {
   cloneNode(item) : NodeTree {
     return {
       label: item.label,
-      labelInfo: item.label,
+      labelInfo: '',
       ParentID: item.ParentID,
       ID: item.ID,
       Type: item.Type,
@@ -137,7 +137,7 @@ export class SharedService extends DataHelper {
       hasChange: item.hasChange,
       hasBuffer: item.hasBuffer,
       Del: item.Del,
-      isCreation: item.isCreation,
+      isControllerScope: item.isControllerScope,
       valueType: item.valueType
     };
   }
