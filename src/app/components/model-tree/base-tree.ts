@@ -197,9 +197,6 @@ export class BaseTree {
     let data = this.fixTreeLabels(tree);
     this.treeModel = data;
     this.transferTree.emit(this.treeModel);
-    setTimeout(() => {
-      this.transferTree.emit(this.treeModel);
-    }, 0);
   }
   onAddNewNode(body) {
     const allNode = [];

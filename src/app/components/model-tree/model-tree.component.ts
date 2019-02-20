@@ -6,6 +6,7 @@ import { NodeTree } from './../../providers/node.interface';
 import { NgForm } from '@angular/forms';
 import { BaseTree } from './base-tree';
 import { ITreeNode, ITreeNodeState } from '@ra-web-tech-ui-toolkit-navigation';
+import { ApiResponse, ApiMessage } from 'src/app/providers/api-response-model';
 
 @Component({
   selector: 'app-model-tree',
@@ -45,7 +46,6 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   }
   checkedStatus = true;
   @Input() set CheckStatusOfController(value) {
-    console.log(value)
     if (value) {
       if (value['Status'] != this.service.controllerMode.rsModeOffline) {
         this.checkedStatus = false;
@@ -76,17 +76,14 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
   constructor(public service: SharedService, private cdRef: ChangeDetectorRef) {
     super(service)
-    this.service.SubjectLoadTree.subscribe((value) => {
-      if (value) {
-        this.service.sendNotification('Succesfully connected!', 'success');
-
-        this.parseTreeNode(value);
-      } else if (value === false) {
-        this.service.sendNotification('Can\'t connect to controller...', 'fail');
+    this.service.SubjectLoadTree.subscribe(value => {
+      if (!value) {
+        return;
+      }
+      if (value.Result && value.Result['Tree']) {
+        this.parseTreeNode(value.Result['Tree']);
       }
     });
-
-
   }
   ngOnInit() {
     // should comment in production!!!!!!
@@ -135,7 +132,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
   onHover() {
     if (!this.checkedStatus) {
-      this.showAOIMsg.emit(true);
+      this.manageMessageDialog([], { Text: 'Controller should be offline!', Type: 'info', Color: null, BgColor: null, IsPopup: true }, false);
     }
   }
   editAoi(aoiName) {
@@ -153,8 +150,11 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     body['name'] = this.aoiName.name;
 
     if (e.Name && e.Program) {
-      this.service.insertAOI(body).subscribe(i => {
-        if (!i) return;
+      this.service.insertAOI(body).subscribe((i: ApiResponse<any>) => {
+        if (!i.Result) {
+          this.manageMessageDialog([], i.Message, false);
+          return;
+        }
         let tree = this.fixTreeLabels(JSON.stringify(i));
         this.onAddNewNode(tree[0].children);
       })
@@ -167,8 +167,7 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     if (this.service.programsAndRoutines)
       this.programsAndRoutines = Object.assign({}, { programs: this.service.programsAndRoutines.programs });
 
-    this.manageMessageDialog([], false, false, '', true);
-
+    this.manageMessageDialog([], { Text: '', Type: 'info', Color: null, BgColor: null, IsPopup: true }, true);
   }
 
   showTooltip(e) {
@@ -192,12 +191,13 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     }
   }
 
-
-  manageMessageDialog(list, showInfoList, showInfoMessage, msg, showVerifyMessage) {
+  manageMessageDialog(list, msg: ApiMessage, showVerifyMessage) {
+    if (!msg.IsPopup) {
+      this.service.sendNotification(msg);
+      return;
+    }
     this.onShowInfoMsg = {
       list: list,
-      showInfoList: showInfoList,
-      showInfoMessage: showInfoMessage,
       message: msg,
       showVerifyMessage: showVerifyMessage
     };

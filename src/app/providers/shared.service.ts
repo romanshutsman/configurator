@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { NodeTree } from './node.interface';
 import { Programs } from './common.interface';
 import { DataHelper } from './data-helper';
+import { ApiResponse, ApiMessage } from './api-response-model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +49,8 @@ export class SharedService extends DataHelper {
   }
 
   constructor(private http: HttpClient) { super() }
-  sendNotification(msg: string, type: string, total = undefined) {
-    const body = { 'msg': msg, 'type': type, 'total': total };
-    this.SubjectNotifications.next(body);
+  sendNotification(msg: ApiMessage) {
+    this.SubjectNotifications.next(msg);
   }
   getActiveControllers() {
     return this.http.get(this.API_URL + '/get');
@@ -94,8 +94,8 @@ export class SharedService extends DataHelper {
   insertAOI(body) {
     return this.http.post(this.API_URL_AOI + '/insert-aoi', body);
   }
-  getPrograms(): Observable<Programs[]> {
-    return this.http.get<Programs[]>(this.API_URL + '/programs');
+  getPrograms() {
+    return this.http.get<ApiResponse<Programs>>(this.API_URL + '/programs');
   }
 
   saveToHdrive(body){

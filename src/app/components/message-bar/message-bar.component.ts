@@ -1,5 +1,6 @@
 import { SharedService } from './../../providers/shared.service';
 import { Component, OnInit } from '@angular/core';
+import { ApiMessage } from 'src/app/providers/api-response-model';
 
 @Component({
   selector: 'app-message-bar',
@@ -10,32 +11,60 @@ export class MessageBarComponent implements OnInit {
   statusBar: any;
   total: any;
   styleBar = 'success';
+  color: string = '#f1f441';
+
+  timelineSuccess = {
+    background: '#80C46E',
+    color: 'white'
+  }
+  timelineError = {
+    background: '#DCC1C1',
+    color: '#862f2f'
+  }
+  timelineStarted = {
+    background: 'lightgray',
+    color: '#6d6d6d'
+  }
+
+  style = {
+    background: '',
+    color: 'white'
+  }
 
   constructor(private service: SharedService) {
-    this.service.SubjectNotifications.subscribe((value) => {
-      const point = value['total'];
-      if (value) {
-        this.showMessage(value['msg'], value['type'], point);
+    this.service.SubjectNotifications.subscribe((value: ApiMessage) => {
+
+      if (value && value.Text) {
+        this.showMessage(value);
+      }
+
+      if (value == undefined) {
+        this.style = this.timelineError;
+        this.statusBar = 'Something went wrong. API offline';
       }
     });
   }
 
   ngOnInit() {
   }
-  showMessage(msg, type, total) {
-    this.statusBar = msg;
-    this.styleBar = type;
-    if (msg === 'Collecting data') {
-      this.total = 0;
+  showMessage(msg: ApiMessage) {
+    this.statusBar = msg.Text;
+
+    if (msg.Color && msg.BgColor) {
+      this.style = { color: msg.Color, background: msg.BgColor };
+      return;
     }
-    if (total) {
-      this.total = total;
-      this.statusBar = `Collecting data, Recorded: ${total} `;
+
+    switch (msg.Type) {
+      case 'info':
+        this.style = this.timelineStarted;
+        break;
+      case 'fail':
+        this.style = this.timelineError;
+        break;
+      case 'success':
+        this.style = this.timelineSuccess;
+        break;
     }
-    if (msg === 'Data saved!' && this.total) {
-      this.statusBar = `Data saved! Recorded: ${this.total} `;
-    }
-    else if (msg === 'Data saved!')
-      this.statusBar = 'Data saved!';
   }
 }

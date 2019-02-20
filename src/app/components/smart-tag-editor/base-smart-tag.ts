@@ -4,6 +4,7 @@ import { Input } from '@angular/core';
 import { NgForm, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/providers/shared.service';
 import { Subscription } from 'rxjs'
+import { ApiResponse } from 'src/app/providers/api-response-model';
 
 export class BaseSmartTag {
   parentOfNode: NodeTree;
@@ -153,9 +154,9 @@ export class BaseSmartTag {
     this.routineDefault = '';
     if (!this.cloneSelectedNode.isAoi)
       this.service.getInfoNode(this.nodeiD)
-        .subscribe((program: string) => {
+        .subscribe((program: ApiResponse<string>) => {
           if (this.nodeiD !== 1) {
-            this.cloneSelectedNode.Program = program;
+            this.cloneSelectedNode.Program = program.Result;
           }
           this.programs = this.allPrograms['programs'];
           const found = this.allPrograms['programs'].filter(i => i.Name == this.cloneSelectedNode.Program);
@@ -189,10 +190,10 @@ export class BaseSmartTag {
     this.timeDefault = this.times[1];
     this.disableReuiredItems(form);
     this.service.getInfoOnEditNode(this.cloneSelectedNode)
-      .subscribe((data: any) => {
+      .subscribe((data: ApiResponse<any>) => {
         let l = this.cloneSelectedNode.label;
         let li = this.cloneSelectedNode.labelInfo;
-        this.cloneSelectedNode = Object.assign({}, data);
+        this.cloneSelectedNode = Object.assign({}, data.Result);
         this.cloneSelectedNode.label = l;
         this.cloneSelectedNode.labelInfo = li;
         this.setUpdateBy();
@@ -267,19 +268,19 @@ export class BaseSmartTag {
     }
   }
   getITypes() {
-    this.service.getInfoTypes().subscribe((value: any) => {
-      if (value) {
-        this.typesOfCheckboxesAOI = JSON.parse(value);
-        this.typesOfCheckboxes = JSON.parse(value);
+    this.service.getInfoTypes().subscribe((value: ApiResponse<any>) => {
+      if (value && value.Result) {
+        this.typesOfCheckboxesAOI = JSON.parse(value.Result);
+        this.typesOfCheckboxes = JSON.parse(value.Result);
         this.typesOfCheckboxesAOI.forEach(e => {
           e.selected = false;
         })
       } else {
         this.typesOfCheckboxesAOI = undefined;
-        this.service.sendNotification('Cant load information types!', 'fail')
+        this.service.sendNotification(value.Message)
       }
     }, err => {
-      this.service.sendNotification('Cant load information types!', 'fail')
+      this.service.sendNotification(undefined)
       this.typesOfCheckboxesAOI = undefined;
     })
   }

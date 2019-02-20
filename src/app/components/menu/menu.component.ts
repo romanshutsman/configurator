@@ -2,6 +2,8 @@ import { element } from 'protractor';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SharedService } from './../../providers/shared.service';
+import { ApiResponse } from 'src/app/providers/api-response-model';
+
 
 @Component({
   selector: 'app-menu',
@@ -87,12 +89,12 @@ export class MenuComponent implements OnInit {
 
   saveToHdrive() {
     let data = {};
-    this.service.saveToHdrive(data).subscribe(val => {
-      if (val == null) return;
-      if (val) {
-        this.service.sendNotification('Data saved!', 'success');
+    this.service.saveToHdrive(data).subscribe((val: ApiResponse<any>) => {
+      if (val.Result == null) return;
+      if (val.Result) {
+        this.service.sendNotification(val.Message);
       } else {
-        this.service.sendNotification('Something went wrong!', 'fail');
+        this.service.sendNotification(val.Message);
       }
     });
   }
@@ -102,9 +104,9 @@ export class MenuComponent implements OnInit {
       this.intervalNode = setInterval(() => {
         if (this.totalValueSubsr)
           this.totalValueSubsr.unsubscribe();
-        this.totalValueSubsr = this.service.getStatus().subscribe((value) => {
-          if (value) {
-            this.service.sendNotification('Collecting data...', 'success', value);
+        this.totalValueSubsr = this.service.getStatus().subscribe((value: ApiResponse<number>) => {
+          if (value.Result) {
+            this.service.sendNotification(value.Message);
           }
         },
           error => clearInterval(this.intervalNode))
@@ -119,30 +121,24 @@ export class MenuComponent implements OnInit {
     this.intervalStatus(true);
     this.getVersion();
     if (this.version) {
-      this.service.sendNotification('Collecting data', 'success');
       this.active = true;
-      this.service.StartCollectData(this.version).subscribe((value) => {
-        if (!value) this.service.sendNotification('Can\'t write a file!', 'fail');
+      this.service.StartCollectData(this.version).subscribe((value: ApiResponse<boolean>) => {
+        this.service.sendNotification(value.Message);
       });
     } else {
-      this.service.sendNotification('Can\'t write a file!', 'fail');
+      this.service.sendNotification(undefined);
     }
   }
   switchOff() {
     this.intervalStatus(false);
     this.getVersion();
     if (this.version) {
-      this.service.sendNotification('Data saved!', 'success');
       this.active = false;
-      this.service.StopCollectData(this.version).subscribe((value) => {
-        if (value) {
-          this.service.sendNotification('Data saved!', 'success');
-        } else {
-          this.service.sendNotification('Something went wrong!', 'fail');
-        }
+      this.service.StopCollectData(this.version).subscribe((value: ApiResponse<boolean>) => {
+        this.service.sendNotification(value.Message);
       });
     } else {
-      this.service.sendNotification('Something went wrong!', 'fail');
+      this.service.sendNotification(undefined);
     }
   }
   getVersion() {

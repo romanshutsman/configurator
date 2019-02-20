@@ -1,8 +1,5 @@
-<div class="container">
-    <div class="timeline" [ngClass]="{
-      'timelineSuccess':styleBar === 'success',
-      'timelineError':styleBar === 'fail',
-      'timelineStarted':styleBar === 'info'}">
-      {{statusBar}}
-    </div>
+<div class="container" [ngStyle]="{'color' : style.color, 'background' : style.background }">
+  <div class="timeline">
+    {{statusBar}}
   </div>
+</div>

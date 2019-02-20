@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, EventEmitter, Output, Input, View
 import { SharedService } from './../../providers/shared.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Programs } from '../../providers/common.interface';
+import { ApiMessage } from 'src/app/providers/api-response-model';
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -17,6 +18,13 @@ export class DialogComponent implements OnInit {
   insertForm: Array<Programs>;
   routines = [];
   rung = 0;
+
+
+  style = {
+    background: 'white',
+    color: 'black'
+  }
+
   @Input() IsInsert: boolean = false
 
   name: string = '';
@@ -26,15 +34,28 @@ export class DialogComponent implements OnInit {
   @Input() set manageOfMessageBox(value: any) {
     if (value) {
       this.list = value.list;
-      if (value.list && value.list.length > 0)
+      if (this.list && this.list.length > 0)
         this.showInfoList = true;
-      this.message = value.message;
-      if (value.message)
+      let messageInfo = value.message as ApiMessage;
+
+      //api offline
+      if (messageInfo == undefined) {
+        this.message = 'Something went wrong. API offline';
         this.showInfoMessage = true;
-      this.showVerifyMessage = value.showVerifyMessage;
-      if (value.message == 'Can\'t connect to controller!') {
-        this.controller = '';
+        return;
       }
+
+      if (messageInfo && messageInfo.Text) {
+        this.message = messageInfo.Text;
+        this.showInfoMessage = true;
+      }
+
+      this.showVerifyMessage = value.showVerifyMessage;
+
+      if (messageInfo.Color && messageInfo.BgColor)
+        this.style = { color: messageInfo.Color, background: messageInfo.BgColor };
+      else
+        this.style = { background: 'white', color: 'black' };
     }
   }
   @Input() set getAllPrograms(value) {

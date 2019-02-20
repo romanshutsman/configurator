@@ -13,7 +13,7 @@
     (contentSelected)="selectedContent($event)"  
     (onReconnect)="onReconnecting($event)"  
     [actionOnClicked]="operationOnForm"
-    [onReconnectLoading]="onBlocking"
+    [onReconnectLoading]="onLoading"
     [onOfflineDisableBtn]="onDisableBtn"
     [onOfflineHideAoi]="onHideAoi"
     [onShowedAOI]="showAOITab"
@@ -29,7 +29,6 @@
         (itemSelected)="getNode($event)" 
         [CheckStatusOfController]="checkStatus"
         (transferTree)="getTree($event)"
-        (showAOIMsg)="showNewMsg($event)"
         (showAOI)="onShowAOI($event)"
         [onReconnectLoading]="onLoading"
         ></app-model-tree>
@@ -67,7 +66,9 @@
     (submitForm)="onSubmitted($event)"
     [changesAllowed]="isChangesAllowed"
     (showMsgChangesNotAllowed)="onChangesNotAllowed()"
-    [selectedContent]="showBtn"></app-control-bar>
+    [selectedContent]="showBtn"
+    (notification)="messageReceived($event)">
+  </app-control-bar>
   </section>
 </section>
 

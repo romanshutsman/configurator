@@ -1,5 +1,6 @@
 import { SharedService } from './../../providers/shared.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { ApiResponse, ApiMessage } from 'src/app/providers/api-response-model';
 
 @Component({
   selector: 'app-control-bar',
@@ -16,6 +17,7 @@ export class ControlBarComponent implements OnInit {
   treePost;
   isChangesAllowed = true;
   @Output() showMsgChangesNotAllowed = new EventEmitter();
+  @Output() notification = new EventEmitter<ApiMessage>();
 
   @Input() set selectedContent(value) {
     this.content = value;
@@ -61,61 +63,60 @@ export class ControlBarComponent implements OnInit {
     if (this.changesAllowed) {
       this.showSpinner = true;
       this.disableAllBtn();
-      this.service.addNode(this.dataForm).subscribe((value) => {
+      this.service.addNode(this.dataForm).subscribe((value: ApiResponse<any>) => {
         this.responseOnAdd(value);
-        //this.saveAoi();
       },
         err => {
           this.disableBtnAddEdit = false;
-          this.onFailed('Addition');
+          this.service.sendNotification(undefined);
         });
     } else {
       this.showMsgChangesNotAllowed.emit();
     }
   }
 
-  responseOnAdd(value) {
+  responseOnAdd(value: ApiResponse<any>) {
     this.showSpinner = false;
     if (value) {
       this.submitForm.emit({
         'action': 'added',
         'body': this.dataForm,
         'component': this.operation.operation.component,
-        'id': value
+        'id': value.Result
       });
-      this.service.sendNotification('Node has been added!', 'success');
+
       this.disableAllBtn();
     } else {
       this.disableBtnAddEdit = false;
-      this.onFailed('Addition');
+      this.showSpinner = false;
     }
+    this.notification.emit(value.Message);
   }
 
   updateNode() {
     this.showSpinner = true;
     this.disableAllBtn();
-    this.service.updateNode(this.dataForm).subscribe((value) => {
+    this.service.updateNode(this.dataForm).subscribe((value: ApiResponse<any>) => {
       this.responseOnEdit(value);
     },
       err => {
         this.disableBtnAddEdit = false;
-        this.onFailed('Edition');
+        this.service.sendNotification(undefined);
       });
   }
 
 
-  responseOnEdit(value) {
+  responseOnEdit(value: ApiResponse<any>) {
     this.showSpinner = false;
     this.disableBtnAddEdit = false;
-    if (value) {
+    this.notification.emit(value.Message);
+    if (value && value.Result) {
       this.disableAllBtn();
       this.submitForm.emit({
         'action': 'edited',
         'body': this.dataForm,
         'component': this.operation.operation.component
       });
-    } else {
-      this.onFailed('Edition');
     }
   }
   waitingTreeAsync(timer) {
@@ -129,23 +130,16 @@ export class ControlBarComponent implements OnInit {
   navigate() {
     this.disableBtnNav = true;
     this.showSpinner = true;
-    this.service.navigate().subscribe((value) => {
-      this.disableBtnNav = false;
+    this.service.navigate().subscribe((value: ApiResponse<boolean>) => {
       this.showSpinner = false;
-      if (value) {
-        this.service.sendNotification('Navigated succeed!', 'success');
-      } else {
-        this.onFailed('Navigation');
-      }
+      this.disableBtnNav = false;
+      this.notification.emit(value.Message);
     },
       err => {
         this.disableBtnNav = false;
-        this.onFailed('Navigation');
+        this.disableBtnNav = false;
+        this.service.sendNotification(undefined);
       });
-  }
-  onFailed(op) {
-    this.showSpinner = false;
-    this.service.sendNotification(op + ' failed!', 'fail');
   }
 
 }

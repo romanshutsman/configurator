@@ -1,8 +1,7 @@
 import { NodeTree } from './../../providers/node.interface';
 import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
-
 import { SharedService } from '../../providers/shared.service';
-import { Programs } from '../../providers/common.interface';
+import { ApiResponse, MessageType, ApiMessage } from 'src/app/providers/api-response-model';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -27,7 +26,6 @@ export class HomeComponent {
   disableBtnOfMenu = false;
   checkStatus;
   onLoading = false;
-  onBlocking = false;
   onHideAoi = false;
   onDisableBtn = false;
   showAOITab = false;
@@ -133,32 +131,23 @@ export class HomeComponent {
 
   getActiveControllerAndCheck() {
     this.onLoading = true;
-    this.onBlocking = true;
     this.onDisableBtn = false;
-    this.service.getActiveControllers().subscribe((data: any) => {
-      this.onBlocking = false;
-      this.listOfControllers = data;
-      if (data.length === 0) {
-        this.manageMessageDialog([], false, true, 'No active controllers!', false);
-        this.disableBtnOfMenu = true;
-        this.onLoading = false;
+    this.service.getActiveControllers().subscribe((data: ApiResponse<Array<any>>) => {
+      this.onLoading = false;
+      this.listOfControllers = data.Result;
 
-      } else if (data.length === 1) {
-        this.disableBtnOfMenu = false;
-        this.manageMessageDialog(data, false, false, '', false);
-        this.checkVerification(data[0]);
-      } else if (data.length > 1) {
-        this.disableBtnOfMenu = false;
-        this.manageMessageDialog(data, true, false, '', false);
+      this.manageMessageDialog(data.Result && data.Result.length > 1 ? data.Result : [], data.Message, false);
+
+      if (!data.Result || data.Result.length === 0) {
+        this.disableBtnOfMenu = true; return;
       }
-
+      this.disableBtnOfMenu = false;
+      if (data.Result.length === 1)
+        this.checkVerification(data.Result[0]);
     },
       error => {
-        this.onBlocking = false;
-        const body = { 'Version': '' };
-        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
-        this.checkVerification(body);
-        this.service.sendNotification('Can\'t connect to controller...', 'fail');
+        this.onLoading = false;
+        this.service.sendNotification(undefined);
         this.disableBtnOfMenu = true;
       });
   }
@@ -172,27 +161,28 @@ export class HomeComponent {
   }
 
   checkVerification(item) {
+    this.onLoading = true;
     this.chosenVersion = item;
     const bodyTransfer = {};
     const body = {};
     bodyTransfer['Name'] = item.Version;
     body['Version'] = item.Version;
     const foundIndex = this.listOfControllers.findIndex(i => i === item);
-    this.service.VerifyLogixInfoServer(foundIndex).subscribe(data => {
-      if (data === true) {
+    this.service.VerifyLogixInfoServer(foundIndex).subscribe((data: ApiResponse<any>) => {
+      if (data.Result) {
         body['IsCodeInjectionNeeded'] = false;
         body['Program'] = null;
         body['Routine'] = null;
         body['Rung'] = null;
         this.connectingToChosenVersion(body, item, bodyTransfer);
         this.disableBtnOfMenu = false;
-      } else if (data === false) {
-        this.manageMessageDialog([], false, false, 'Could not detect LogixInfoServer Program', true);
+      } else if (!!data.Result === false) {
+        this.manageMessageDialog([], data.Message, true);
         this.disableBtnOfMenu = true;
       } else {
         this.onLoading = false;
         this.manageOfContent(false, false, false);
-        this.manageMessageDialog([], false, true, 'You should set the language first!', false);
+        this.manageMessageDialog([], data.Message, false);
         this.disableBtnOfMenu = true;
         this.onDisableBtn = true;
       }
@@ -203,32 +193,23 @@ export class HomeComponent {
 
 
   connectingToChosenVersion(body, item, bodyTransfer) {
-    this.service.connectToController(body).subscribe(data => {
+    this.service.connectToController(body).subscribe((data: ApiResponse<any>) => {
       this.onLoading = false;
-      if (!data){
-        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
+      if (!data.Result || !data.Result['Tree']) {
+        this.manageMessageDialog([], data.Message, false);
+        this.disableBtnOfMenu = true;
+        this.errorConnect();
         return;
       }
-      if (data['Status'] != this.service.controllerMode.rsModeOffline) {
+      this.disableBtnOfMenu = false;
+      if (data.Result['Status'] != this.service.controllerMode.rsModeOffline) {
         this.onHideAoi = true;
       }
-      this.checkStatus = data;
-      if (data['Tree']) {
-        this.successConnect(data['Tree'], bodyTransfer, item);
-        this.disableBtnOfMenu = false;
-      } else {
-        this.service.SubjectLoadTree.next(data['Tree']);
-        this.errorConnect();
-        this.disableBtnOfMenu = true;
-        if (item.Version) {
-          this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
-        } else {
-          this.manageMessageDialog([], false, false, '', false);
+      this.checkStatus = data.Result;
+      this.successConnect(data, bodyTransfer, item);
+      this.manageMessageDialog([], data.Message, false);
 
-        }
-      }
-      if (data['Status'] != this.service.controllerMode.rsModeOffline && data['IsOldVersion']) {
-        this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
+      if (data.Result['Status'] != this.service.controllerMode.rsModeOffline && data.Result['IsOldVersion']) {
         this.isChangesAllowed = false;
       } else {
         this.isChangesAllowed = true;
@@ -238,25 +219,31 @@ export class HomeComponent {
       error => {
         this.onLoading = false;
         this.disableBtnOfMenu = true;
-        this.manageMessageDialog([], false, true, 'Can\'t connect to controller...', false);
+        this.manageMessageDialog([], undefined, false);
         if (item.Version !== '') {
           this.errorConnect();
         }
       });
   }
   onChangesNotAllowed() {
-    this.manageMessageDialog([], false, true, 'Changes in this version is not allowed!', false);
+    this.manageMessageDialog([], { Text: 'Changes in this version is not allowed!', Type: 'info', Color: null, BgColor: null, IsPopup: true }, false);
   }
 
   initForm() {
     this.getProgram();
   }
 
-  manageMessageDialog(list, showInfoList, showInfoMessage, msg, showVerifyMessage) {
+  messageReceived(message: ApiMessage) {
+    this.manageMessageDialog([], message, false);
+  }
+
+  manageMessageDialog(list, msg: ApiMessage, showVerifyMessage) {
+    if (!msg.IsPopup) {
+      this.service.sendNotification(msg);
+      return;
+    }
     this.onShowInfoMsg = {
       list: list,
-      showInfoList: showInfoList,
-      showInfoMessage: showInfoMessage,
       message: msg,
       showVerifyMessage: showVerifyMessage
     };
@@ -286,11 +273,7 @@ export class HomeComponent {
     body['Rung'] = e.Rung;
     this.connectingToChosenVersion(body, this.chosenVersion, bodyTransfer);
   }
-  showNewMsg(e) {
-    if (e) {
-      this.manageMessageDialog([], false, true, 'Controller should be offline!', false);
-    }
-  }
+
   onReconnecting(e) {
     if (e) {
       this.getActiveControllerAndCheck();
@@ -298,22 +281,22 @@ export class HomeComponent {
   }
   onShowAOI(e) {
     this.nameAoi = e.aoi;
-    this.service.loadAOI(e.aoi).subscribe(value => {
+    this.service.loadAOI(e.aoi).subscribe((value: ApiResponse<any>) => {
       if (value) {
         const body = e;
-        body['resAoi'] = value;
+        body['resAoi'] = value.Result;
         this.showAOITab = body;
         this.manageOfContent(false, false, true);
-        this.responseAoi = value;
+        this.responseAoi = value.Result;
       } else {
         e.emit = false;
         this.showAOITab = e;
-        this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
+        this.service.sendNotification(value.Message);
         this.manageOfContent(true, false, false);
       }
     },
       error => {
-        this.service.sendNotification(`Can\'t load AOI: ${e.aoi}`, 'fail');
+        this.service.sendNotification(undefined);
         e.emit = false;
         this.showAOITab = e;
       });
@@ -323,12 +306,18 @@ export class HomeComponent {
     this.pathSelectedItem = Object.assign({}, { path: e });
   }
   getProgram() {
-    this.service.getPrograms().subscribe(programs => {
-      this.service.programsAndRoutines = Object.assign({}, { programs: programs });
+    this.service.getPrograms().subscribe((data: ApiResponse<any>) => {
+
+      if (!data.Result) {
+        this.service.sendNotification(data.Message);
+        return;
+      }
+
+      this.service.programsAndRoutines = Object.assign({}, { programs: data.Result });
       this.programsAndRoutines = this.service.programsAndRoutines;
     },
       err => {
-        this.service.sendNotification('Cant load Programs!', 'fail')
+        this.service.sendNotification(undefined);
       })
   }
 }

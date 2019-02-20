@@ -1,5 +1,5 @@
 <div class="over" *ngIf="showInfoList">
-  <div class="pop connected">
+  <div class="pop connected" [ngStyle]="{'color' : style.color, 'background' : style.background }">
     <mat-radio-group class="example-radio-group" class="group">
       <mat-radio-button class="example-radio-button" [checked]="item.Name == controller" *ngFor="let item of list"
         [value]="item" (click)="chooseController(item); ">
@@ -11,14 +11,15 @@
 </div>
 
 <div class="over" *ngIf="showInfoMessage">
-  <div class="pop connected">
+  <div class="pop connected" [ngStyle]="{'color' : style.color, 'background' : style.background }">
     <p class="header">{{message}}</p>
     <button mat-raised-button color="primary" (click)="closeModal2()">close</button>
   </div>
 </div>
 
 <div class="over" *ngIf="showVerifyMessage">
-  <div class="pop connected" *ngIf="showVerifyMessage && !showInsert && !IsInsert">
+  <div class="pop connected" [ngStyle]="{'color' : style.color, 'background' : style.background }"
+    *ngIf="showVerifyMessage && !showInsert && !IsInsert">
     <p class="">{{message}}</p>
     <p class="">Do you want to insert it?</p>
     <div class="group-btn">
@@ -26,57 +27,57 @@
       <button mat-raised-button color="primary" (click)="onResponseVerify(false)">No</button>
     </div>
   </div>
-  
-  <div class="pop connected" *ngIf="showVerifyMessage &&  (showInsert || IsInsert)">
-      <div>
-          <form>
-            <mat-card class="select">
-            <div class="mat-select-center">
-              <mat-form-field class="example-full-width" *ngIf="IsInsert">
-                <input matInput placeholder="Name" [formControl]="enteredName" [(ngModel)]="name"  required >
+
+  <div class="pop connected" [ngStyle]="{'color' : style.color, 'background' : style.background }"
+    *ngIf="showVerifyMessage &&  (showInsert || IsInsert)">
+    <div>
+      <form>
+        <mat-card class="select">
+          <div class="mat-select-center">
+            <mat-form-field class="example-full-width" *ngIf="IsInsert">
+              <input matInput placeholder="Name" [formControl]="enteredName" [(ngModel)]="name" required>
+            </mat-form-field>
+          </div>
+          <div class="mat-select-center">
+            <mat-form-field class="routineProgramselect">
+              <mat-select [formControl]="selectProgram" [(ngModel)]="selectedProgram" id="matSelect1"
+                placeholder="Programs" style="color:black" required="true"
+                (selectionChange)="onSelectedProgram($event)">
+                <mat-option *ngFor="let item of insertForm" [value]="item.Name">{{item.Name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="selectProgram.hasError('required')">You must make a selection</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="mat-select-center">
+            <mat-form-field class="routineProgramselect">
+              <mat-select [formControl]="selectRoutines" [(ngModel)]="selectedRoutine" placeholder="Routines"
+                style="color:black" required="true">
+                <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="selectRoutines.hasError('required')">You must make a selection</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="inputs">
+            <div>
+              <mat-form-field class="rung">
+                <input matInput [formControl]="selectRung" [(ngModel)]="rung" placeholder="Rung" type="number"
+                  pattern="^\d*[0-9]\d*$" name="rung" [value]="rung" (keydown)="removeMinus($event)" min="0" id="rung"
+                  required="true">
+                <mat-error *ngIf="selectRung.hasError('required')">Rung is required!</mat-error>
+                <mat-error *ngIf="selectRung.hasError('pattern')">Only positive or 0!</mat-error>
               </mat-form-field>
             </div>
-              <div class="mat-select-center">
-                <mat-form-field class="routineProgramselect">
-                  <mat-select [formControl]="selectProgram" [(ngModel)]="selectedProgram"  id="matSelect1" placeholder="Programs" style="color:black"
-                    required="true" (selectionChange)="onSelectedProgram($event)">
-                    <mat-option *ngFor="let item of insertForm" [value]="item.Name">{{item.Name}}</mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="selectProgram.hasError('required')">You must make a selection</mat-error>
-                </mat-form-field>
-              </div>
-              <div class="mat-select-center">
-                <mat-form-field class="routineProgramselect">
-                  <mat-select [formControl]="selectRoutines" [(ngModel)]="selectedRoutine"  placeholder="Routines" style="color:black"
-                    required="true">
-                    <mat-option *ngFor="let item of routines " [value]="item">{{item}}</mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="selectRoutines.hasError('required')">You must make a selection</mat-error>
-                </mat-form-field>
-              </div>
-              <div class="inputs">
-                <div>
-                  <mat-form-field class="rung">
-                    <input matInput [formControl]="selectRung" [(ngModel)]="rung" placeholder="Rung" type="number" pattern="^\d*[0-9]\d*$"
-                      name="rung" [value]="rung" (keydown)="removeMinus($event)" min="0" id="rung"
-                      required="true">
-                      <mat-error *ngIf="selectRung.hasError('required')">Rung is required!</mat-error>
-                      <mat-error *ngIf="selectRung.hasError('pattern')">Only positive or 0!</mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-            </mat-card>
-          </form>
-          <section class="buttons">
-              <button mat-raised-button color="primary" (click)="onResponseVerify(false)">Cancel</button>
-              <button mat-raised-button color="primary" 
-              [disabled]="
+          </div>
+        </mat-card>
+      </form>
+      <section class="buttons">
+        <button mat-raised-button color="primary" (click)="onResponseVerify(false)">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="
               selectProgram.status == 'INVALID' ||
               selectRoutines.status == 'INVALID' ||
               enteredName.status == 'INVALID' && IsInsert ||
-              selectRung.status == 'INVALID' "
-              (click)="onResponseVerify(true)">Insert</button>
-          </section>
-        </div>
+              selectRung.status == 'INVALID' " (click)="onResponseVerify(true)">Insert</button>
+      </section>
+    </div>
   </div>
 </div>

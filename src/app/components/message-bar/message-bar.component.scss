@@ -6,14 +6,17 @@
     padding-left: 40px;
     padding-top: 6px;
     padding-bottom: 5px;
-}
-.timelineSuccess {
-    background-color: #80C46E;
-    color: white;
+    height: 30px;
+    box-sizing: border-box;
     display: flex;
     p {
         width: 15px;
     }
+}
+.timelineSuccess {
+    background-color: #80C46E;
+    color: white;
+
 }
 .timelineError {
     background: #DCC1C1;
