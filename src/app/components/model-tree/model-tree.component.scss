@@ -61,15 +61,10 @@ mat-form-field {
 ra-ui-tree {
     position: relative;
 }
-::ng-deep .bgColorNode {
-    padding-left: 0px !important;
-    position: fixed; 
-    opacity: .2;
-    width: 22px; //547px
-    height: 28px;
-    background: rebeccapurple;
-    left: 10;
-    pointer-events: none;
+
+.aoi {
+    color: darkblue;
+    font-style: italic;
 }
 
 .ra-tree-template {

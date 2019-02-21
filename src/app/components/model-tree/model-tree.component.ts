@@ -3,7 +3,6 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { Nullable } from '@ra-web-tech-ui-toolkit-common-utils';
 import { SharedService } from './../../providers/shared.service';
 import { NodeTree } from './../../providers/node.interface';
-import { NgForm } from '@angular/forms';
 import { BaseTree } from './base-tree';
 import { ITreeNode, ITreeNodeState } from '@ra-web-tech-ui-toolkit-navigation';
 import { ApiResponse, ApiMessage } from 'src/app/providers/api-response-model';
@@ -203,17 +202,18 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
     };
   }
 
-  addUnknownNode(node) {
-    const NewNode = Object.assign({}, this.unknownNodeSelected);
-    NewNode.ParentID = node.ID;
-    const allNode = [];
-    this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
-    NewNode.ID = allNode.length + 1;
-    this.treeControlRa.addChildren(node, [NewNode]);
-    this.treeControlRa.refreshUi.emit()
+  addUnknownNode() {
+    this.unknownNodeSelected.ParentID = this.selectedNode.ID;
+    this.service.addNode(this.unknownNodeSelected).subscribe((value: ApiResponse<any>) => {
+      this.treeControlRa.addChildren(this.selectedNode, [this.unknownNodeSelected]);
+      this.treeControlRa.refreshUi.emit()
 
-    this.unKnownNodes = this.unKnownNodes.filter(i => this.unknownNodeSelected != i);
-    this.unknownNodeSelected && this.treeControlRa.refreshUi.emit();
-
+      this.unKnownNodes = this.unKnownNodes.filter(i => this.unknownNodeSelected != i);
+      this.unknownNodeSelected && this.treeControlRa.refreshUi.emit();
+      // this.responseOnAdd(value);
+    },
+      err => {
+        this.service.sendNotification(undefined);
+      });
   }
 }

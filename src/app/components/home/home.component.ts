@@ -176,21 +176,19 @@ export class HomeComponent {
         body['Rung'] = null;
         this.connectingToChosenVersion(body, item, bodyTransfer);
         this.disableBtnOfMenu = false;
-      } else if (!!data.Result === false) {
-        this.manageMessageDialog([], data.Message, true);
-        this.disableBtnOfMenu = true;
       } else {
-        this.onLoading = false;
-        this.manageOfContent(false, false, false);
-        this.manageMessageDialog([], data.Message, false);
+        let verifyMessage = true;
+        if (data.Result === null){
+          this.manageOfContent(false, false, false);
+          this.onLoading = verifyMessage = false;
+        }
+        this.manageMessageDialog([], data.Message, verifyMessage);
         this.disableBtnOfMenu = true;
-        this.onDisableBtn = true;
-      }
+      } 
     }, err => {
       this.disableBtnOfMenu = true;
     });
   }
-
 
   connectingToChosenVersion(body, item, bodyTransfer) {
     this.service.connectToController(body).subscribe((data: ApiResponse<any>) => {
@@ -226,7 +224,13 @@ export class HomeComponent {
       });
   }
   onChangesNotAllowed() {
-    this.manageMessageDialog([], { Text: 'Changes in this version is not allowed!', Type: 'info', Color: null, BgColor: null, IsPopup: true }, false);
+    this.manageMessageDialog([], {
+      Text: 'Changes in this version is not allowed!',
+      Type: 'info',
+      Color: null,
+      BgColor: null,
+      IsPopup: true
+    }, false);
   }
 
   initForm() {

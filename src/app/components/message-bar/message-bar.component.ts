@@ -38,6 +38,7 @@ export class MessageBarComponent implements OnInit {
         this.showMessage(value);
       }
 
+      //api offline
       if (value == undefined) {
         this.style = this.timelineError;
         this.statusBar = 'Something went wrong. API offline';

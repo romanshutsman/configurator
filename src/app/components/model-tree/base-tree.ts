@@ -6,6 +6,7 @@ import { NodeTree } from './../../providers/node.interface';
 export class BaseTree {
 
   selectedNode: Nullable<ITreeNode>;
+  selectedBrokenNode: Nullable<ITreeNode>;
   treeControlRa: RaUiNestedTreeControl;
   config: ITreeConfig;
   treeModel: NodeTree[];
@@ -69,8 +70,8 @@ export class BaseTree {
     'Nothing'
   ];
   listOfNode = [];
-  
-  @Input() newElementId : number;
+
+  @Input() newElementId: number;
   @Output() itemSelected = new EventEmitter();
   @Output() actionContextMenuChanged = new EventEmitter();
   @Output() transferTree = new EventEmitter();
@@ -89,8 +90,8 @@ export class BaseTree {
   onTreeInitialized(treeControl: RaUiNestedTreeControl, component) {
     this.treeControlRa = treeControl;
     this.treeControlRa.runForEachChild(this.treeModel, e => {
-      if(component == 'model') {
-        if(e.Type == 0) {
+      if (component == 'model') {
+        if (e.Type == 0) {
           this.listOfNode.push(e);
         }
       }
@@ -114,38 +115,38 @@ export class BaseTree {
 
   addInfoNode(node) {
     let arrayOfAttr = [];
-    if(node.updateRadio=='Parent') {
+    if (node.updateRadio == 'Parent') {
       arrayOfAttr.push('P');
-      if(node.hasBuffer)  {
+      if (node.hasBuffer) {
         arrayOfAttr = [];
       }
-      if(node.hasTrigger) {
-        if(node.hasBuffer) {
+      if (node.hasTrigger) {
+        if (node.hasBuffer) {
           arrayOfAttr.push('P');
         }
         arrayOfAttr.push('T');
       }
-      if(node.hasChange) arrayOfAttr.push('Ch');
+      if (node.hasChange) arrayOfAttr.push('Ch');
     }
 
-    if(node.updateRadio=='Rate') {
+    if (node.updateRadio == 'Rate') {
       let tempStr = node.updateRate + 'sec';
       arrayOfAttr.push(tempStr);
-      if(node.hasTrigger) arrayOfAttr.push('T');
-      if(node.hasChange) arrayOfAttr.push('Ch');
-      if(!node.hasBuffer) arrayOfAttr.push('NL');
+      if (node.hasTrigger) arrayOfAttr.push('T');
+      if (node.hasChange) arrayOfAttr.push('Ch');
+      if (!node.hasBuffer) arrayOfAttr.push('NL');
     }
 
-    if(node.updateRadio=='Nothing') {
-      if(node.hasTrigger) arrayOfAttr.push('N');
+    if (node.updateRadio == 'Nothing') {
+      if (node.hasTrigger) arrayOfAttr.push('N');
       let tempStr = node.updateRate + ' sec';
       arrayOfAttr.push(tempStr);
-      if(node.hasTrigger) arrayOfAttr.push('T');
-      if(node.hasChange) arrayOfAttr.push('Ch');
-      if(!node.hasBuffer) arrayOfAttr.push('NL');
+      if (node.hasTrigger) arrayOfAttr.push('T');
+      if (node.hasChange) arrayOfAttr.push('Ch');
+      if (!node.hasBuffer) arrayOfAttr.push('NL');
     }
     const stringOfAttr = arrayOfAttr.join(' + ');
-    if(arrayOfAttr.length>0) {
+    if (arrayOfAttr.length > 0) {
       let finishedInfoString = '';
       const arrayWithParathethis = ['(', stringOfAttr, ')']
       finishedInfoString = arrayWithParathethis.join('');
@@ -156,6 +157,7 @@ export class BaseTree {
   }
 
   onDblClick(comp) {
+    if (comp == 'model' && this.selectedNode.isAoi) return;
     if (this.selectedNode.Type === 0) {
       this.sendActionAndType('edit', 'node', comp);
     } else if (this.selectedNode.Type === 1) {
@@ -183,7 +185,7 @@ export class BaseTree {
     });
   }
 
-  fixTreeLabels(tree): any{
+  fixTreeLabels(tree): any {
     let stringifyData = tree;
     stringifyData = stringifyData.replace(/nameInModel/g, 'label');
     stringifyData = stringifyData.replace(/lChildrens/g, 'children');
@@ -201,9 +203,9 @@ export class BaseTree {
   onAddNewNode(body) {
     const allNode = [];
     this.treeControlRa.runForEachChild(this.treeModel, e => allNode.push(e))
-    body.ID = this.newElementId? this.newElementId : allNode.length;
+    body.ID = this.newElementId ? this.newElementId : allNode.length;
 
-    let insertion = body.length > 1? body: [body];
+    let insertion = body.length > 1 ? body : [body];
 
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, insertion);
     this.transferTreePost.emit(this.treeModel);
