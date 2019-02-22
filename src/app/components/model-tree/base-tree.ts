@@ -209,5 +209,6 @@ export class BaseTree {
 
     this.selectedNode && this.treeControlRa.addChildren(this.selectedNode, insertion);
     this.transferTreePost.emit(this.treeModel);
+    this.treeControlRa.refreshUi.emit()
   }
 }

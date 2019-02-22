@@ -21,7 +21,7 @@
       <p class="unknown-nodes-p">Unknown elements:</p>
       <ra-ui-tree class="model" [contextMenu]="UnknownMenu" [contextMenuSubject]="selectedBrokenNode"
         [(tree)]="unKnownNodes" [config]="config" (treeNodeSelected)="onTreeUnknownNodeSelected($event)"
-        (treeInitialized)="onTreeInitialized($event,'unknown')">
+        >
         <ng-template #node let-data="model">
           <div class="ra-tree-template">
             <p>{{data.label}}</p>

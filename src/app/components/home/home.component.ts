@@ -35,6 +35,7 @@ export class HomeComponent {
   programsAndRoutines;
   isChangesAllowed = true;
   elementId: number;
+  unKnownElements: Array<any>;
 
   constructor(private service: SharedService) {
     this.getActiveControllerAndCheck();
@@ -206,6 +207,8 @@ export class HomeComponent {
       this.checkStatus = data.Result;
       this.successConnect(data, bodyTransfer, item);
       this.manageMessageDialog([], data.Message, false);
+      this.unKnownElements = data.Result['BrokenTree'];
+      console.log(this.unKnownElements);
 
       if (data.Result['Status'] != this.service.controllerMode.rsModeOffline && data.Result['IsOldVersion']) {
         this.isChangesAllowed = false;

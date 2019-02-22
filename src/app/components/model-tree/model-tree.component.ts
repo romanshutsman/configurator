@@ -32,6 +32,14 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
   offsetTopTooltip: any;
   offsetLeftTooltip: any;
   aoiName: any;
+  unKnownNodes: any;
+
+
+  @Input() set unKnownElements(val) {
+    this.unKnownNodes = this.fixTreeLabels(val);
+    console.log(this.unKnownNodes);
+  }
+
   @Input() set dataForm(value) {
     if (value) {
       if (value.action === 'added') {
@@ -61,15 +69,15 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
       this.treeModel = undefined;
     this.visibleBlock = value;
   }
-  unKnownNodes = [
-    { label: 'R21', Type: 2, children: [] },
-    { label: 'D22', Type: 3, children: [] },
-    { label: 'D22', Type: 4, children: [] },
-    { label: 'D22', Type: 5, children: [] },
-    { label: 'D22', Type: 5, children: [] },
-    { label: 'D22', Type: 2, children: [] },
+  // unKnownNodes = [
+  //   { label: 'R21', Type: 2, children: [] },
+  //   { label: 'D22', Type: 3, children: [] },
+  //   { label: 'D22', Type: 4, children: [] },
+  //   { label: 'D22', Type: 5, children: [] },
+  //   { label: 'D22', Type: 5, children: [] },
+  //   { label: 'D22', Type: 2, children: [] },
 
-  ];
+  // ];
   listOfNode = [];
   unknownNodeSelected: Nullable<ITreeNode>;
 
@@ -204,13 +212,14 @@ export class ModelTreeComponent extends BaseTree implements OnInit {
 
   addUnknownNode() {
     this.unknownNodeSelected.ParentID = this.selectedNode.ID;
+    this.unknownNodeSelected.Routine = this.selectedNode.Routine;
     this.service.addNode(this.unknownNodeSelected).subscribe((value: ApiResponse<any>) => {
-      this.treeControlRa.addChildren(this.selectedNode, [this.unknownNodeSelected]);
-      this.treeControlRa.refreshUi.emit()
+      this.manageMessageDialog(null, value.Message, false);
 
+      if (!value.Result) return;
+      this.onAddNewNode(this.unknownNodeSelected);
       this.unKnownNodes = this.unKnownNodes.filter(i => this.unknownNodeSelected != i);
       this.unknownNodeSelected && this.treeControlRa.refreshUi.emit();
-      // this.responseOnAdd(value);
     },
       err => {
         this.service.sendNotification(undefined);
